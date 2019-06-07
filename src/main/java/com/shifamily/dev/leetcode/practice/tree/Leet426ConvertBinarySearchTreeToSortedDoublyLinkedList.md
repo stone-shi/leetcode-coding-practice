@@ -27,11 +27,11 @@ The figure below shows the transformed BST. The solid line indicates the success
 
 # 解法
 
-因为是BST而且题目要求顺序输出，所以用中序遍历。可以用各种方法，这个解用了迭代。基本如下：
-所有左节点入栈
-循环直到栈空
+因为是BST而且题目要求顺序输出，所以用中序遍历。可以用各种方法，这个解用了迭代。基本如下：  
+所有左节点入栈  
+循环直到栈空  
 出栈 - 做处理。这里是把 prev的right (next)指到出栈节点，然后出栈节点left (previous)指到prev，prev赋值出栈节点。
-如果有右节点，右节点和其所有的左节点入栈。
+如果有右节点，右节点和其所有的左节点入栈。  
 
 因为这个要求循环，所以记住head和tail节点，head的left指向tail，tail的right指向head。完成题目要求。
 
