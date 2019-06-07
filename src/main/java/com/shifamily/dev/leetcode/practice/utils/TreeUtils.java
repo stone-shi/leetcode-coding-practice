@@ -1,6 +1,5 @@
 package com.shifamily.dev.leetcode.practice.utils;
 
-import apple.laf.JRSUIUtils;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -8,6 +7,38 @@ import java.util.Random;
 
 public class TreeUtils {
 
+
+
+    public static TreeNode createBST(int[] val){
+
+        if (val == null || val.length == 0)
+            return null;
+
+        TreeNode root = insertNodeToBST(null, val[0]);
+        for (int i = 1; i < val.length; i++)
+            insertNodeToBST(root, val[i]);
+
+        return root;
+
+    }
+
+    public static TreeNode insertNodeToBST(TreeNode root, int val){
+        if (root == null)
+            return new TreeNode(val);
+
+        if (val <= root.val){
+            if (root.left == null)
+                return root.left = new TreeNode(val);
+            else
+                return insertNodeToBST(root.left, val);
+        }else{
+            if (root.right == null)
+                return root.right = new TreeNode(val);
+            else
+                return insertNodeToBST(root.right, val);
+        }
+
+    }
 
     public static TreeNode createTreeFromString(String tree){
         if (tree == null || tree.length() <= 2 || tree.charAt(0) != '[' || tree.charAt(tree.length() - 1) != ']')
@@ -67,6 +98,38 @@ public class TreeUtils {
 
         }
         return root;
+    }
+
+    public static Node copyToNode(TreeNode root){
+        if (root == null)
+            return null;
+
+        Node newRoot = new Node(root.val);
+        Queue<TreeNode> bfs = new LinkedList<>();
+        Queue<Node> bfsNew = new LinkedList<>();
+        bfs.offer(root);
+        bfsNew.offer(newRoot);
+
+        while (!bfs.isEmpty()){
+            TreeNode orig  = bfs.poll();
+            Node newNode = bfsNew.poll();
+
+            if (orig.left != null){
+                Node node = new Node(orig.left.val);
+                newNode.left = node;
+                bfs.offer(orig.left);
+                bfsNew.offer(node);
+            }
+
+            if (orig.right != null){
+                Node node = new Node(orig.right.val);
+                newNode.right = node;
+                bfs.offer(orig.right);
+                bfsNew.offer(node);
+            }
+
+        }
+        return newRoot;
     }
 
     public static TreeNode duplicateTree(TreeNode root){

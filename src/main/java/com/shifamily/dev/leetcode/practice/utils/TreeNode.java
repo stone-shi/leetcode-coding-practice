@@ -1,15 +1,18 @@
 package com.shifamily.dev.leetcode.practice.utils;
 
-import apple.laf.JRSUIUtils;
 
 public class TreeNode {
     public int val;
     public TreeNode left, right;
+
+
     public TreeNode(int item)
     {
         val = item;
         left = right = null;
     }
+
+
 
     @Override
     public boolean equals(Object o){
@@ -32,4 +35,6 @@ public class TreeNode {
         return compareNode(a.left, b.left) && compareNode(a.right, b.right);
 
     }
+
+
 }
