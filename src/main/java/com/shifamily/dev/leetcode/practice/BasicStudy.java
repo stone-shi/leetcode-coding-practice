@@ -46,10 +46,7 @@ public class BasicStudy {
             }
         }
 
-
-
-
-        return  r.equals(a);
+        return  a.equals(r);
     }
 
     protected void addParameterAndAnswer(Object[] parameters, Object answers, boolean orderMatter) {
