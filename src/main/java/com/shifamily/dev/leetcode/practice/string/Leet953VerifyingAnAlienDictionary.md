@@ -57,3 +57,44 @@ orderMap['l' - 'a'] = 1 因为h是第二个。
 如果字符不一样，查找orderMap，找出order值，如果前一个字符的Order值小于等于后一个，检查完毕，break，否则也检查完毕，返回false。
 
 最后，处理字符串可以比较的不部分都一样，比如abc vs abcdefg。那前一个必须不长于后一个。否则返回false。
+
+## 复杂度
+时间复杂度 O(N * M)
+空间复杂度 O(1)
+
+## 代码
+```Java
+    public boolean isAlienSorted(String[] words, String order) {
+        //建立order 到"真实"字符的顺序映射
+        int[] orderMap = new int[26];
+        for (int i = 0; i < order.length(); i++)
+            orderMap[ order.charAt(i) - 'a'] = i;
+
+        //字符串和后一个比较，比较的时候只要一个个字符看，如果字符一样，就下一个，不一样就查表拿到"真实"的顺序进行比较。
+        for (int i = 0; i < words.length - 1; i++) {
+
+            int j = 0;
+            boolean checked = false;
+            while ( j < words[i].length() && j < words[i+1].length()){
+                //如果字符一样，下一个
+                if (words[i].charAt(j) == words[i+1].charAt(j)) {
+                    j++;
+                    continue;
+                }
+                if ( orderMap[ words[i].charAt(j) - 'a'] >  orderMap[ words[i+1].charAt(j) - 'a']  )
+                    return false;
+                else {
+                    checked = true;
+                    break;
+                }
+            }
+            //这个检查的是，如果字符都一样，较短的字符串必须在前，否则就是不对。
+            if (! checked && words[i].length() > words[i+1].length())
+                return false;
+
+        }
+        return true;
+
+    }
+
+```

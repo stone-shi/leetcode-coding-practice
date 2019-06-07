@@ -58,5 +58,50 @@ B进入等待列表
 
 然后继续如上操作直到 queue和等待列表都是空。期间需要统计执行多少次包括轮空的。
 
+## 复杂度
+时间复杂度：O(n lgn)，主要是堆里面排序
+空间复杂度：O(n)，需要保存到queue里
 
+## 代码
+```Java
+    public int leastInterval(char[] tasks, int n) {
+
+        //统计task出现次数
+        int[] charCount = new int[26];
+        for ( char c : tasks)
+            charCount[c - 'A']++;
+
+        // comparator 设成  Collections.reverseOrder() 是为了最大值在前 (max heap)
+        PriorityQueue<Integer> queue = new PriorityQueue<>(26, Collections.reverseOrder());
+        //把次数入queue，从最大次数开始排列，这里不记录是什么task，是因为题目不要求写出实际排列
+        for (int ct : charCount) {
+            if (ct > 0)
+                queue.offer(ct);
+        }
+        //记录执行次数
+        int time = 0;
+        while (!queue.isEmpty()){
+            //记录这个执行block里面的等待list
+            List<Integer> waitingList = new LinkedList<>();
+            for (int i = 0; i <= n ; i++) { //每个任务要等待 n
+                if (!queue.isEmpty()) {
+                    //提取一个任务执行，执行次数-1
+                    int taskCt = queue.poll() - 1;
+                    time++; //记录执行了这个任务
+                    if (taskCt > 0) //如果这个任务还需要执行，放到等待list
+                        waitingList.add(taskCt);
+                }else{
+                    //这里表示现有的执行队列里已经没有任务了，但是有等待列表，那CPU必须轮空（执行次数++)，如果等待列表都没了，说明执行完成了，CPU不需要轮空
+                    if (!waitingList.isEmpty())
+                        time++;
+                }
+            }
+            //把执行列表里的数据放回执行队列
+            for (Integer task: waitingList)
+                queue.offer(task);
+        }
+        return time;
+    }
+
+```
 

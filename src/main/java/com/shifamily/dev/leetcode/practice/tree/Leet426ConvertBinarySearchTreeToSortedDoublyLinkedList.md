@@ -35,4 +35,46 @@ The figure below shows the transformed BST. The solid line indicates the success
 
 因为这个要求循环，所以记住head和tail节点，head的left指向tail，tail的right指向head。完成题目要求。
 
+## 复杂度
+时间复杂度 O(N)
+空间复杂度 O(N)
+
+
+## 代码
+```Java
+   public Node treeToDoublyList(Node root) {
+
+        if (root == null)
+            return null;
+
+        Stack<Node> stack = new Stack<>();
+        Node node = root;
+        while (node != null){
+            stack.push(node);
+            node = node.left;
+        }
+
+        Node head = stack.peek();
+        Node prev = null;
+
+        while (! stack.isEmpty()){
+            node = stack.pop();
+            Node n = node.right;
+            while (n != null){
+                stack.push(n);
+                n = n.left;
+            }
+            if (prev != null) {
+                prev.right = node;
+                node.left = prev;
+            }
+            prev = node;
+
+        }
+        head.left = node;
+        node.right = head;
+
+        return head;
+    }
+```
 

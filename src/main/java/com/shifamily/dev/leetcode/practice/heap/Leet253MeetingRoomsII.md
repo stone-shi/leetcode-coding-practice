@@ -27,3 +27,31 @@ NOTE: input types have been changed on April 15, 2019. Please reset to default c
 然后把新的会议结束时间放到queue里。
 
 最后检查这个queue的size就可以得出最少需要多少个会议室了。
+
+## 复杂度
+时间复杂度 O(NLgN) 排序
+空间复杂度 O(N)
+
+
+## 代码
+```Java
+   public int minMeetingRooms(int[][] intervals) {
+
+        if (intervals == null|| intervals.length == 0)
+            return 0;
+
+        //对会议开始的时间排序，会议总是要从先开始的开始处理的，这个是 O（NlgN)
+        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+
+        //mimi heap
+        PriorityQueue<Integer> queue = new PriorityQueue<>();
+        queue.offer(intervals[0][1]);  //放入第一个会议的结束时间
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] >= queue.peek()) //检查当前需要安排的会议，是否有已经进行的会议结束了
+                queue.poll(); //结束的会议出queue
+            queue.offer(intervals[i][1]); //开始这个会议
+        }
+        return queue.size(); //所有的会议安排完了，看看有多少个同时进行的
+
+    }
+```

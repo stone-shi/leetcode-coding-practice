@@ -34,4 +34,62 @@ Note: Do not use class member/global/static variables to store states. Your seri
 
 这题可以有很多解法，我写了递归的dfs。 只要遍历所有的Node，写到字符串就实现了序列化。反过来重新建立node就好了。
 
+## 复杂度
+时间复杂度 二叉树遍历的递归实现，每个结点只需遍历一次，故时间复杂度为O(n)
+空间复杂度 O(N) 
+
+
+## 代码
+```Java
+    public class Codec {
+
+        // Encodes a tree to a single string.
+        public String serialize(TreeNode root) {
+            StringBuilder result = new StringBuilder();
+            dfs(root, result);
+
+            if (result.length() > 0)
+                result.deleteCharAt(result.length() - 1); //remove ',' 为了显示好看点
+            return result.toString();
+
+        }
+
+        //dfs遍历，把node的值写到stringbuilder里面。
+        private void dfs(TreeNode root, StringBuilder result){
+
+            if (root == null){
+                result.append("null,");
+                return;
+            }
+            result.append(root.val).append(",");
+            dfs(root.left, result);
+            dfs(root.right, result);
+
+        }
+
+        // Decodes your encoded data to tree.
+        public TreeNode deserialize(String data) {
+            String[] treeData = data.split(",");
+            //字符串放到队列里
+            Queue<String> q = new LinkedList<>(Arrays.asList(treeData));
+            return assembleTree(q);
+        }
+
+        //把解析的字符串反过来建树
+        private TreeNode assembleTree(Queue<String> q){
+            if (q.isEmpty())
+                return null;
+
+            String nodeToProcess = q.poll();
+            if (nodeToProcess.equals("null"))
+                return null;
+
+            TreeNode root = new TreeNode(Integer.valueOf(nodeToProcess));
+            root.left = assembleTree(q);
+            root.right = assembleTree(q);
+
+            return root;
+        }
+    }
+```
 
