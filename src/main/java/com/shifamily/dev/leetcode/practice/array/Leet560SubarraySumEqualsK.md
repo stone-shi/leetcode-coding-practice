@@ -31,7 +31,13 @@ sum[i, j] = sum[0, j] - sum[0, i - 1]
 然后检查 0 - j，sum[0, j] - k 有没有已经存在的 sum[0, i] (已经在hashmap了)。如果有，说明 sum[i, j]存在，result把那个和发生过的次数累加上去就好了，次数代表i可能是多个。
 题目不要求写出子数组，所以记录次数就好了。
 
-代码
+因为子数组是按照顺序来的，所以计算并保存进hash map的操作和查找的操作是可以合并在一个循环里的。
+
+## 复杂度
+时间复杂度：O(n)，只有一个循环，HashMap插入查找都是O(1)
+空间复杂度：O(n)，需要保存和到HashMap里
+
+## 代码
 ```Java
 
     public int subarraySum(int[] nums, int k) {
