@@ -89,6 +89,7 @@ Note:
 ```
 ## 解法3
 这个是 quick select算法，是选k th 元素最快的算法。
+quick sort : https://blog.csdn.net/morewindows/article/details/6684558
 
 ### 复杂度
 时间复杂度 平均O(N)，worst O(N^2)
