@@ -78,32 +78,37 @@ public class Leet269AlienDictionary extends BasicStudy {
         Map<Character, Set<Character>> map = new HashMap<>();
         Map<Character, Integer> inDegree = new HashMap<>();
 
+        //为每个字符建立入度表 ，初始化0
         for (String w : words) {
             for (char c: w.toCharArray())
                 inDegree.put(c, 0);
         }
 
+        //循环所有的单词
         for (int i = 0; i < words.length - 1; i++) {
             
             char[] w1 = words[i].toCharArray();
             char[] w2 = words[i + 1].toCharArray();
             int len = Math.min(w1.length, w2.length);
 
+            //前一个单词和后一个比较，一个个字符比较直到有不同的（我们可以知道这个不同的字符的顺序）.
             for (int j = 0; j < len; j++) {
                 if (w1[j] != w2[j]){
 
+                    //建立第一个字符到其他字符的边， 如果这个组合不存在，后一个字符的入度+1 （应为第一个字符指向他）
                     Set<Character> s = map.getOrDefault(w1[j], new HashSet<>());
                     if (!s.contains(w2[j])) {
                         s.add(w2[j]);
                         map.put(w1[j], s);
                         inDegree.put(w2[j], inDegree.get(w2[j]) + 1);
                     }
-
+                    //看到不同后就停止，因为后面字符不是必须按照顺序的
                     break;
                 }
             }
         }
 
+        //对有向图进行BFS遍历，每个节点，加到结果
         Queue<Character> queue = new LinkedList<>();
         for (Map.Entry<Character, Integer> e: inDegree.entrySet()){
             if (e.getValue() == 0)
@@ -125,6 +130,7 @@ public class Leet269AlienDictionary extends BasicStudy {
                 }
             }
         }
+        //如果长度不匹配意味着有向图不能遍历所有节点，这个排序是无效的
         if (sb.length() != inDegree.size())
             return "";
         return sb.toString();
