@@ -49,6 +49,10 @@ public class BasicStudy {
         return  a.equals(r);
     }
 
+    protected void addParameterAndAnswer(Object[] parameters, Object answers) {
+        addParameterAndAnswer(parameters, answers, false);
+    }
+
     protected void addParameterAndAnswer(Object[] parameters, Object answers, boolean orderMatter) {
         parametersList.add(parameters);
         answersList.add(answers);
