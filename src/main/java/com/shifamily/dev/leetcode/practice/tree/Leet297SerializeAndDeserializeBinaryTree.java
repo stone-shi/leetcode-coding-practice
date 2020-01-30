@@ -65,7 +65,61 @@ public class Leet297SerializeAndDeserializeBinaryTree extends BasicStudy {
         return codec.deserialize(codec.serialize(root));
 
     }
+    /*
+    second practise
+     */
 
+    public class Codec {
+
+
+
+        // Encodes a tree to a single string.
+        public String serialize(TreeNode root) {
+            StringBuilder sb = new StringBuilder();
+            dfs(sb, root);
+            if (sb.length() > 0)
+                sb.deleteCharAt(sb.length() -1 );
+            return sb.toString();
+        }
+
+        private void dfs (StringBuilder sb, TreeNode root){
+            if (root == null){
+                sb.append("null,");
+                return;
+            }
+
+            sb.append(root.val).append(",");
+            dfs(sb, root.left);
+            dfs(sb, root.right);
+
+        }
+
+        // Decodes your encoded data to tree.
+        public TreeNode deserialize(String data) {
+            String[] treeArray = data.split(",");
+            Queue<String> nodeQueue = new LinkedList(Arrays.asList(treeArray));
+            return assembleTree(nodeQueue);
+        }
+
+        private TreeNode assembleTree( Queue<String> nodeQueue){
+            if (nodeQueue.isEmpty())
+                return null;
+
+            String val = nodeQueue.poll();
+            if (!val.equals("null")) {
+                TreeNode root = new TreeNode( Integer.valueOf(val)) ;
+                root.left = assembleTree( nodeQueue );
+                root.right = assembleTree( nodeQueue );
+                return root;
+            }else
+                return null;
+
+        }
+
+    }
+
+    /*
+    First practice, dfs recursive call
     public class Codec {
 
         // Encodes a tree to a single string.
@@ -117,4 +171,6 @@ public class Leet297SerializeAndDeserializeBinaryTree extends BasicStudy {
         }
     }
 
+
+     */
 }
