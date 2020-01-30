@@ -29,6 +29,9 @@ Input: nums = [4,5,6,7,0,1,2], target = 3
 Output: -1
 # 解法
 
+这个是二分查找的变种，先根据mid和low检查哪一边是sorted，然后根据2情况分别检查 target落在哪个区间。
+
+
 ## 复杂度
 时间复杂度 O(N)
 空间复杂度 O(N)
@@ -36,5 +39,27 @@ Output: -1
 
 ## 代码
 ```Java
+    public int search(int[] nums, int target) {
 
+        int low = 0;
+        int high = nums.length - 1;
+
+        while (low <= high){
+            int mid = low + ( high - low ) / 2 ;
+            if (nums[mid] ==  target)
+                return mid;
+            if (nums[low] <= nums[mid]){ //sorted on low side
+                if (nums[mid] > target && nums[low] <= target) //in left part
+                    high = mid - 1;
+                else
+                    low = mid + 1;
+            }else { //sorted on high side
+                if (nums[mid] < target && nums[high] >= target) //in right part
+                    low = mid + 1;
+                else
+                    high = mid - 1;
+            }
+        }
+        return -1;
+    }
 ```
