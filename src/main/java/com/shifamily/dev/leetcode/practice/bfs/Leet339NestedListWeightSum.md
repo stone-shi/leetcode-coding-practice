@@ -24,6 +24,7 @@ Input: [1,[4,[6]]]
 Output: 27 
 Explanation: One 1 at depth 1, one 4 at depth 2, and one 6 at depth 3; 1 + 4*2 + 6*3 = 27.
 # 解法
+dfs 解，加上level信息。
 
 ## 复杂度
 时间复杂度 O(N)
@@ -31,5 +32,24 @@ Explanation: One 1 at depth 1, one 4 at depth 2, and one 6 at depth 3; 1 + 4*2 +
 
 ## 代码
 ```Java
+    public int depthSum(List<NestedInteger> nestedList) {
+
+        return dfs(nestedList, 1);
+
+    }
+
+    public int dfs( List<NestedInteger> nestedList, int level ){
+
+        int sum = 0;
+        for (NestedInteger ni: nestedList
+             ) {
+            if (ni.isInteger())
+                sum = sum +  ni.getInteger() * level;
+            else
+                sum = sum + dfs(ni.getList(), level + 1);
+        }
+        return sum;
+
+    }
 
 ```
