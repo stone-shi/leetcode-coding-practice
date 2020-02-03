@@ -1,6 +1,8 @@
 package com.shifamily.dev.leetcode.practice.utils;
 
 
+import apple.laf.JRSUIUtils;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -162,6 +164,20 @@ public class TreeUtils {
 
         }
         return newRoot;
+
+    }
+
+    public static TreeNode findNodeWithValue(TreeNode root, int val){
+
+        if (root == null || root.val == val)
+            return root;
+
+        TreeNode node = findNodeWithValue(root.left, val);
+        if (node != null)
+            return node;
+
+        node = findNodeWithValue(root.right, val);
+        return node;
 
     }
 
