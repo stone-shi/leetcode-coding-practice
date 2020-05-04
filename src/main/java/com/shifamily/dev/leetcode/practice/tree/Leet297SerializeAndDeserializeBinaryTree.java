@@ -4,9 +4,7 @@ import com.shifamily.dev.leetcode.practice.BasicStudy;
 import com.shifamily.dev.leetcode.practice.CaseRunner;
 import com.shifamily.dev.leetcode.practice.utils.*;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /*
 297. Serialize and Deserialize Binary Tree
@@ -65,9 +63,57 @@ public class Leet297SerializeAndDeserializeBinaryTree extends BasicStudy {
         return codec.deserialize(codec.serialize(root));
 
     }
+
+    /* 3rd */
+    public class Codec {
+        // Encodes a tree to a single string.
+        public String serialize(TreeNode root) {
+            StringBuilder sb = new StringBuilder();
+            dfs(root, sb);
+            sb.deleteCharAt(sb.length() - 1);
+            return sb.toString();
+        }
+
+        private void dfs(TreeNode root, StringBuilder sb){
+
+            if (root == null) {
+                sb.append("null").append(",");
+                return;
+            }
+
+            dfs(root.left, sb);
+            dfs(root.right, sb);
+            sb.append(root.val).append(',');
+
+        }
+
+        // Decodes your encoded data to tree.
+        public TreeNode deserialize(String data) {
+            String[] nodes = data.split(",");
+            Deque<String> stack = new LinkedList<>();
+            for (String s: nodes)
+                stack.push(s);
+            return reverse_dfs(stack);
+
+        }
+
+        private TreeNode reverse_dfs(Deque<String> data){
+            String sData = data.pop();
+            if (sData.equals("null"))
+                return null;
+            TreeNode aNode = new TreeNode(Integer.parseInt(sData));
+            aNode.right = reverse_dfs(data);
+            aNode.left = reverse_dfs(data);
+
+            return aNode;
+
+        }
+    }
+
     /*
     second practise
-     */
+
+
 
     public class Codec {
 
@@ -117,6 +163,8 @@ public class Leet297SerializeAndDeserializeBinaryTree extends BasicStudy {
         }
 
     }
+
+     */
 
     /*
     First practice, dfs recursive call
