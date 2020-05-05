@@ -34,8 +34,8 @@ import java.util.Random;
  */
 public class Leet42TrappingRainWater extends BasicStudy {
     public Leet42TrappingRainWater() {
-        int[][] caseP1 = {{ 0,1,0,2,1,0,1,3,2,1,2,1 } };
-        int[] answer = {6};
+        int[][] caseP1 = {{2,0,2}, { 0,1,0,2,1,0,1,3,2,1,2,1 } };
+        int[] answer = {2, 6};
 
         for (int i = 0; i < caseP1.length; i++) {
             Object[] p = new Object[1];
@@ -108,13 +108,13 @@ public class Leet42TrappingRainWater extends BasicStudy {
     @CaseRunner
     public int trapDp1pass(int[] height) {
 
-        int left = 1;
-        int right = height.length - 2;
-        int leftMax = height[0];
-        int rightMax = height[height.length - 1];
+        int left = 0;
+        int right = height.length - 1;
+        int leftMax = 0;
+        int rightMax = 0;
         int trapVol = 0;
 
-        while (left < right){
+        while (left <= right){
 
             if (height[left] <= height[right]){
 
