@@ -6,6 +6,20 @@ public class ListNode {
       public ListNode next;
       public ListNode(int x) { val = x; }
 
+      public static ListNode fromArray(int[] a){
+            if (a == null || a.length == 0)
+                  return null;
+
+            ListNode root = new ListNode(a[0]);
+            ListNode prev = root;
+            for (int i = 1; i < a.length ; i++) {
+                  ListNode current = new ListNode(a[i]);
+                  prev.next = current;
+                  prev = current;
+            }
+            return root;
+      }
+
       @Override
       public boolean equals(Object o){
             if (!o.getClass().equals(ListNode.class))
