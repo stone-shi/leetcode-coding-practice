@@ -6,6 +6,7 @@ import com.shifamily.dev.leetcode.practice.CaseRunner;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.Random;
 
 /*
 973. K Closest Points to Origin
@@ -55,6 +56,67 @@ public class Leet973KClosestPointsToOrigin extends BasicStudy {
         int[][] answer1 = {{-2, 2}};
 
         addParameterAndAnswer(p1, answer1, false);
+
+
+        Object[] p1a = new Object[2];
+
+        int len = 1024 * 1024;
+        int[][] p = new int[len][];
+        int[][] a = randomCase(len, 1000, p);
+        p1a[0] = p;
+        p1a[1] = 1000;
+
+        addParameterAndAnswer(p1a, a, false);
+
+    }
+
+    private int randInt(int min, int max){
+        Random rand = new Random();
+        return rand.nextInt((max - min) + 1) + min;
+    }
+    private int[][] randomCase(int len, int k ,int[][] p1){
+
+        for (int i = 0; i < len; i++) {
+            p1[i] = new int[2];
+            p1[i][0] = randInt(-10000, 10000);
+            p1[i][1] = randInt(-10000, 10000);
+        }
+
+        Arrays.sort(p1,  Comparator.comparingInt(a -> a[0] * a[0] + a[1] * a[1]));
+        return Arrays.copyOfRange(p1, 0, k );
+    }
+
+    @Override
+    protected boolean compareAnswer(Object r, Object a, Boolean orderMatter) {
+        int[][] ans = (int[][])a;
+        int[][] res = (int[][])r;
+
+        Arrays.sort(ans, (o1, o2)-> o1[0] == o2[0]? o1[1] - o2[1]: o1[0] - o2[0] );
+        Arrays.sort(res, (o1, o2)-> o1[0] == o2[0]? o1[1] - o2[1]: o1[0] - o2[0] );
+        return Arrays.deepEquals(ans, res);
+
+    }
+
+    /*
+    Second time - pq
+     */
+    @CaseRunner
+    public int[][] kClosestPQSecond(int[][] points, int K) {
+
+        PriorityQueue<int[]> priorityQueue = new PriorityQueue<>((a, b)->b[0]*b[0] + b[1]*b[1] - a[0]*a[0] - a[1]*a[1] );
+        for (int[] p : points){
+            priorityQueue.offer(p);
+            if (priorityQueue.size() > K)
+                priorityQueue.poll();
+        }
+
+        int[][] res = new int[K][];
+        int i = 0;
+        while (!priorityQueue.isEmpty())
+            res[i++] = priorityQueue.poll();
+
+        return res;
+
 
     }
 

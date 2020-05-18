@@ -31,6 +31,25 @@ public class Leet238ProductOfArrayExceptSelf extends BasicStudy {
 
     }
 
+    //second time
+    @CaseRunner
+    public int[] productExceptSelf(int[] nums) {
+        int[] res = new int[nums.length];
+
+        int[] leftProd = new int[nums.length];
+        leftProd[0] = 1;
+        for (int i =1; i < nums.length; i++)
+            leftProd[i] = leftProd[i - 1] * nums[i - 1];
+
+        int rightProd = 1;
+        for (int i = nums.length - 1 ; i >=0 ; i--) {
+            res[i] = rightProd * leftProd[i];
+            rightProd = rightProd * nums[i];
+        }
+
+        return res;
+    }
+    /*
     @CaseRunner
     public int[] productExceptSelf(int[] nums) {
 
@@ -52,4 +71,6 @@ public class Leet238ProductOfArrayExceptSelf extends BasicStudy {
 
         return result;
     }
+
+     */
 }

@@ -4,6 +4,7 @@ import com.shifamily.dev.leetcode.practice.BasicStudy;
 import com.shifamily.dev.leetcode.practice.CaseRunner;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /*
 560. Subarray Sum Equals K
@@ -29,6 +30,23 @@ public class Leet560SubarraySumEqualsK extends BasicStudy {
 
         addParameterAndAnswer(p1, 2, false);
 
+    }
+
+    /*second try*/
+    @CaseRunner
+    public int subarraySum2nd(int[] nums, int k) {
+        Map<Integer, Integer> mapSum = new HashMap<>();
+        int sum = 0;
+        int res = 0;
+        mapSum.put(0, 1);
+
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (mapSum.containsKey(sum - k))
+                res += mapSum.get(sum - k);
+            mapSum.put(sum, mapSum.getOrDefault(sum, 0) + 1);
+        }
+        return res;
     }
 
     @CaseRunner

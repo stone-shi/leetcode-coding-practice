@@ -72,6 +72,83 @@ public class Leet269AlienDictionary extends BasicStudy {
         }
     }
 
+
+    /*
+    Second try
+     */
+    @CaseRunner
+    public String alienOrder2nd(String[] words) {
+
+        if (words == null || words.length == 0)
+            return null;
+
+        Map<Character, Set<Character>> outbound = new HashMap<>();
+        Map<Character, Integer> inbound = new HashMap<>();
+
+        for (String w : words){
+            for (Character c : w.toCharArray())
+                inbound.put(c, 0);
+        }
+
+        String prev = words[0];
+        for (int i = 1; i < words.length; i++) {
+            int idx = 0;
+            while (idx < words[i].length()
+                    && idx < prev.length()
+                    && prev.charAt(idx) == words[i].charAt(idx) )
+                idx++;
+
+            if (idx == words[i].length() || idx == prev.length()){
+                if (words[i].length() > prev.length())
+                    prev = words[i];
+                continue;
+            }
+            Character from = prev.charAt(idx);
+            Character to = words[i].charAt(idx);
+            if (outbound.containsKey(from))
+                outbound.get(from).add(to);
+            else{
+                Set<Character> toSet = new HashSet<>();
+                toSet.add(to);
+                outbound.put(from, toSet);
+            }
+            inbound.put(to, inbound.get(to) + 1);
+            prev = words[i];
+        }
+
+        PriorityQueue<Character> q = new PriorityQueue<>();
+        for (Map.Entry<Character, Integer> e : inbound.entrySet()){
+            if (e.getValue() == 0){
+                q.offer(e.getKey());
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while (!q.isEmpty()){
+            Character c = q.poll();
+            sb.append(c);
+            Set<Character> toSet = outbound.get(c);
+            if (toSet != null) {
+                for (Character to : toSet) {
+                    int inDegree = inbound.get(to) - 1;
+                    if (inDegree == 0)
+                        q.offer(to);
+                    inbound.put(to, inDegree);
+                }
+            }
+        }
+
+        if (inbound.size() != sb.length())
+            return "";
+
+        return sb.toString();
+
+
+    }
+
+
+
+
     @CaseRunner
     public String alienOrder(String[] words) {
 
