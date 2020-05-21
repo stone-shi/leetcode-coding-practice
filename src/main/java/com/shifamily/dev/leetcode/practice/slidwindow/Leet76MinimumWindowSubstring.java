@@ -4,6 +4,7 @@ import com.shifamily.dev.leetcode.practice.BasicStudy;
 import com.shifamily.dev.leetcode.practice.CaseRunner;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /*
 76. Minimum Window Substring
@@ -29,10 +30,10 @@ If there is such window, you are guaranteed that there will always be only one u
  */
 public class Leet76MinimumWindowSubstring extends BasicStudy {
     public Leet76MinimumWindowSubstring() {
-        String[] caseP1 = {"ADOBECODEBANC" , "AAA", "aBcedF"};
-        String[] caseP2 = {"ABC", "CC" , "cd"};
+        String[] caseP1 = {"QABCCD", "ADOBECODEBANC" , "AAA", "aBcedF"};
+        String[] caseP2 = {"ACC", "ABC", "CC" , "cd"};
 
-        String[] answer = {"BANC", "", "ced"};
+        String[] answer = {"ABCC", "BANC", "", "ced"};
 
         for (int i = 0; i < caseP1.length; i++) {
             Object[] p = new Object[2];
@@ -42,6 +43,49 @@ public class Leet76MinimumWindowSubstring extends BasicStudy {
         }
     }
 
+    /* second try */
+    @CaseRunner
+    public String minWindow2nd(String s, String t) {
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < t.length(); i++)
+            map.put(t.charAt(i), map.getOrDefault(t.charAt(i), 0) + 1 );
+
+        int left = 0;
+        int right = 0;
+        int minLen = Integer.MAX_VALUE;
+        int matchedLen = t.length();
+        String res = "";
+
+        while (left < s.length() && right < s.length()){
+            char c = s.charAt(right);
+            if ( map.containsKey(c) ){
+                int ct = map.get(c);
+                if (ct > 0)
+                    matchedLen--;
+                map.put(c, ct + 1);
+            }
+            while ( matchedLen == 0 ){
+                if (right - left + 1 < minLen){
+                    minLen = right - left + 1;
+                    res = s.substring(left, right + 1);
+                }
+
+                char c1 = s.charAt(left);
+                if (map.containsKey(c1)){
+                    int ct = map.get(c1);
+                    if (ct > 0)
+                        matchedLen++;
+                    map.put(c1, ct - 1);
+                }
+                left++;
+            }
+            right++;
+        }
+
+
+        return res;
+
+    }
 
     @CaseRunner
     public String minWindow(String s, String t) {
