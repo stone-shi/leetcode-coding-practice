@@ -50,6 +50,26 @@ public class Leet124BinaryTreeMaximumPathSum extends BasicStudy {
 
     }
 
+    /* 2nd try - 5/23/2020 */
+    int maxGainValue = Integer.MIN_VALUE;
+    @CaseRunner
+    public int maxPathSum2nd(TreeNode root) {
+        maxGainValue = Integer.MIN_VALUE;
+        maxGain(root);
+        return maxGainValue;
+    }
+
+    private int maxGain(TreeNode root){
+        if (root == null)
+            return 0;
+        int leftGain = Math.max(0, maxGain(root.left));
+        int rightGain = Math.max(0, maxGain(root.right));
+        int val = root.val + leftGain + rightGain;
+        if (val > maxGainValue)
+            maxGainValue = val;
+        return root.val + Math.max( leftGain,  rightGain);
+    }
+
 
     @CaseRunner
     public int maxPathSum(TreeNode root) {

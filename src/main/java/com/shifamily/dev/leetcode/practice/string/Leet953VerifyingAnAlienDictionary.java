@@ -62,6 +62,29 @@ public class Leet953VerifyingAnAlienDictionary extends BasicStudy {
 
     }
 
+    /* second try 5/23/2020 */
+    @CaseRunner
+    public boolean isAlienSorted2nd(String[] words, String order) {
+        int[] orderMap = new int[26];
+        for (int i = 0; i < order.length(); i++)
+            orderMap[order.charAt(i) - 'a'] = i;
+
+        for (int i = 0; i < words.length - 1; i++) {
+            int j = 0;
+            while (j < words[i].length() && j < words[i + 1].length()
+                    && words[i].charAt(j) == words[i + 1].charAt(j))
+                j++;
+            if (j == words[i + 1].length())
+                return false;
+            else if (j == words[i].length())
+                continue;
+            if (orderMap[words[i].charAt(j) - 'a'] > orderMap[words[i+1].charAt(j) - 'a'] )
+                return false;
+        }
+        return true;
+
+    }
+
     @CaseRunner
     public boolean isAlienSorted(String[] words, String order) {
         //建立order 到"真实"字符的顺序映射
