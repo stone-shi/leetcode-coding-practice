@@ -15,7 +15,7 @@ public class App {
 
 
     private static Set<Class<? extends BasicStudy>> getTestClass(){
-        Reflections reflections = new Reflections("com.shifamily.dev.leetcode.practice");
+        Reflections reflections = new Reflections("com.shifamily.dev");
         return reflections.getSubTypesOf(BasicStudy.class);
     }
 
