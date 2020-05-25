@@ -1,4 +1,4 @@
-package com.shifamily.dev.leetcode.practice;
+package com.shifamily.dev;
 
 import lombok.extern.slf4j.Slf4j;
 

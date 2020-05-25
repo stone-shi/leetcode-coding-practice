@@ -1,8 +1,8 @@
 package com.shifamily.dev.leetcode.practice.other;
 
 
-import com.shifamily.dev.leetcode.practice.BasicStudy;
-import com.shifamily.dev.leetcode.practice.CaseRunner;
+import com.shifamily.dev.BasicStudy;
+import com.shifamily.dev.CaseRunner;
 
 import java.util.Deque;
 import java.util.LinkedList;

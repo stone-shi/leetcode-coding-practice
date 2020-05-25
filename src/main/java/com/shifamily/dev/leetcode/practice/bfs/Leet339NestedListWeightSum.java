@@ -1,8 +1,8 @@
 package com.shifamily.dev.leetcode.practice.bfs;
 
-import com.shifamily.dev.leetcode.practice.BasicStudy;
-import com.shifamily.dev.leetcode.practice.CaseRunner;
-import com.shifamily.dev.leetcode.practice.utils.NestedInteger;
+import com.shifamily.dev.BasicStudy;
+import com.shifamily.dev.CaseRunner;
+import com.shifamily.dev.utils.NestedInteger;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package com.shifamily.dev.leetcode.practice.search;
 
 
-import com.shifamily.dev.leetcode.practice.BasicStudy;
-import com.shifamily.dev.leetcode.practice.CaseRunner;
+import com.shifamily.dev.BasicStudy;
+import com.shifamily.dev.CaseRunner;
 
 /*
 33. Search in Rotated Sorted Array

@@ -1,12 +1,11 @@
 package com.shifamily.dev.leetcode.practice.other;
 
-import com.shifamily.dev.leetcode.practice.BasicStudy;
-import com.shifamily.dev.leetcode.practice.CaseRunner;
+import com.shifamily.dev.BasicStudy;
+import com.shifamily.dev.CaseRunner;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
-import java.util.TreeMap;
 
 /*
 716. Max Stack

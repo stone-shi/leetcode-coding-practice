@@ -1,10 +1,9 @@
 package com.shifamily.dev.leetcode.practice.tree;
 
-import apple.laf.JRSUIUtils;
-import com.shifamily.dev.leetcode.practice.BasicStudy;
-import com.shifamily.dev.leetcode.practice.CaseRunner;
-import com.shifamily.dev.leetcode.practice.utils.TreeNode;
-import com.shifamily.dev.leetcode.practice.utils.TreeUtils;
+import com.shifamily.dev.BasicStudy;
+import com.shifamily.dev.CaseRunner;
+import com.shifamily.dev.utils.TreeNode;
+import com.shifamily.dev.utils.TreeUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.LinkedList;

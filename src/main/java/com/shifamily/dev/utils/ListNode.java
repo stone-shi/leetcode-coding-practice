@@ -1,4 +1,4 @@
-package com.shifamily.dev.leetcode.practice.utils;
+package com.shifamily.dev.utils;
 
 
 public class ListNode {

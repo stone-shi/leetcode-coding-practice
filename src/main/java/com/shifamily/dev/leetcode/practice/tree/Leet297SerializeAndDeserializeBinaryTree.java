@@ -1,8 +1,8 @@
 package com.shifamily.dev.leetcode.practice.tree;
 
-import com.shifamily.dev.leetcode.practice.BasicStudy;
-import com.shifamily.dev.leetcode.practice.CaseRunner;
-import com.shifamily.dev.leetcode.practice.utils.*;
+import com.shifamily.dev.BasicStudy;
+import com.shifamily.dev.CaseRunner;
+import com.shifamily.dev.utils.*;
 
 import java.util.*;
 

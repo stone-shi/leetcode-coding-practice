@@ -42,8 +42,8 @@ order.length == 26
 All characters in words[i] and order are english lowercase letters.
  */
 
-import com.shifamily.dev.leetcode.practice.BasicStudy;
-import com.shifamily.dev.leetcode.practice.CaseRunner;
+import com.shifamily.dev.BasicStudy;
+import com.shifamily.dev.CaseRunner;
 
 public class Leet953VerifyingAnAlienDictionary extends BasicStudy {
 

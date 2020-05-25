@@ -1,7 +1,7 @@
 package com.shifamily.dev.leetcode.practice.array;
 
-import com.shifamily.dev.leetcode.practice.BasicStudy;
-import com.shifamily.dev.leetcode.practice.CaseRunner;
+import com.shifamily.dev.BasicStudy;
+import com.shifamily.dev.CaseRunner;
 
 public class Leet605CanPlaceFlowers extends BasicStudy {
 

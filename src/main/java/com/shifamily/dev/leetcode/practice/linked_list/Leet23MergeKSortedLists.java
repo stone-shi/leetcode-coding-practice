@@ -1,8 +1,8 @@
 package com.shifamily.dev.leetcode.practice.linked_list;
 
-import com.shifamily.dev.leetcode.practice.BasicStudy;
-import com.shifamily.dev.leetcode.practice.CaseRunner;
-import com.shifamily.dev.leetcode.practice.utils.ListNode;
+import com.shifamily.dev.BasicStudy;
+import com.shifamily.dev.CaseRunner;
+import com.shifamily.dev.utils.ListNode;
 
 import java.util.*;
 

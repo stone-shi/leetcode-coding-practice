@@ -1,6 +1,6 @@
 package com.shifamily.dev.leetcode.practice.tree;
 
-import com.shifamily.dev.leetcode.practice.utils.TreeNode;
+import com.shifamily.dev.utils.TreeNode;
 
 import java.util.Stack;
 

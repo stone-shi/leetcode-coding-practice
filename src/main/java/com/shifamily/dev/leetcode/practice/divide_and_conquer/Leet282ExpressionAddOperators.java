@@ -1,9 +1,8 @@
 package com.shifamily.dev.leetcode.practice.divide_and_conquer;
 
-import com.shifamily.dev.leetcode.practice.BasicStudy;
-import com.shifamily.dev.leetcode.practice.CaseRunner;
+import com.shifamily.dev.BasicStudy;
+import com.shifamily.dev.CaseRunner;
 
-import javax.jws.Oneway;
 import java.util.LinkedList;
 import java.util.List;
 

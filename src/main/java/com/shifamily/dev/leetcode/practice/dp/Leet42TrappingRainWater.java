@@ -1,8 +1,7 @@
 package com.shifamily.dev.leetcode.practice.dp;
 
-import com.shifamily.dev.leetcode.practice.BasicStudy;
-import com.shifamily.dev.leetcode.practice.CaseRunner;
-import jdk.nashorn.internal.ir.CallNode;
+import com.shifamily.dev.BasicStudy;
+import com.shifamily.dev.CaseRunner;
 
 import java.util.Random;
 

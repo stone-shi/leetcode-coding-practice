@@ -1,7 +1,7 @@
 package com.shifamily.dev.leetcode.practice.dp;
 
-import com.shifamily.dev.leetcode.practice.BasicStudy;
-import com.shifamily.dev.leetcode.practice.CaseRunner;
+import com.shifamily.dev.BasicStudy;
+import com.shifamily.dev.CaseRunner;
 
 /*
 256. Paint House

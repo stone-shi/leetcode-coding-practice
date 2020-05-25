@@ -1,10 +1,10 @@
 package com.shifamily.dev.leetcode.practice.tree;
 
-import com.shifamily.dev.leetcode.practice.BasicStudy;
-import com.shifamily.dev.leetcode.practice.CaseRunner;
-import com.shifamily.dev.leetcode.practice.utils.ArrayUtils;
-import com.shifamily.dev.leetcode.practice.utils.Node;
-import com.shifamily.dev.leetcode.practice.utils.TreeUtils;
+import com.shifamily.dev.BasicStudy;
+import com.shifamily.dev.CaseRunner;
+import com.shifamily.dev.utils.ArrayUtils;
+import com.shifamily.dev.utils.Node;
+import com.shifamily.dev.utils.TreeUtils;
 
 import java.util.Arrays;
 import java.util.Stack;
