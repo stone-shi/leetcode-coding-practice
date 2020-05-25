@@ -51,10 +51,35 @@ public class Leet88MergeSortedArray extends BasicStudy {
         }
     }
 
+    /* second try 5/23/2020 */
+    public void merge2nd(int[] nums1, int m, int[] nums2, int n) {
+        int p = m + n - 1;
+        m--;
+        n--;
+        while (n >= 0){
+            if (m >= 0 && nums1[m] > nums2[n])
+                nums1[p--] = nums1[m--];
+            else
+                nums1[p--] = nums2[n--];
+        }
+
+    }
+
+
+    @CaseRunner
+    public boolean runIt2(int[] nums1, int m, int[] nums2, int n, int[] answer){
+        int[] p1 = Arrays.copyOf(nums1, nums1.length);
+        int[] p2 = Arrays.copyOf(nums2, nums2.length);
+        merge2nd(p1, m, p2, n);
+        return Arrays.equals(p1, answer);
+    }
+
     @CaseRunner
     public boolean runIt(int[] nums1, int m, int[] nums2, int n, int[] answer){
-        merge(nums1, m, nums2, n);
-        return Arrays.equals(nums1, answer);
+        int[] p1 = Arrays.copyOf(nums1, nums1.length);
+        int[] p2 = Arrays.copyOf(nums2, nums2.length);
+        merge(p1, m, p2, n);
+        return Arrays.equals(p1, answer);
     }
 
     public void merge(int[] nums1, int m, int[] nums2, int n) {

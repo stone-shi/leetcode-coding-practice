@@ -56,11 +56,11 @@ import java.util.*;
 public class Leet140WordBreakII extends BasicStudy {
     public Leet140WordBreakII() {
         String[] caseP1 = {
-                //"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                 "catsanddog",
                 "aaaaaaaa","aaaaaaa", "catsanddog", "pineapplepenapple", "catsandog"};
         String[][] caseP2 = {
-                //{"a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"},
+                {"a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"},
                 {"cat", "cats", "and", "sand", "dog"},
                 {"aaaa","aaa","aa"},
                 {"aaaa","aaa"},
@@ -69,7 +69,7 @@ public class Leet140WordBreakII extends BasicStudy {
                 {"cats", "dog", "sand", "and", "cat"}
         };
         String[][] answer = {
-                //{"a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"},
+                {},
                 {"cats and dog", "cat sand dog"},
                 {"aa aa aa aa","aaaa aa aa","aaa aaa aa","aa aaaa aa","aaa aa aaa","aa aaa aaa","aa aa aaaa","aaaa aaaa"},
                 {"aaaa aaa","aaa aaaa"},
@@ -85,6 +85,43 @@ public class Leet140WordBreakII extends BasicStudy {
             addParameterAndAnswer(p, answer[i], false);
         }
     }
+
+    /* 2nd try 5/23/2020 DFS*/
+    @CaseRunner
+    public List<String> wordBreak2nd(String s, List<String> wordDict) {
+        Map<String, List<String>> mem = new HashMap<>();
+        Set<String> dict = new HashSet<>(wordDict);
+
+        return dfs2nd(s, dict, mem);
+
+    }
+
+    private List<String> dfs2nd(String s, Set<String> dict, Map<String, List<String>> mem){
+        if (mem.containsKey(s))
+            return mem.get(s);
+
+        List<String> res = new LinkedList<>();
+        for (int i = 1; i <= s.length(); i++) {
+            String sub = s.substring(0, i);
+            if (dict.contains(sub)){
+                if (i < s.length()){
+                    List<String> r = dfs2nd(s.substring(i), dict, mem);
+                    for (String rs : r)
+                        res.add(sub + " " + rs);
+                }else{
+                    res.add(sub);
+                }
+            }
+        }
+        mem.put(s, res);
+        return res;
+
+    }
+
+
+
+
+    /*-----------------------*/
 
     @CaseRunner
     public List<String> wordBreak(String s, List<String> wordDict) {
@@ -139,52 +176,5 @@ public class Leet140WordBreakII extends BasicStudy {
 
 
 
-
-/*
-    @CaseRunner
-    public List<String> wordBreak(String s, List<String> wordDict) {
-
-        Set<String> dict = new HashSet<>(wordDict);
-
-        boolean[] visited = new boolean[s.length() + 1];
-        boolean[] hasPath = new boolean[s.length() + 1];
-        List<String>[] paths = new List[s.length() + 1];
-        wordPath(s, 0, dict, visited, hasPath, paths);
-        return paths[0];
-
-    }
-
-    private boolean wordPath(String s, int start, Set<String> dict, boolean[] visited, boolean[] hasPath, List<String>[] paths){
-        if (paths[start] ==  null)
-            paths[start] = new ArrayList<>();
-        if (start == s.length()){
-            return true;
-        }
-        if (visited[start])
-            return hasPath[start];
-        visited[start] = true;
-
-        for (int i = start; i < s.length(); i++) {
-
-            String w = s.substring(start, i + 1);
-            if (dict.contains(w)){
-                boolean rs = wordPath(s, i + 1, dict, visited, hasPath, paths);
-                hasPath[start] = rs;
-                if (rs){
-                    if (paths[i + 1].size() > 0) {
-                        for (String sub : paths[i + 1])
-                            paths[start].add(w + " " + sub);
-
-                    }else
-                        paths[start].add(w);
-
-                }
-            }
-        }
-
-        return hasPath[start];
-    }
-
-*/
 
 }

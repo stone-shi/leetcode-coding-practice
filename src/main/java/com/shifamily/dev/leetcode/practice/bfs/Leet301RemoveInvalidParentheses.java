@@ -47,6 +47,69 @@ public class Leet301RemoveInvalidParentheses extends BasicStudy {
         addParameterAndAnswer(case4, answer4, false);
     }
 
+    /* 2nd try 5/24/2020 */
+    @CaseRunner
+    public List<String> removeInvalidParentheses2ndDFS(String s) {
+
+        int left = 0;
+        int right = 0;
+        for (int i = 0; i < s.length() ; i++) {
+            if (s.charAt(i) == '('){
+                left++;
+            }else if (s.charAt(i) == ')'){
+                if (left > 0)
+                    left--;
+                else
+                    right++;
+            }
+        }
+        Set<String> res = new HashSet<>();
+        dfs(0, left, right, s, res);
+        return new LinkedList<>(res);
+    }
+
+    private void dfs(int start, int left, int right, String s, Set<String> res){
+        if (left == 0 && right == 0){
+            if (!res.contains(s) && isValid2nd(s)){
+                res.add(s);
+            }
+            return;
+        }
+        for (int i = start; i < s.length(); i++) {
+            if (i > start && s.charAt(i) == s.charAt(i-1))
+                continue;
+
+            if (s.charAt(i) == '(' && left > 0)
+                dfs(i, left - 1, right,  s.substring(0, i) + s.substring(i + 1) , res);
+            else if (s.charAt(i) == ')' && right > 0)
+                dfs(i , left, right - 1,  s.substring(0, i) + s.substring(i + 1), res);
+
+        }
+
+
+    }
+
+    private boolean isValid2nd(String s){
+        int ct = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') ct++;
+            if (s.charAt(i) == ')') ct--;
+            if (ct < 0) return false;
+        }
+        return ct == 0;
+
+    }
+
+
+
+
+
+
+
+
+    /* =================================================== */
+
+
     /*
     BFS解法 - iteration
      */
