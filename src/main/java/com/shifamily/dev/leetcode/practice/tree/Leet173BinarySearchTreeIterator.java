@@ -1,7 +1,12 @@
 package com.shifamily.dev.leetcode.practice.tree;
 
+import com.shifamily.dev.BasicStudy;
+import com.shifamily.dev.CaseRunner;
 import com.shifamily.dev.utils.TreeNode;
+import com.shifamily.dev.utils.TreeUtils;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 /*
@@ -42,17 +47,97 @@ Note:
 next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree.
 You may assume that next() call will always be valid, that is, there will be at least a next smallest number in the BST when next() is called.
  */
-public class Leet173BinarySearchTreeIterator {
+public class Leet173BinarySearchTreeIterator extends BasicStudy {
 
-    /**
-     * Definition for a binary tree node.
-     * public class TreeNode {
-     *     int val;
-     *     TreeNode left;
-     *     TreeNode right;
-     *     TreeNode(int x) { val = x; }
-     * }
-     */
+    public Leet173BinarySearchTreeIterator() {
+        String[] casesP1 = {"[7,3,15,null,null,9,20]"};
+        String[] casesP2 = {"nnhnhnhnh"};
+        int[][] answers = {{3,7,1,9,1,15,1,20,0}};
+
+        for (int i = 0; i < casesP1.length; i++) {
+            Object[] p = new Object[3];
+            p[0] = TreeUtils.createTreeFromString(casesP1[i]);
+            p[1] = casesP2[i];
+            p[2] = answers[i];
+            addParameterAndAnswer(p, true, true);
+        }
+
+    }
+
+    @CaseRunner
+    public boolean BSTIteratorRunner2nd(TreeNode root, String ops, int[] ans){
+        BSTIterator2nd bstIterator2nd = new BSTIterator2nd(root);
+        char[] op = ops.toCharArray();
+
+        for (int i = 0; i < op.length; i++) {
+            int res = -1;
+            if (op[i] == 'n')
+                res = bstIterator2nd.next();
+            else if (op[i] == 'h')
+                res = bstIterator2nd.hasNext()?1:0;
+            if (ans[i] != res)
+                return false;
+        }
+
+        return true;
+    }
+
+    /* 2nd try 5/25/2020 */
+    class BSTIterator2nd {
+
+        Deque<TreeNode> stack = new ArrayDeque<>();
+
+        public BSTIterator2nd(TreeNode root) {
+
+            while (root != null){
+                stack.push(root);
+                root = root.left;
+            }
+
+        }
+
+        /** @return the next smallest number */
+        public int next() {
+            TreeNode node = stack.pop();
+            int ret = node.val;
+            node = node.right;
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+
+
+            return ret;
+        }
+
+        /** @return whether we have a next smallest number */
+        public boolean hasNext() {
+
+            return !stack.isEmpty();
+        }
+    }
+
+    @CaseRunner
+    public boolean BSTIteratorRunner(TreeNode root, String ops, int[] ans){
+        BSTIterator bstIterator = new BSTIterator(root);
+        char[] op = ops.toCharArray();
+
+        for (int i = 0; i < op.length; i++) {
+            int res = -1;
+            if (op[i] == 'n')
+                res = bstIterator.next();
+            else if (op[i] == 'h')
+                res = bstIterator.hasNext()?1:0;
+            if (ans[i] != res)
+                return false;
+        }
+
+        return true;
+    }
+
+
+    /*--------------------------------------------------------*/
+
     class BSTIterator {
 
         Stack<TreeNode> stack ;
