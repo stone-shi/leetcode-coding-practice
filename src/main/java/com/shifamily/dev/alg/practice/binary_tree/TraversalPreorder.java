@@ -12,8 +12,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Slf4j
-public class traversalPreorder extends BasicStudy {
-    public traversalPreorder() {
+public class TraversalPreorder extends BasicStudy {
+    public TraversalPreorder() {
         String[] casesP1 = {"[1,2,3,4,null,null,5,null,6,null,null,7,8]"};
         Integer[][] answers = {{1, 2, 4, 6, 7, 8, 3, 5}};
 
