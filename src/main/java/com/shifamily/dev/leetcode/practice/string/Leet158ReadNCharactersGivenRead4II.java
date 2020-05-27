@@ -93,10 +93,43 @@ public class Leet158ReadNCharactersGivenRead4II extends BasicStudy {
 
     }
 
+    /* 2nd try 5/26/2020
+     */
+
+    public class Reader42nd extends Reader4 {
+        /**
+         * @param buf Destination buffer
+         * @param n   Number of characters to read
+         * @return    The number of actual characters read
+         */
+        char[] buf4 = new char[4];
+        int buf4pt = 0;
+        int buf4ct = 0;
+
+        public int read(char[] buf, int n) {
+
+            int ct = 0;
+            int pt = 0;
+            boolean eof = false;
+            while ( ct < n && ! eof ){
+                if (buf4ct > 0){
+                    buf[pt++] = buf4[buf4pt++];
+                    buf4ct--;
+                    ct++;
+                }else{
+                    buf4pt = 0;
+                    buf4ct = read4(buf4);
+                    eof = buf4ct == 0;
+                }
+            }
+            return ct;
+        }
+    }
+
     @CaseRunner
     public String runCase(String fileBuffer, int[] readCount ){
 
-        Solution solution = new Solution();
+        Reader42nd solution = new Reader42nd();
         solution.setBuffer(fileBuffer.toCharArray());
 
         StringBuilder sb = new StringBuilder();

@@ -3,10 +3,7 @@ package com.shifamily.dev.leetcode.practice.array;
 import com.shifamily.dev.BasicStudy;
 import com.shifamily.dev.CaseRunner;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /*
 621. Task Scheduler
@@ -53,6 +50,45 @@ public class Leet621TaskScheduler extends BasicStudy {
         addParameterAndAnswer(p1, answer1, false);
 
     }
+
+    /* */
+
+    @CaseRunner
+    public int leastInterval2nd(char[] tasks, int n) {
+        int[] charCount = new int[26];
+        for (char t: tasks)
+            charCount[t - 'A']++;
+
+        int totalTask = 0;
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int c : charCount) {
+            if (c > 0) {
+                pq.offer(c);
+                totalTask += c;
+            }
+        }
+
+        int res = 0;
+
+        while (totalTask > 0){
+            List<Integer> stash = new ArrayList<>();
+            for (int i = 0; i <= n; i++) {
+                if (totalTask > 0)
+                    res++;
+                if (!pq.isEmpty()){
+                    int ct = pq.poll() - 1;
+                    totalTask--;
+                    if (ct > 0)
+                        stash.add(ct);
+                }
+            }
+            if (!stash.isEmpty())
+                pq.addAll(stash);
+        }
+
+        return res;
+    }
+
 
     @CaseRunner
     public int leastInterval(char[] tasks, int n) {
