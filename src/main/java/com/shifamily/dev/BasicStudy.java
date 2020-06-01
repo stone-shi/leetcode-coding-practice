@@ -12,6 +12,37 @@ public class BasicStudy {
     protected List<Object[]> parametersList = new ArrayList<>();
     protected List<Object> answersList = new ArrayList<>();
     protected List<Boolean> answersOrderMatter = new ArrayList<>();
+
+    protected boolean compareArray(Object r, Object a, Boolean orderMatter) {
+
+        String rClass = r.getClass().getName();
+        String aClass = a.getClass().getName();
+        if (!rClass.equals(aClass))
+            return false;
+
+        Object[] o1;
+        Object[] o2;
+        if (aClass.equals("[I")){
+            o1 = Arrays.stream((int[])a).boxed().toArray();
+            o2 = Arrays.stream((int[])r).boxed().toArray();
+        }else if (aClass.equals("[D")){
+            o1 = Arrays.stream((double[])a).boxed().toArray();
+            o2 = Arrays.stream((double[])r).boxed().toArray();
+        }else{
+            o1 = (Object[])r;
+            o2 = (Object[])a;
+        }
+
+        if (!orderMatter){
+            Arrays.sort(o1);
+            Arrays.sort(o2);
+        }
+
+        return Arrays.deepEquals(o1, o2);
+
+
+    }
+
     protected boolean compareAnswer(Object r, Object a, Boolean orderMatter) {
         if (r == null )
             return a == null;
@@ -19,15 +50,8 @@ public class BasicStudy {
         if (a == null)
             return false;
 
-        if (r.getClass().isArray()){
-            if (a.getClass().isArray()){
-                if (!orderMatter) {
-                    Arrays.sort((Object[]) r);
-                    Arrays.sort((Object[]) a);
-                }
-                return Arrays.deepEquals((Object[])r, (Object[])a);
-            }else
-                return false;
+        if (a.getClass().isArray()){
+            return compareArray(r, a, orderMatter);
         }
 
         if (r instanceof List){
