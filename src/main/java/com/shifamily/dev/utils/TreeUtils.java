@@ -45,7 +45,7 @@ public class TreeUtils {
             return null;
 
         String[] treeArray = tree.substring(1, tree.length() - 1).split(",");
-        if (treeArray.length == 0 || treeArray[1].equalsIgnoreCase("null"))
+        if (treeArray.length == 0 )//|| treeArray[1].equalsIgnoreCase("null"))
             return null;
 
         Queue<TreeNode> bfs = new LinkedList<>();
