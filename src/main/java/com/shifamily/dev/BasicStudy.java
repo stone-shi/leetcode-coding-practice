@@ -12,8 +12,17 @@ public class BasicStudy {
     protected List<Object[]> parametersList = new ArrayList<>();
     protected List<Object> answersList = new ArrayList<>();
     protected List<Boolean> answersOrderMatter = new ArrayList<>();
+    protected List<Comparator> answersComparator = new ArrayList<>();
 
-    protected boolean compareArray(Object r, Object a, Boolean orderMatter) {
+    protected Object convertReturn(Object r){
+        return r;
+    }
+
+    protected boolean compareArray(Object r, Object a, boolean orderMatter, Comparator comparator) {
+
+        if (r instanceof List){
+            r = ((List) r).toArray();
+        }
 
         String rClass = r.getClass().getName();
         String aClass = a.getClass().getName();
@@ -34,8 +43,14 @@ public class BasicStudy {
         }
 
         if (!orderMatter){
-            Arrays.sort(o1);
-            Arrays.sort(o2);
+            if (comparator == null) {
+                Arrays.sort(o1);
+                Arrays.sort(o2);
+            }else{
+                Arrays.sort(o1, comparator);
+                Arrays.sort(o2, comparator);
+
+            }
         }
 
         return Arrays.deepEquals(o1, o2);
@@ -43,15 +58,16 @@ public class BasicStudy {
 
     }
 
-    protected boolean compareAnswer(Object r, Object a, Boolean orderMatter) {
+    protected boolean compareAnswer(Object r, Object a, boolean orderMatter, Comparator comparator) {
         if (r == null )
             return a == null;
 
         if (a == null)
             return false;
 
+        r = convertReturn(r);
         if (a.getClass().isArray()){
-            return compareArray(r, a, orderMatter);
+            return compareArray(r, a, orderMatter, comparator);
         }
 
         if (r instanceof List){
@@ -70,17 +86,21 @@ public class BasicStudy {
             }
         }
 
+
         return  a.equals(r);
     }
 
     protected void addParameterAndAnswer(Object[] parameters, Object answers) {
-        addParameterAndAnswer(parameters, answers, false);
+        addParameterAndAnswer(parameters, answers, true, null);
     }
-
     protected void addParameterAndAnswer(Object[] parameters, Object answers, boolean orderMatter) {
+        addParameterAndAnswer(parameters, answers, orderMatter, null);
+    }
+    protected void addParameterAndAnswer(Object[] parameters, Object answers, boolean orderMatter, Comparator comparator) {
         parametersList.add(parameters);
         answersList.add(answers);
         answersOrderMatter.add(orderMatter);
+        answersComparator.add(comparator);
     }
 
     public  List<RunState> runCases(){
@@ -111,7 +131,7 @@ public class BasicStudy {
                     Object r = m.invoke(this, parametersList.get(i));
                     runStat.setRunTimeInNs(System.nanoTime() - startTime);
                     runStat.setRunMemoryInBytes(rt.totalMemory()-rt.freeMemory()-startSize);
-                    if (!compareAnswer(r, answersList.get(i), answersOrderMatter.get(i))){
+                    if (!compareAnswer(r, answersList.get(i), answersOrderMatter.get(i), answersComparator.get(i))){
                         log.error("Error on case {} method {}: expected [{}] got [{}]", i, m.getName(),   answersList.get(i), r);
                     }else
                         runStat.setResult("Pass");

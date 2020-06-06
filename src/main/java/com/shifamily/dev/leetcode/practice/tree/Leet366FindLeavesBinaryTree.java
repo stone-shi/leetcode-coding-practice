@@ -6,6 +6,7 @@ import com.shifamily.dev.utils.TreeNode;
 import com.shifamily.dev.utils.TreeUtils;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class Leet366FindLeavesBinaryTree extends BasicStudy {
     }
 
     @Override
-    protected boolean compareAnswer(Object r, Object a, Boolean orderMatter){
+    protected boolean compareAnswer(Object r, Object a,  boolean orderMatter, Comparator comparator){
         List<List<Integer>> result = (List<List<Integer>>)r;
         int[][] answer = (int[][])a;
 

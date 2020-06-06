@@ -170,7 +170,7 @@ public class Leet314BinaryTreeVerticalOrderTraversal extends BasicStudy {
     }
 
     @Override
-    protected boolean compareAnswer(Object r, Object a, Boolean orderMatter) {
+    protected boolean compareAnswer(Object r, Object a, boolean orderMatter, Comparator comparator) {
         List<List<Integer>> res = (List<List<Integer>>)r;
         Integer[][] ans = (Integer[][])a;
 

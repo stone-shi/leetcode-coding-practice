@@ -87,7 +87,7 @@ public class Leet973KClosestPointsToOrigin extends BasicStudy {
     }
 
     @Override
-    protected boolean compareAnswer(Object r, Object a, Boolean orderMatter) {
+    protected boolean compareAnswer(Object r, Object a,  boolean orderMatter, Comparator comparator) {
         int[][] ans = (int[][])a;
         int[][] res = (int[][])r;
 
