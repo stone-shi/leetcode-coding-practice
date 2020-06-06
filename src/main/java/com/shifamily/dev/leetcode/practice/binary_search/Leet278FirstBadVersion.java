@@ -45,7 +45,7 @@ public class Leet278FirstBadVersion extends BasicStudy {
     @CaseRunner
     public int caseRun(int n){
         currentAnswer = checker.get(n);
-        return firstBadVersion(n);
+        return firstBadVersion2nd(n);
     }
 
     private int currentAnswer = -1;
@@ -53,6 +53,26 @@ public class Leet278FirstBadVersion extends BasicStudy {
     private boolean isBadVersion(int version) {
         return version >= currentAnswer;
     }
+
+    /* 2nd try 6/5/2020 */
+    private int firstBadVersion2nd(int n) {
+
+        int high = n;
+        int low = 1;
+
+        while (low < high){
+            int mid = low + (high - low ) / 2;
+            if ( isBadVersion(mid) ){
+                high = mid ;
+            }else {
+                low = mid + 1;
+            }
+        }
+
+        return low;
+    }
+
+
 
     private int firstBadVersion(int n) {
 
