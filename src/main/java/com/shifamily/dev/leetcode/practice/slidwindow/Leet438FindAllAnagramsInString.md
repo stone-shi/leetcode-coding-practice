@@ -82,6 +82,11 @@ Medium
 
 # 解法
 
+对p建立一个26 size的数组。保存每个字母出现的次数。
+对s，从 s[0, p.length)开始计算另外一个26 size数组。和p数组比较，如果一样，返回。
+然后不断把这个window向右移动。移除的从数组减去次数，增加的，加上次数。让后和p数组比较。
+
+
 ## 复杂度
 时间复杂度 O(N)
 空间复杂度 O(N)
@@ -89,5 +94,31 @@ Medium
 
 ## 代码
 ```Java
+   public List<Integer> findAnagrams(String s, String p) {
 
+        int plen = p.length();
+        int slen = s.length();
+        List<Integer> res = new LinkedList<>();
+
+        if (slen < plen)
+            return res;
+
+        int[] pCount = new int[26];
+        int[] sCount = new int[26];
+        for (int i = 0; i < plen; i++) {
+            pCount[p.charAt(i) - 'a']++;
+            sCount[s.charAt(i) - 'a']++;
+        }
+        if (Arrays.equals(pCount, sCount))
+            res.add(0);
+
+        for (int i = 1; i < slen - plen + 1 ; i++) {
+            sCount[s.charAt(i - 1) - 'a']--;
+            sCount[s.charAt(i + plen - 1) - 'a']++;
+            if (Arrays.equals(pCount, sCount))
+                res.add(i);
+        }
+
+        return res;
+    }
 ```
