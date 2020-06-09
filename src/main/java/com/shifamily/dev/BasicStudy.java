@@ -1,7 +1,10 @@
 package com.shifamily.dev;
 
 import lombok.extern.slf4j.Slf4j;
+import org.omg.CORBA.FREE_MEM;
 
+import javax.management.remote.rmi._RMIConnection_Stub;
+import javax.security.auth.login.CredentialException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -18,29 +21,61 @@ public class BasicStudy {
         return r;
     }
 
-    protected boolean compareArray(Object r, Object a, boolean orderMatter, Comparator comparator) {
+    private int[] ListToArrayInt(List r){
+        if (!r.get(0).getClass().getName().equals("Integer"))
+            return null;
 
-        if (r instanceof List){
-            r = ((List) r).toArray();
+        int[] res = new int[r.size()];
+        for (int i = 0; i < r.size(); i++) {
+            res[i] = (int)r.get(i);
+        }
+        return res;
+    }
+
+    private Object[] listToArray(List r){
+        if (r.isEmpty())
+            return new Object[0];
+        Object[] res = new Object[r.size()];
+        if (r.get(0) instanceof List){
+            for (int i = 0; i < r.size(); i++) {
+                List rsub = (List)r.get(i);
+                Object[] sub = new Object[rsub.size()];
+                res[i] = rsub.toArray(sub);
+            }
+
+        }else{
+            r.toArray(res);
         }
 
-        String rClass = r.getClass().getName();
-        String aClass = a.getClass().getName();
-        if (!rClass.equals(aClass))
-            return false;
+        return res;
+    }
 
+    protected boolean compareArray(Object r, Object a, boolean orderMatter, Comparator comparator) {
+
+        String aClass = a.getClass().getName();
+        String rClass = r.getClass().getName();
         Object[] o1;
         Object[] o2;
         if (aClass.equals("[I")){
             o1 = Arrays.stream((int[])a).boxed().toArray();
-            o2 = Arrays.stream((int[])r).boxed().toArray();
         }else if (aClass.equals("[D")){
             o1 = Arrays.stream((double[])a).boxed().toArray();
-            o2 = Arrays.stream((double[])r).boxed().toArray();
         }else{
             o1 = (Object[])r;
-            o2 = (Object[])a;
         }
+
+
+        if (r instanceof List){
+            o2 = listToArray((List)r);
+        }
+        else if (rClass.equals("[I")){
+            o2 = Arrays.stream((int[])r).boxed().toArray();
+        }else if (aClass.equals("[D")){
+            o2 = Arrays.stream((double[])r).boxed().toArray();
+        }else{
+            o2 = (Object[])r;
+        }
+
 
         if (!orderMatter){
             if (comparator == null) {
@@ -66,24 +101,10 @@ public class BasicStudy {
             return false;
 
         r = convertReturn(r);
+
+
         if (a.getClass().isArray()){
             return compareArray(r, a, orderMatter, comparator);
-        }
-
-        if (r instanceof List){
-            if (!orderMatter)
-                Collections.sort((List)r);
-
-            if (a.getClass().isArray()){
-                if (!orderMatter)
-                    Arrays.sort((Object[])a);
-               return r.equals(Arrays.asList((Object[])a));
-            }
-            if (a instanceof List) {
-                if (!orderMatter)
-                    Collections.sort((List)a);
-                return r.equals(a);
-            }
         }
 
 
