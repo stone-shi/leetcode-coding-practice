@@ -61,7 +61,7 @@ public class BasicStudy {
         }else if (aClass.equals("[D")){
             o1 = Arrays.stream((double[])a).boxed().toArray();
         }else{
-            o1 = (Object[])r;
+            o1 = (Object[])a;
         }
 
 
