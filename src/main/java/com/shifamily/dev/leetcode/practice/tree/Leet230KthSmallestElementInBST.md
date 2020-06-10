@@ -80,6 +80,8 @@ Second Minimum Node In a Binary Tree
 Easy
 Try to utilize the property of a BST.
 # 解法
+只要用in order遍历即可。迭代方式似乎简单点，直接返回。
+
 
 ## 复杂度
 时间复杂度 O(N)
@@ -88,5 +90,23 @@ Try to utilize the property of a BST.
 
 ## 代码
 ```Java
+   public int kthSmallest(TreeNode root, int k) {
 
+        TreeNode node = root;
+        Deque<TreeNode> stack = new ArrayDeque<>();
+
+        while (node != null || !stack.isEmpty()){
+            if (node != null){
+                stack.push(node);
+                node = node.left;
+            }else{
+                node = stack.pop();
+                if (--k == 0)
+                    return node.val;
+                node = node.right;
+            }
+        }
+
+        return -1;
+    }
 ```
