@@ -79,6 +79,50 @@ public class Leet523ContinuousSubarraySum extends BasicStudy {
 
     }
 
+    /* 2nd try 6/9/2020 */
+    @CaseRunner
+    public boolean checkSubarraySum2nd(int[] nums, int k) {
+        if (nums.length <= 1)
+            return false;
+
+        int[] prefixSum = new int[nums.length];
+        prefixSum[0] = nums[0]; 
+        for (int i = 1; i < nums.length; i++)
+            prefixSum[i] = prefixSum[i - 1] + nums[i];
+
+        for (int i = 1; i < nums.length; i++) {
+            for (int j = 0; j < i ; j++) {
+                int sum = prefixSum[i] - prefixSum[j] + nums[j];
+                if ( (k == 0 && sum == 0 )  || (k != 0 && sum % k == 0))
+                    return true;
+            }
+        }
+        return false;
+
+
+
+    }
+
+    /* 2nd try 6/9/2020 */
+    @CaseRunner
+    public boolean checkSubarraySum2ndHashMap(int[] nums, int k) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum = sum + nums[i];
+            if (k != 0) sum %= k ;
+            if (map.containsKey(sum)){
+                if (i - map.get(sum) > 1)
+                    return true;
+            }else
+                map.put(sum, i);
+        }
+        return false;
+
+    }
+
     @CaseRunner
     public boolean checkSubarraySum(int[] nums, int k) {
         if (nums.length <= 1)
