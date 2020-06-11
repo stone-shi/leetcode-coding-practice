@@ -4,6 +4,7 @@ import com.shifamily.dev.BasicStudy;
 import com.shifamily.dev.CaseRunner;
 import com.shifamily.dev.utils.Interval;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,9 +37,9 @@ NOTE: input types have been changed on April 15, 2019. Please reset to default c
 public class Leet57InsertInterval extends BasicStudy {
 
     public Leet57InsertInterval() {
-        int[][] caseP1 = {{1,3,6,9}, {1,2, 3,5, 6,7, 8,10, 12,16} };
+        int[][][] caseP1 = { {{1,3},{6,9}}, {{1,2}, {3,5}, {6,7}, {8,10}, {12,16}} };
         int[][] caseP2 = {{2,5}, {4,8}};
-        Integer[][] answer = {{1,5,6,9}, {1,2,3,10,12,16}};
+        int[][][] answer = {{{1,5},{6,9}}, {{1,2},{3,10},{12,16}}};
 
         for (int i = 0; i < caseP1.length; i++) {
             Object[] p = new Object[2];
@@ -48,6 +49,35 @@ public class Leet57InsertInterval extends BasicStudy {
         }
     }
 
+
+
+    /* 2nd try 6/10/2020 */
+    @CaseRunner
+    public int[][] insert2nd(int[][] intervals, int[] newInterval) {
+
+        List<int[]> res = new ArrayList<>();
+        int i = 0;
+        boolean newIntAdded = false;
+        while ( i < intervals.length){
+            if (intervals[i][1] < newInterval[0]) {
+                res.add(intervals[i]);
+            }else if ( intervals[i][0] > newInterval[1]){
+                if (!newIntAdded) {
+                    res.add(newInterval);
+                    newIntAdded = true;
+                }
+                res.add(intervals[i]);
+            }else{
+                newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+                newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+            }
+            i++;
+        }
+
+        return res.toArray(new int[res.size()][]);
+    }
+
+/*
     private List<Interval> intArrayToIntervalList(int[] itv){
         List<Interval> intervals = new LinkedList<>();
         int i = 0;
@@ -101,5 +131,7 @@ public class Leet57InsertInterval extends BasicStudy {
 
 
     }
+
+ */
 
 }

@@ -39,6 +39,23 @@ public class Leet53MaximumSubarray extends BasicStudy {
             addParameterAndAnswer(p, answer[i], false);
         }
     }
+    /* 2nd try 6/10/2020
+     */
+    @CaseRunner
+    public int maxSubArray2nd(int[] nums) {
+        if (nums == null || nums.length == 0)
+            return 0;
+
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+        int maxSum = dp[0];
+        for (int i = 1; i < nums.length ; i++) {
+            dp[i] = Math.max(dp[i - 1], 0) + nums[i];
+            if (maxSum < dp[i])
+                maxSum = dp[i];
+        }
+        return maxSum;
+    }
 
     @CaseRunner
     public int maxSubArray(int[] nums) {
