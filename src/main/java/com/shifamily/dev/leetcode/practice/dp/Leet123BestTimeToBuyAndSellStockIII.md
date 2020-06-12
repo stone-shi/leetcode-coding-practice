@@ -93,5 +93,22 @@ dp[0][k][1] = 负无穷，因为不可能。
 
 ## 代码
 ```Java
+   public int maxProfit(int[] prices) {
 
+        int dp20 = 0;
+        int dp10 = 0;
+        int dp21 = Integer.MIN_VALUE;
+        int dp11 = Integer.MIN_VALUE;
+
+        for (int i = 0; i < prices.length; i++) {
+            dp10 = Math.max(dp10, dp11 + prices[i]);
+            dp11 = Math.max(dp11, -prices[i]);
+            dp20 = Math.max(dp20, dp21 + prices[i]);
+            dp21 = Math.max(dp21, dp10 - prices[i]);
+        }
+
+
+        return dp20;
+
+    }
 ```
