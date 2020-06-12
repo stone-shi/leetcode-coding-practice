@@ -105,10 +105,47 @@ Hard
 Best Time to Buy and Sell Stock with Cooldown
 Medium
 # 解法
+
+解法一
 保留2个变量，最小价格和最高利润。
 从0开始循环，记录最小价格，同时计算利润，prf = price[i] - minPrice，从而记录最高值
  
+解法二：这类问题的通解
+https://labuladong.gitbook.io/algo/dong-tai-gui-hua-xi-lie/tuan-mie-gu-piao-wen-ti
 
+设dp[i][k][0/1]为第i天 （从第一天），还有K次可买情况下 持有1/不持有0 情况下的最大盈利。
+
+转移方程:
+
+dp[i][k][0] = max ( dp[i-1][k][0], dp[i-1][k][1] + price[i])
+第i天还有k次可买不持有 = max ( 前一天就不持有， 前一天持有，今天卖了  )
+
+dp[i][k][1] = max ( dp[i-1][k][1], dp[i-1][k - 1][0] - price[i])
+第i天还有k次可买持有 = max ( 前一天就持有， 前一天不持有，今天买了  )
+
+Base Case:
+
+dp[0][k][0] = 0， 第一天之前（day 0？）显然没有股票可以买卖，结果是0
+dp[0][k][1] = 负无穷，因为不可能。
+
+
+了解通解后：
+对于这题，k=1
+Base case:
+dp[0][1][0] = 0
+dp[0][1][1] = Integer.MIN_VAL
+
+转移方程：
+dp[i][1][0] = max ( dp[i-1][1][0], dp[i-1][1][1] + price[i]  )
+dp[i][1][1] = max ( dp[i-1][1][1], dp[i-1][0][0] - price[i] ) 
+
+这题只能买一次，所以dp[i-1][0][0] 为0，也就是不持股
+去掉K
+转移方程：
+dp[i][0] = max ( dp[i-1][0], dp[i-1][1] + price[i]  )
+dp[i][1] = max ( dp[i-1][1],  -price[i] ) 
+
+另外，dp[i]状态只和dp[i-1]有关，所以空间复杂度可以做到 O(1)
 
 ## 复杂度
 时间复杂度 O(N)
