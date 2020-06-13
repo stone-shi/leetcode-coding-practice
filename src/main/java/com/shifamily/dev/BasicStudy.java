@@ -1,10 +1,7 @@
 package com.shifamily.dev;
 
 import lombok.extern.slf4j.Slf4j;
-import org.omg.CORBA.FREE_MEM;
 
-import javax.management.remote.rmi._RMIConnection_Stub;
-import javax.security.auth.login.CredentialException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -124,6 +121,12 @@ public class BasicStudy {
         answersComparator.add(comparator);
     }
 
+
+    private int answerAsParameterIndex = -1;
+    public void setAnswerAsParameterIndex(int i){
+        this.answerAsParameterIndex = i;
+    }
+
     public  List<RunState> runCases(){
 
         List<RunState> result = new LinkedList<>();
@@ -150,6 +153,8 @@ public class BasicStudy {
                     final long startSize = rt.totalMemory()-rt.freeMemory();
                     long startTime = System.nanoTime();
                     Object r = m.invoke(this, parametersList.get(i));
+                    if (answerAsParameterIndex != -1)
+                        r = parametersList.get(i)[answerAsParameterIndex];
                     runStat.setRunTimeInNs(System.nanoTime() - startTime);
                     runStat.setRunMemoryInBytes(rt.totalMemory()-rt.freeMemory()-startSize);
                     if (!compareAnswer(r, answersList.get(i), answersOrderMatter.get(i), answersComparator.get(i))){
