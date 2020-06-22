@@ -2,8 +2,6 @@ package com.shifamily.dev.leetcode.practice.reservoir_sampling;
 
 import com.shifamily.dev.BasicStudy;
 import com.shifamily.dev.CaseRunner;
-import com.sun.tools.internal.ws.wsdl.document.schema.SchemaKinds;
-import com.sun.tools.javac.tree.JCTree;
 
 import java.util.*;
 
