@@ -36,8 +36,8 @@ public class App {
 
             BasicStudy basicStudy = null;
             try {
-                basicStudy = clazz.newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
+                basicStudy = clazz.getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
                 log.error("Error to create instance of class " , e);
             }
             log.info("Running {} ...", basicStudy.getClass().getName());
