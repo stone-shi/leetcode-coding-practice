@@ -6,11 +6,11 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Debug (Launch)-App<leetcode-coding-practice>",
+            "name": "Launch with Arguments Prompt",
             "request": "launch",
             "mainClass": "com.shifamily.dev.App",
-            "args": "Leet140WordBreakII",
-            "projectName": "leetcode-coding-practice"
+            "args": "${command:SpecifyProgramArgs}"
         }
+
     ]
 }
