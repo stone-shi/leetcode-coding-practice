@@ -84,9 +84,8 @@ public class Leet37SudokuSolver extends BasicStudy {
         for (int i = 0; i < caseP1.length; i++) {
             Object[] p = new Object[1];
             p[0] = caseP1[i];
-            addParameterAndAnswer(p, answer[i]);
+            addParameterAndAnswer(p, answer[i], false, null, null, 0);
         }
-        setAnswerAsParameterIndex(0);
 
     }
 
