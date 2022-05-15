@@ -1,18 +1,8 @@
-package com.shifamily.dev.leetcode.practice.array;
+# Leetcode #1509 Minimum Difference Between Largest and Smallest Value in Three Moves
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.PriorityQueue;
+## 原题
 
-import com.shifamily.dev.BasicStudy;
-import com.shifamily.dev.CaseData;
-import com.shifamily.dev.CaseRunner;
-import com.shifamily.dev.CaseParameters;
-
-/*
-1509. Minimum Difference Between Largest and Smallest Value in Three Moves
+1509 Minimum Difference Between Largest and Smallest Value in Three Moves
 Medium
 1091
 148
@@ -34,30 +24,46 @@ Output: 1
 Explanation: Change the array [1,5,0,10,14] to [1,1,0,1,1]. 
 The difference between the maximum and minimum is 1-0 = 1.
  
-
 Constraints:
 
 1 <= nums.length <= 105
 -109 <= nums[i] <= 109
-*/
 
-public class Leet1509MinimumDifferenceBetweenLargestSmallestValueThreeMoves extends BasicStudy {
 
-    @CaseData
-    public List<CaseParameters> data1() {
-        List<CaseParameters> cases = new ArrayList<>();
-        cases.add(CaseParameters.builder().parameters(new Object[] { new int[] { 82, 81, 95, 75, 20 } }).answer(1)
-                .build());
-        cases.add(CaseParameters.builder().parameters(new Object[] { new int[] { 6, 6, 0, 1, 1, 4, 6 } }).answer(2)
-                .build());
-        cases.add(CaseParameters.builder().parameters(new Object[] { new int[] { 5, 3, 2, 4 } }).answer(0)
-                .build());
-        cases.add(CaseParameters.builder().parameters(new Object[] { new int[] { 1, 5, 0, 10, 14 } }).answer(1)
-                .build());
-        return cases;
-    }
+## 解法
 
-    @CaseRunner
+修改k做法：
+
+取最小 k + 1, 最大 k + 1 ，java可以用priority queue.
+
+k = 3
+n[0] n[1] n[2] n[3] ...... n[len - 4], n[len - 3], n[len -2], n[len - 1]
+然后取下列差最小值
+
+n[len - 4] - n[0]
+n[len - 3] - n[1]
+n[len - 2] - n[2]
+n[len - 1] - n[3]
+
+含义是，我们可以改最大三个值，那就是最大第4个值和最小值之间的差
+也可以额改最小三个值，然后最小第四个和最大值比较
+也可以最小二个值和最大一个值，那就是最小第三个值和最大第二个值差，
+依次类推
+
+另一种解法，可以不用priority queue，直接sort
+
+## 复杂度
+双qp：
+O(2 n lg K)
+Sort:
+O(n lg n)
+
+
+## 代码
+
+
+```Java
+ @CaseRunner
     public int minDifferenceSort(int[] nums) {
         int k = 3;
         int len = nums.length;
@@ -102,5 +108,4 @@ public class Leet1509MinimumDifferenceBetweenLargestSmallestValueThreeMoves exte
         }
         return m;
     }
-
-}
+```

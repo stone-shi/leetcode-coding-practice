@@ -5,13 +5,14 @@
     "version": "0.2.0",
     "configurations": [
 
+
         {
             "type": "java",
             "name": "Launch with Arguments Prompt",
             "request": "launch",
             "mainClass": "com.shifamily.dev.App",
             "args": "${command:SpecifyProgramArgs}"
-        }
+        },
 
         {
             "type": "java",
@@ -21,5 +22,6 @@
             "args": "${fileBasenameNoExtension}"
           
         }
+
     ]
 }

@@ -122,7 +122,8 @@ public class BasicStudy {
         caseParameters.add(param);
     }
 
-    private void prepareCaseData() {
+    private List<CaseParameters> prepareLocalCaseData() {
+        List<CaseParameters> localCase = new ArrayList<>();
         Method[] methods = this.getClass().getDeclaredMethods();
         for (Method method : methods) {
             if (method.isAnnotationPresent(CaseData.class)) {
@@ -130,18 +131,43 @@ public class BasicStudy {
                 try {
                     Object res = method.invoke(this);
                     if (res instanceof List) {
-                        caseParameters.addAll((List<CaseParameters>) res);
-                        log.info("{} Case added", ((List<CaseParameters>)res).size());
+                        localCase.addAll((List<CaseParameters>) res);
+                        log.info("{} Case added", ((List<CaseParameters>) res).size());
                     }
                 } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                     log.error("Error to invoke runner ", e);
                 }
             }
         }
+        return localCase;
+    }
+
+    private void runOneCase(Method m, CaseParameters c, RunState runStat) {
+        try {
+            runStat.setResult("Error");
+            final Runtime rt = Runtime.getRuntime();
+            for (int k = 0; k < 3; k++)
+                rt.gc();
+            final long startSize = rt.totalMemory() - rt.freeMemory();
+            long startTime = System.nanoTime();
+            Object r = m.invoke(this, c.getParameters());
+            // in case our answer is some in-place change
+            if (c.getAnswerInPlaceIndex() != -1)
+                r = c.getParameters()[c.getAnswerInPlaceIndex()];
+            runStat.setRunTimeInNs(System.nanoTime() - startTime);
+            runStat.setRunMemoryInBytes(rt.totalMemory() - rt.freeMemory() - startSize);
+            if (!compareAnswer(r, c.getAnswer(), c.getAnswersOrderMatter(), c.getAnswersComparator())) {
+                log.error("Error on case method {}: expected [{}] got [{}]", m.getName(),
+                        c.getAnswer(), r);
+            } else
+                runStat.setResult("Pass");
+
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            log.error("Error to invoke runner ", e);
+        }
     }
 
     public List<RunState> runCases() {
-        prepareCaseData();
         List<RunState> result = new LinkedList<>();
 
         Method[] methods = this.getClass().getDeclaredMethods();
@@ -153,37 +179,15 @@ public class BasicStudy {
             }
         }
 
-        for (int i = 0; i < caseParameters.size(); i++) {
-            for (Method m : runners) {
+        for (Method m : runners) {
+            List<CaseParameters> localCase = prepareLocalCaseData();
+            localCase.addAll(caseParameters);
+            int i  = 0;
+            for (CaseParameters c : localCase) {
                 RunState runStat = new RunState();
-
-                try {
-                    CaseParameters c = caseParameters.get(i);
-                    runStat.setName(this.getClass().getSimpleName() + "." + m.getName() + "(): case " + i + ' '
+                runStat.setName(this.getClass().getSimpleName() + "." + m.getName() + "(): case " + i++ + ' '
                             + c.getDescription());
-                    runStat.setResult("Error");
-
-                    final Runtime rt = Runtime.getRuntime();
-                    for (int k = 0; k < 3; k++)
-                        rt.gc();
-                    final long startSize = rt.totalMemory() - rt.freeMemory();
-                    long startTime = System.nanoTime();
-                    Object r = m.invoke(this, c.getParameters());
-                    // in case our answer is some in-place change
-                    if (c.getAnswerInPlaceIndex() != -1)
-                        r = c.getParameters()[c.getAnswerInPlaceIndex()];
-                    runStat.setRunTimeInNs(System.nanoTime() - startTime);
-                    runStat.setRunMemoryInBytes(rt.totalMemory() - rt.freeMemory() - startSize);
-                    if (!compareAnswer(r, c.getAnswer(), c.getAnswersOrderMatter(), c.getAnswersComparator())) {
-                        log.error("Error on case {} method {}: expected [{}] got [{}]", i, m.getName(),
-                                c.getAnswer(), r);
-                    } else
-                        runStat.setResult("Pass");
-
-                } catch (IllegalAccessException | InvocationTargetException e) {
-                    log.error("Error to invoke runner ", e);
-                }
-
+                runOneCase(m, c, runStat);
                 result.add(runStat);
             }
         }
