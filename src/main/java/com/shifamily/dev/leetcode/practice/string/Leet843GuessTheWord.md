@@ -6,7 +6,7 @@ Hard
 
 273
 
-303
+303 
 
 Favorite
 
@@ -39,6 +39,11 @@ Note:  Any solutions that attempt to circumvent the judge will result in disqual
 
 
 # 解法
+
+先取一个元素，进行guess。返回数字n。如果n=6，直接返回，否则在剩余的数组中找到和这个元素有n个字符相符的元素，循环。
+取元素可以是随机或者第一个，没有区别。为了pass Leetcode的test case，必须随机。
+
+
 
 ## 复杂度
 时间复杂度 O(N)

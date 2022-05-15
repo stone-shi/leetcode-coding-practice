@@ -3,6 +3,10 @@ package com.shifamily.dev;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.shifamily.dev.CaseData;
+import com.shifamily.dev.CaseParameters;
+import com.shifamily.dev.CaseRunner;
+
 
 public class QuestionTemplate1 extends BasicStudy {
 
