@@ -6,7 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
-
 @Slf4j
 public class BasicStudy {
 
@@ -132,6 +131,7 @@ public class BasicStudy {
                     Object res = method.invoke(this);
                     if (res instanceof List) {
                         caseParameters.addAll((List<CaseParameters>) res);
+                        log.info("{} Case added", ((List<CaseParameters>)res).size());
                     }
                 } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                     log.error("Error to invoke runner ", e);

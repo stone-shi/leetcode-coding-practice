@@ -3,9 +3,6 @@ package com.shifamily.dev;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.base.Strings;
-import com.shifamily.dev.BasicStudy;
-import com.shifamily.dev.CaseRunner;
 
 public class QuestionTemplate1 extends BasicStudy {
 
