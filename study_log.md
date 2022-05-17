@@ -18,3 +18,4 @@
 ### 2022/05/17
 
 - 1048 Longest String Chain
+- 1525 Number of Good Ways to Split a String
