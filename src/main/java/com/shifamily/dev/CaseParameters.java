@@ -20,7 +20,7 @@ public class CaseParameters {
     private Object answer;
     private Comparator answersComparator;
     @Builder.Default
-    private Boolean answersOrderMatter = false;
+    private Boolean answersOrderMatter = true;
     @Builder.Default
     private int answerInPlaceIndex = -1;
 

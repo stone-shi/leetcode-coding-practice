@@ -15,3 +15,6 @@
 
 - 735 Asteroid Collision
 
+### 2022/05/17
+
+- 1048 Longest String Chain
