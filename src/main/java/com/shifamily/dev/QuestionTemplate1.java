@@ -1,7 +1,6 @@
 package com.shifamily.dev;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import com.shifamily.dev.CaseData;
 import com.shifamily.dev.CaseParameters;
