@@ -26,3 +26,6 @@
 - 1293 Shortest Path in a Grid with Obstacles Elimination
 - 690 Employee Importance
 
+### 0222/05/21
+
+- 1423 Maximum Points You Can Obtain from Cards
