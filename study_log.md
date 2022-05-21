@@ -20,4 +20,8 @@
 - 1048 Longest String Chain
 - 1525 Number of Good Ways to Split a String
 - 1277 Count Square Submatrices with All Ones
-- 
+  
+### 2022/05/20
+
+- 1293 Shortest Path in a Grid with Obstacles Elimination
+
