@@ -24,4 +24,5 @@
 ### 2022/05/20
 
 - 1293 Shortest Path in a Grid with Obstacles Elimination
+- 690 Employee Importance
 
