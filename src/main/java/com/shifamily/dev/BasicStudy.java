@@ -179,7 +179,7 @@ public class BasicStudy {
         }
     }
 
-    private void runOneClassCase(Class clazz, ClassCaseParameters c, RunState runStat) throws Exception {
+    private void runOneClassCase(Class<?> clazz, ClassCaseParameters c, RunState runStat)  {
         try {
             runStat.setResult("Error");
             final Runtime rt = Runtime.getRuntime();
@@ -202,7 +202,6 @@ public class BasicStudy {
                 Method m = methodMap.get(ops[i]);
                 if (m == null) {
                     log.error("Error while looking for method [{}]", ops[i]);
-                    throw new Exception("Error while looking for method");
                 }
                 Object r = m.invoke(o, opsPara[i]);
                 ret.add(r);
@@ -216,36 +215,34 @@ public class BasicStudy {
             } else
                 runStat.setResult("Pass");
 
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (Exception e) {
             log.error("Error to invoke runner ", e);
         }
     }
 
     private List<RunState> runClassCase() {
         List<RunState> result = new LinkedList<>();
-        Class[] classes = this.getClass().getClasses();
-        List<Class> runners = new LinkedList<>();
-        for (Class clazz : classes) {
+        Class<?>[] classes = this.getClass().getClasses();
+        List<Class<?>> runners = new LinkedList<>();
+        for (Class<?> clazz : classes) {
             if (clazz.isAnnotationPresent(CaseRunner.class)) {
-                log.info("Found @CaseRunner class: {}", clazz.getName());
+                log.info("Found @CaseRunner class: {} ", clazz.getName());
                 runners.add(clazz);
             }
         }
-        for (Class clazz : runners) {
+        for (Class<?> clazz : runners) {
             List<ClassCaseParameters> localCase = new LinkedList<>();
             prepareLocalCaseData(null, localCase);
             localCase.addAll(classCaseParameters);
             int i = 0;
             for (ClassCaseParameters c : localCase) {
+                CaseRunner r = clazz.getAnnotation(CaseRunner.class);
+                if (!r.value().isEmpty() && !r.value().equals(c.getOperations()[0]) )
+                    continue;
                 RunState runStat = new RunState();
                 runStat.setName(this.getClass().getSimpleName() + "." + clazz.getName() + "(): case " + i++ + ' '
                         + c.getDescription());
-                try {
-                    runOneClassCase(clazz, c, runStat);
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                runOneClassCase(clazz, c, runStat);
                 result.add(runStat);
             }
         }

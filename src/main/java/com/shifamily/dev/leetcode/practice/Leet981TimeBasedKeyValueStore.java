@@ -24,7 +24,7 @@ public class Leet981TimeBasedKeyValueStore extends BasicStudy {
                 new String[] { "TimeMap","set","set","get","get","get","get","get" })
                 .operationParameters(new Object[][] {
                     {},{"love","high",10},{"love","low",20},{"love",5},{"love",10},{"love",15},{"love",20},{"love",25}
-                }).answer(new Object[] { null, null, null, null, "high", "high", "low", "low" })
+                }).answer(new Object[] { null, null, null, "", "high", "high", "low", "low" })
                 .description("case a").build());
         return cases;
     }
