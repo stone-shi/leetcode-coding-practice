@@ -1,7 +1,9 @@
 package com.shifamily.dev.utils;
 
 
+import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
@@ -38,6 +40,37 @@ public class TreeUtils {
                 return insertNodeToBST(root.right, val);
         }
 
+    }
+    
+    public static List<TreeNode> createForestFromString(String forest){
+        if (forest == null || forest.length() <= 2 || forest.charAt(0) != '[' || forest.charAt(forest.length() - 1) != ']')
+            return null;
+        forest =  forest.substring(1, forest.length() - 1);
+        Deque<Integer> stack = new LinkedList<>();
+        int i = 0;
+        char[] cs = forest.toCharArray();
+        List<TreeNode> res = new LinkedList<>();
+        while (i < cs.length){
+            if (cs[i] != '['){
+                i++;
+                continue;
+            }
+            stack.push(i);
+            int start = i;
+            i++;
+            while (!stack.isEmpty()){
+               if (cs[i] == '[')
+                    stack.push(i);
+                else if (cs[i] == ']'){
+                    stack.pop();
+                }
+                i++;
+            }
+            String tree = forest.substring(start, i);
+            TreeNode node = TreeUtils.createTreeFromString(tree);
+            res.add(node);
+        }
+        return res;
     }
 
     public static TreeNode createTreeFromString(String tree){
