@@ -4,12 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.rmi.server.ObjID;
 import java.util.*;
 
 @Slf4j
 public class BasicStudy {
 
     protected List<CaseParameters> caseParameters = new ArrayList<>();
+    protected List<ClassCaseParameters> classCaseParameters = new ArrayList<>();
 
     protected Object convertReturn(Object r) {
         return r;
@@ -122,24 +124,34 @@ public class BasicStudy {
         caseParameters.add(param);
     }
 
-    private List<CaseParameters> prepareLocalCaseData() {
-        List<CaseParameters> localCase = new ArrayList<>();
+    private void prepareLocalCaseData(List<CaseParameters> caseParameters,
+            List<ClassCaseParameters> classCaseParameters) {
         Method[] methods = this.getClass().getDeclaredMethods();
         for (Method method : methods) {
-            if (method.isAnnotationPresent(CaseData.class)) {
+            if (method.isAnnotationPresent(CaseData.class) && caseParameters != null) {
                 log.info("Found @CaseData method: {}", method.getName());
                 try {
                     Object res = method.invoke(this);
                     if (res instanceof List) {
-                        localCase.addAll((List<CaseParameters>) res);
+                        caseParameters.addAll((List<CaseParameters>) res);
                         log.info("{} Case added", ((List<CaseParameters>) res).size());
+                    }
+                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                    log.error("Error to invoke runner ", e);
+                }
+            } else if (method.isAnnotationPresent(ClassCaseData.class) && classCaseParameters != null) {
+                log.info("Found @ClassCaseData method: {}", method.getName());
+                try {
+                    Object res = method.invoke(this);
+                    if (res instanceof List) {
+                        classCaseParameters.addAll((List<ClassCaseParameters>) res);
+                        log.info("{} Case added", ((List<ClassCaseParameters>) res).size());
                     }
                 } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                     log.error("Error to invoke runner ", e);
                 }
             }
         }
-        return localCase;
     }
 
     private void runOneCase(Method m, CaseParameters c, RunState runStat) {
@@ -167,7 +179,80 @@ public class BasicStudy {
         }
     }
 
-    public List<RunState> runCases() {
+    private void runOneClassCase(Class clazz, ClassCaseParameters c, RunState runStat) throws Exception {
+        try {
+            runStat.setResult("Error");
+            final Runtime rt = Runtime.getRuntime();
+            for (int k = 0; k < 3; k++)
+                rt.gc();
+            final long startSize = rt.totalMemory() - rt.freeMemory();
+            long startTime = System.nanoTime();
+
+            Method[] methods = clazz.getDeclaredMethods();
+            Map<String, Method> methodMap = new HashMap<>();
+            for (Method method : methods)
+                methodMap.put(method.getName(), method);
+
+            Object o = clazz.getDeclaredConstructor().newInstance();
+            String[] ops = c.getOperations();
+            Object[][] opsPara = c.getOperationParameters();
+            List<Object> ret = new LinkedList<>();
+            ret.add(null);
+            for (int i = 1; i < ops.length; i++) {
+                Method m = methodMap.get(ops[i]);
+                if (m == null) {
+                    log.error("Error while looking for method [{}]", ops[i]);
+                    throw new Exception("Error while looking for method");
+                }
+                Object r = m.invoke(o, opsPara[i]);
+                ret.add(r);
+            }
+            runStat.setRunTimeInNs(System.nanoTime() - startTime);
+            runStat.setRunMemoryInBytes(rt.totalMemory() - rt.freeMemory() - startSize);
+
+            if (!compareAnswer(ret.toArray(), c.getAnswer(), c.getAnswersOrderMatter(), c.getAnswersComparator())) {
+                log.error("Error on case method {}: expected [{}] got [{}]", clazz.getName(),
+                        c.getAnswer(), ret);
+            } else
+                runStat.setResult("Pass");
+
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            log.error("Error to invoke runner ", e);
+        }
+    }
+
+    private List<RunState> runClassCase() {
+        List<RunState> result = new LinkedList<>();
+        Class[] classes = this.getClass().getClasses();
+        List<Class> runners = new LinkedList<>();
+        for (Class clazz : classes) {
+            if (clazz.isAnnotationPresent(CaseRunner.class)) {
+                log.info("Found @CaseRunner class: {}", clazz.getName());
+                runners.add(clazz);
+            }
+        }
+        for (Class clazz : runners) {
+            List<ClassCaseParameters> localCase = new LinkedList<>();
+            prepareLocalCaseData(null, localCase);
+            localCase.addAll(classCaseParameters);
+            int i = 0;
+            for (ClassCaseParameters c : localCase) {
+                RunState runStat = new RunState();
+                runStat.setName(this.getClass().getSimpleName() + "." + clazz.getName() + "(): case " + i++ + ' '
+                        + c.getDescription());
+                try {
+                    runOneClassCase(clazz, c, runStat);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                result.add(runStat);
+            }
+        }
+        return result;
+    }
+
+    private List<RunState> runMethodCase() {
         List<RunState> result = new LinkedList<>();
 
         Method[] methods = this.getClass().getDeclaredMethods();
@@ -180,13 +265,14 @@ public class BasicStudy {
         }
 
         for (Method m : runners) {
-            List<CaseParameters> localCase = prepareLocalCaseData();
+            List<CaseParameters> localCase = new LinkedList<>();
+            prepareLocalCaseData(localCase, null);
             localCase.addAll(caseParameters);
-            int i  = 0;
+            int i = 0;
             for (CaseParameters c : localCase) {
                 RunState runStat = new RunState();
                 runStat.setName(this.getClass().getSimpleName() + "." + m.getName() + "(): case " + i++ + ' '
-                            + c.getDescription());
+                        + c.getDescription());
                 runOneCase(m, c, runStat);
                 result.add(runStat);
             }
@@ -195,4 +281,10 @@ public class BasicStudy {
         return result;
     }
 
+    public List<RunState> runCases() {
+        List<RunState> result = new LinkedList<>();
+        result.addAll(runMethodCase());
+        result.addAll(runClassCase());
+        return result;
+    }
 }
