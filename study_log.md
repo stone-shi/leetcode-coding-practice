@@ -1,5 +1,9 @@
 # Study log
 
+## TODO
+
+- Check TreeMap, LinkedHashMap
+
 ## For Google interview
 
 ### 2022/05/14
@@ -34,3 +38,4 @@
 ### 2022/05/22
 
 - 833 Find And Replace in String
+- 981 Time Based Key-Value Store
