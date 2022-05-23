@@ -40,3 +40,4 @@
 - 833 Find And Replace in String
 - 981 Time Based Key-Value Store
 - revisited 56 Merge Intervals
+- 299 Bulls and Cows
