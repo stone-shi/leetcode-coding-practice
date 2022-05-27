@@ -56,8 +56,9 @@
 - 951 Flip Equivalent Binary Trees
 - 2 Add Two Numbers
 
-### 2022/05/26
+### 2022/05/27
 
 - 418 Sentence Screen Fitting
+- 853 Car Fleet
 
 
