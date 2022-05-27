@@ -56,6 +56,8 @@
 - 951 Flip Equivalent Binary Trees
 - 2 Add Two Numbers
 
+### 2022/05/26
 
+- 418 Sentence Screen Fitting
 
 
