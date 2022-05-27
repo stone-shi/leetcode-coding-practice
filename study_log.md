@@ -54,6 +54,8 @@
 ### 2022/05/26
 
 - 951 Flip Equivalent Binary Trees
+- 2 Add Two Numbers
+
 
 
 

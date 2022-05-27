@@ -35,6 +35,7 @@ Explanation: 342 + 465 = 807.
 
 ## 解法
 
+就像手工加法，从低到高加，注意进位。进位最后还要检查，要加到结果。
 
 ## 复杂度
 
@@ -43,5 +44,34 @@ Explanation: 342 + 465 = 807.
 
 
 ```Java
+  public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+
+        ListNode res = null;
+        ListNode prev = null;
+        int addtion = 0;
+        while (l1 != null || l2 != null) {
+            int v1 = l1 == null ? 0 : l1.val;
+            int v2 = l2 == null ? 0 : l2.val;
+
+            int r = v1 + v2 + addtion;
+            addtion = r / 10;
+            r = r % 10;
+            ListNode n = new ListNode(r);
+            if (res == null) {
+                res = n;
+                prev = n;
+            } else {
+                prev.next = n;
+                prev = n;
+            }
+            l1 = l1 == null ? null : l1.next;
+            l2 = l2 == null ? null : l2.next;
+        }
+        if (addtion != 0){
+            prev.next = new ListNode(addtion);
+        }
+
+        return res;
+    }
 
 ```
