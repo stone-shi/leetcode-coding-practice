@@ -193,9 +193,14 @@ public class BasicStudy {
             for (Method method : methods)
                 methodMap.put(method.getName(), method);
 
-            Object o = clazz.getDeclaredConstructor().newInstance();
             String[] ops = c.getOperations();
             Object[][] opsPara = c.getOperationParameters();
+            Class<?>[] parameterType = new Class[opsPara[0].length];
+            for (int i = 0; i < opsPara[0].length; i++) {
+               parameterType[i] = opsPara[0][i].getClass(); 
+            }
+
+            Object o = clazz.getDeclaredConstructor(parameterType).newInstance(opsPara[0]);
             List<Object> ret = new LinkedList<>();
             ret.add(null);
             for (int i = 1; i < ops.length; i++) {
