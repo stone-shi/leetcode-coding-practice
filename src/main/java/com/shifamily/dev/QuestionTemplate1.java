@@ -18,9 +18,10 @@ public class QuestionTemplate1 extends BasicStudy {
                 .description("case a").build());
 
         cases.add(ClassCaseParameters.builder().operations(
-                new String[] { "TimeMap","set","set","get","get","get","get","get" })
+                new String[] { "TimeMap", "set", "set", "get", "get", "get", "get", "get" })
                 .operationParameters(new Object[][] {
-                    {},{"love","high",10},{"love","low",20},{"love",5},{"love",10},{"love",15},{"love",20},{"love",25}
+                        {}, { "love", "high", 10 }, { "love", "low", 20 }, { "love", 5 }, { "love", 10 },
+                        { "love", 15 }, { "love", 20 }, { "love", 25 }
                 }).answer(new Object[] { null, null, null, "", "high", "high", "low", "low" })
                 .description("case a").build());
         return cases;
@@ -31,7 +32,7 @@ public class QuestionTemplate1 extends BasicStudy {
         List<CaseParameters> cases = new ArrayList<>();
 
         cases.add(CaseParameters.builder().parameters(new Object[] { new int[] { 0, 2, 3, 4 } }).answer(0)
-        .description("case a").build() );
+                .description("case a").build());
         cases.add(new CaseParameters("case b", new Object[] { new int[] { 1, 2, 3, 4 } }, 1, null, false, -1));
 
         return cases;
