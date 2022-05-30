@@ -70,4 +70,4 @@
 ### 2022/05/29
 
 - 1406 Stone Game III
-- 
+- 1937 Maximum Number of Points with Cost
