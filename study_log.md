@@ -71,3 +71,8 @@
 
 - 1406 Stone Game III
 - 1937 Maximum Number of Points with Cost
+
+### 2022/05/30
+
+- 1499 Max Value of Equation
+
