@@ -3,6 +3,7 @@
 ## TODO
 
 - Check TreeMap, LinkedHashMap
+- Binary search all cases
 
 ## For Google interview
 
@@ -75,4 +76,4 @@
 ### 2022/05/30
 
 - 1499 Max Value of Equation
-
+- 300 Longest Increasing Subsequence
