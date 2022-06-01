@@ -1,45 +1,38 @@
 package com.shifamily.dev.leetcode.practice;
 
-import com.shifamily.dev.BasicStudy;
-import com.shifamily.dev.CaseRunner;
-
-/*
-53. Maximum Subarray
-Easy
-
-6118
-
-254
-
-Add to List
-
-Share
-Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
-
-Example:
-
-Input: [-2,1,-3,4,-1,2,1,-5,4],
-Output: 6
-Explanation: [4,-1,2,1] has the largest sum = 6.
-Follow up:
-
-If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
-
- */
+import java.util.*;
+import com.shifamily.dev.*;
 
 public class Leet53MaximumSubarray extends BasicStudy {
 
-    public Leet53MaximumSubarray() {
-        int[][] caseP1 = {{-2,1,-3,4,-1,2,1,-5,4} };
-        int[] answer = {6};
-
-        for (int i = 0; i < caseP1.length; i++) {
-            Object[] p = new Object[1];
-            p[0] = caseP1[i];
-            addParameterAndAnswer(p, answer[i], false);
-        }
+    @CaseData
+    public List<CaseParameters> data1() {
+        List<CaseParameters> cases = new ArrayList<>();
+        cases.add(CaseParameters.builder().parameters(new Object[] { new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 } })
+                .answer(6).description("case a").build());
+        cases.add(CaseParameters.builder().parameters(new Object[] { new int[] { 1 } }).answer(1).description("case a")
+                .build());
+        cases.add(CaseParameters.builder().parameters(new Object[] { new int[] { 5, 4, -1, 7, 8 } }).answer(23)
+                .description("case a").build());
+        return cases;
     }
-    /* 2nd try 6/10/2020
+
+    // 3rd try at 5/31/2022
+    @CaseRunner
+    public int maxSubArray2(int[] nums) {
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+        int res = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = (dp[i - 1] > 0 ? dp[i - 1] : 0) + nums[i];
+            res = Math.max(res, dp[i]) ;
+        }
+        return res;
+    }
+
+    /*
+     * 2nd try 6/10/2020
      */
     @CaseRunner
     public int maxSubArray2nd(int[] nums) {
@@ -49,7 +42,7 @@ public class Leet53MaximumSubarray extends BasicStudy {
         int[] dp = new int[nums.length];
         dp[0] = nums[0];
         int maxSum = dp[0];
-        for (int i = 1; i < nums.length ; i++) {
+        for (int i = 1; i < nums.length; i++) {
             dp[i] = Math.max(dp[i - 1], 0) + nums[i];
             if (maxSum < dp[i])
                 maxSum = dp[i];
@@ -62,7 +55,7 @@ public class Leet53MaximumSubarray extends BasicStudy {
         if (nums == null || nums.length == 0)
             return 0;
 
-        int[] dp = new int[nums.length]; //dp[i]代表i为最后元素的最大sub array
+        int[] dp = new int[nums.length]; // dp[i]代表i为最后元素的最大sub array
         dp[0] = nums[0];
         int maxSum = dp[0];
 
