@@ -56,6 +56,12 @@ public class BasicStudy {
             o1 = Arrays.stream((int[]) a).boxed().toArray();
         } else if (aClass.equals("[D")) {
             o1 = Arrays.stream((double[]) a).boxed().toArray();
+        } else if (aClass.equals("[[I")) {
+            o1 = new Object[((int[][])a).length];
+            int i = 0;
+            for (int[] o : (int[][])a) 
+                o1[i++] = Arrays.stream(o).boxed().toArray(); 
+            
         } else {
             o1 = (Object[]) a;
         }
@@ -179,7 +185,7 @@ public class BasicStudy {
         }
     }
 
-    private void runOneClassCase(Class<?> clazz, ClassCaseParameters c, RunState runStat)  {
+    private void runOneClassCase(Class<?> clazz, ClassCaseParameters c, RunState runStat) {
         try {
             runStat.setResult("Error");
             final Runtime rt = Runtime.getRuntime();
@@ -197,7 +203,7 @@ public class BasicStudy {
             Object[][] opsPara = c.getOperationParameters();
             Class<?>[] parameterType = new Class[opsPara[0].length];
             for (int i = 0; i < opsPara[0].length; i++) {
-               parameterType[i] = opsPara[0][i].getClass(); 
+                parameterType[i] = opsPara[0][i].getClass();
             }
 
             Object o = clazz.getDeclaredConstructor(parameterType).newInstance(opsPara[0]);
@@ -242,7 +248,7 @@ public class BasicStudy {
             int i = 0;
             for (ClassCaseParameters c : localCase) {
                 CaseRunner r = clazz.getAnnotation(CaseRunner.class);
-                if (!r.value().isEmpty() && !r.value().equals(c.getOperations()[0]) )
+                if (!r.value().isEmpty() && !r.value().equals(c.getOperations()[0]))
                     continue;
                 RunState runStat = new RunState();
                 runStat.setName(this.getClass().getSimpleName() + "." + clazz.getName() + "(): case " + i++ + ' '
