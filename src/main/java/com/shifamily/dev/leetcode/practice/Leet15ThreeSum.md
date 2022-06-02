@@ -32,6 +32,10 @@ Notice that the solution set must not contain duplicate triplets.
 
 ## 解法
 
+选择第一个数字 `nums[i]`，然后找出 后面2个数字之和 为 `0 - nums[i]`
+第一个解法是用了当初 2sum
+
+第二个解法是slide window (比较快)
 
 
 ## 复杂度
