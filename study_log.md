@@ -81,3 +81,7 @@
 ### 2022/05/31
 
 - 53 Maximum Subarray
+
+### 2022/06/01
+
+- 489 Robot Room Cleaner
