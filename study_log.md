@@ -89,3 +89,4 @@
 ### 2022/06/02
 
 - 15 3Sum
+- 562 Longest Line of Consecutive One in Matrix
