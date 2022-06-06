@@ -16,6 +16,17 @@ public class BasicStudy {
         return r;
     }
 
+    protected List<List<Integer>> convertReturnNeedSortListListTwoNumbers(List<List<Integer>> res) {
+        Comparator<List<Integer>> c = new Comparator<List<Integer>>() {
+            @Override
+            public int compare(List<Integer> arg0, List<Integer> arg1) {
+                return arg0.get(0).equals(arg1.get(0)) ? arg0.get(1) - arg1.get(1) : arg0.get(0) - arg1.get(0);
+            }
+        };
+        Collections.sort(res, c);
+        return res;
+    }
+
     private int[] ListToArrayInt(List r) {
         if (!r.get(0).getClass().getName().equals("Integer"))
             return null;
@@ -56,11 +67,11 @@ public class BasicStudy {
         } else if (aClass.equals("[D")) {
             o1 = Arrays.stream((double[]) a).boxed().toArray();
         } else if (aClass.equals("[[I")) {
-            o1 = new Object[((int[][])a).length];
+            o1 = new Object[((int[][]) a).length];
             int i = 0;
-            for (int[] o : (int[][])a) 
-                o1[i++] = Arrays.stream(o).boxed().toArray(); 
-            
+            for (int[] o : (int[][]) a)
+                o1[i++] = Arrays.stream(o).boxed().toArray();
+
         } else {
             o1 = (Object[]) a;
         }
