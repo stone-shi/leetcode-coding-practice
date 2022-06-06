@@ -56,12 +56,10 @@ public class BasicStudy {
         return res;
     }
 
-    protected boolean compareArray(Object r, Object a, boolean orderMatter, Comparator comparator) {
-
+    protected Object[] boxArray(Object a) {
         String aClass = a.getClass().getName();
-        String rClass = r.getClass().getName();
         Object[] o1;
-        Object[] o2;
+
         if (aClass.equals("[I")) {
             o1 = Arrays.stream((int[]) a).boxed().toArray();
         } else if (aClass.equals("[D")) {
@@ -76,15 +74,22 @@ public class BasicStudy {
             o1 = (Object[]) a;
         }
 
-        if (r instanceof List) {
+        return o1;
+    }
+
+    protected boolean compareArray(Object r, Object a, boolean orderMatter, Comparator comparator) {
+
+        String aClass = a.getClass().getName();
+        String rClass = r.getClass().getName();
+        Object[] o1 = null;
+        Object[] o2 = null;
+        if (aClass.charAt(0) == '[')
+            o1 = boxArray(a);
+    
+        if (rClass.charAt(0) == '[')
+            o2 = boxArray(r);
+        else if (r instanceof List) 
             o2 = listToArray((List) r);
-        } else if (rClass.equals("[I")) {
-            o2 = Arrays.stream((int[]) r).boxed().toArray();
-        } else if (aClass.equals("[D")) {
-            o2 = Arrays.stream((double[]) r).boxed().toArray();
-        } else {
-            o2 = (Object[]) r;
-        }
 
         if (!orderMatter) {
             if (comparator == null) {
@@ -93,7 +98,6 @@ public class BasicStudy {
             } else {
                 Arrays.sort(o1, comparator);
                 Arrays.sort(o2, comparator);
-
             }
         }
 
