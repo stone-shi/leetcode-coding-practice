@@ -8,7 +8,7 @@
 
 A car travels from a starting position to a destination which is target miles east of the starting position.
 
-There are gas stations along the way. The gas stations are represented as an array stations where `stations[i] = [positioni, fueli]` indicates that the i^th^ gas station is positioni miles east of the starting position and has fuel~i~ liters of gas.
+There are gas stations along the way. The gas stations are represented as an array stations where stations[i] = [position~i~, fuel~i~] indicates that the i^th^ gas station is position~i~ miles east of the starting position and has fuel~i~ liters of gas.
 
 The car starts with an infinite tank of gas, which initially has startFuel liters of fuel in it. It uses one liter of gas per one mile that it drives. When the car reaches a gas station, it may stop and refuel, transferring all the gas from the station into the car.
 
@@ -47,10 +47,37 @@ We made 2 refueling stops along the way, so we return 2.
 
 ## 解法
 
+Greedy ( priority queue)
+
+从 startFuel 开始，选择range内第一批station，找出最大range, 然后加入第二批，以此类推。
+
+
 ## 复杂度
 
+O(N Log N)
 ## 代码
 
 ```Java
+    @CaseRunner
+    public int minRefuelStops(int target, int startFuel, int[][] stations) {
+        int stop = 0;
+        int n = stations.length;
+        int i = 0;
+
+        Queue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
+        int maxDistance = startFuel;
+        while (maxDistance < target) {
+            while (i < n && stations[i][0] <= maxDistance) {
+                pq.offer(stations[i][1]);
+                i++;
+            }
+            if (pq.isEmpty())
+                return -1;
+            maxDistance += pq.poll();
+            stop++;
+        }
+
+        return stop;
+    }
 
 ```
