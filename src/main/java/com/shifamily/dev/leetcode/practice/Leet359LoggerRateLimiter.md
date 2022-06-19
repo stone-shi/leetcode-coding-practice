@@ -1,4 +1,4 @@
-# Leetcode #
+# Leetcode #359 Logger Rate Limiter
 
 ## 原题
 
@@ -10,7 +10,7 @@ Given a message and a timestamp (in seconds granularity), return true if the mes
 
 It is possible that several messages arrive roughly at the same time.
 
-Example:
+**Example:**
 
 ```java
 Logger logger = new Logger();

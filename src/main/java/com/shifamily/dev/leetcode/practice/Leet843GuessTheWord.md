@@ -1,47 +1,51 @@
-# 原题
-Leetcode 843
+# Leetcode 843 Guess the Word
 
-843 Guess the Word
-Hard
+## 原题
 
-273
+[843 Guess the Word](https://leetcode.com/problems/guess-the-word/)
 
-303 
+**<span style="color:red">Hard</span>** 273 303 
 
-Favorite
+This is an _**interactive problem**_.
 
-Share
-This problem is an interactive problem new to the LeetCode platform.
+You are given an array of **unique** strings `wordlist` where `wordlist[i]` is 6 letters long, and one word in this list is chosen as `secret`.
 
-We are given a word list of unique words, each word is 6 letters long, and one word in this list is chosen as secret.
+You may call `Master.guess(word)` to guess a word. The guessed word should have type `string` and must be from the original list with 6 lowercase letters.
 
-You may call master.guess(word) to guess a word.  The guessed word should have type string and must be from the original list with 6 lowercase letters.
+This function returns an integer type, representing the number of exact matches (value and position) of your guess to the secret word. Also, if your guess is not in the given wordlist, it will return -1 instead.
 
-This function returns an integer type, representing the number of exact matches (value and position) of your guess to the secret word.  Also, if your guess is not in the given wordlist, it will return -1 instead.
+For each test case, you have exactly 10 guesses to guess the word. At the end of any number of calls, if you have made 10 or fewer calls to Master.guess and at least one of these guesses was secret, then you pass the test case.
 
-For each test case, you have 10 guesses to guess the word. At the end of any number of calls, if you have made 10 or less calls to master.guess and at least one of these guesses was the secret, you pass the testcase.
+**Example 1:**
 
-Besides the example test case below, there will be 5 additional test cases, each with 100 words in the word list.  The letters of each word in those testcases were chosen independently at random from 'a' to 'z', such that every word in the given word lists is unique.
-
-Example 1:
-Input: secret = "acckzz", wordlist = ["acckzz","ccbazz","eiowzz","abcczz"]
-
-Explanation:
-
-master.guess("aaaaaa") returns -1, because "aaaaaa" is not in wordlist.
-master.guess("acckzz") returns 6, because "acckzz" is secret and has all 6 matches.
-master.guess("ccbazz") returns 3, because "ccbazz" has 3 matches.
-master.guess("eiowzz") returns 2, because "eiowzz" has 2 matches.
-master.guess("abcczz") returns 4, because "abcczz" has 4 matches.
-
+> `Input: secret = "acckzz", wordlist = ["acckzz","ccbazz","eiowzz","abcczz"]`
+**Explanation:**
+`master.guess("aaaaaa") returns -1, because "aaaaaa" is not in wordlist.`
+`master.guess("acckzz") returns 6, because "acckzz" is secret and has all 6 matches.`
+`master.guess("ccbazz") returns 3, because "ccbazz" has 3 matches.`
+`master.guess("eiowzz") returns 2, because "eiowzz" has 2 matches.`
+`master.guess("abcczz") returns 4, because "abcczz" has 4 matches.`
 We made 5 calls to master.guess and one of them was the secret, so we pass the test case.
 Note:  Any solutions that attempt to circumvent the judge will result in disqualification.
 
+**Example 2:**
+
+> `Input: secret = "hamada", wordlist = ["hamada","khaled"], numguesses = 10`
+`Output: You guessed the secret word correctly.`
+
+**Constraints:**
+
+* 1 <= wordlist.length <= 100
+* wordlist[i].length == 6
+* wordlist[i] consist of lowercase English letters.
+* All the strings of wordlist are unique.
+* secret exists in wordlist.
+* numguesses == 10
 
 # 解法
 
 先取一个元素，进行guess。返回数字n。如果n=6，直接返回，否则在剩余的数组中找到和这个元素有n个字符相符的元素，循环。
-取元素可以是随机或者第一个，没有区别。为了pass Leetcode的test case，必须随机。
+取元素可以是随机或者第一个，没有区别。:laughing:**为了pass Leetcode的test case，必须随机。**
 
 
 

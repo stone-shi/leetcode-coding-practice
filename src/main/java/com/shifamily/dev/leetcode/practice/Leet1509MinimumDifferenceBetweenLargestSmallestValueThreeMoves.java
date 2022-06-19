@@ -11,36 +11,6 @@ import com.shifamily.dev.CaseData;
 import com.shifamily.dev.CaseRunner;
 import com.shifamily.dev.CaseParameters;
 
-/*
-1509. Minimum Difference Between Largest and Smallest Value in Three Moves
-Medium
-1091
-148
-Add to List
-Share
-You are given an integer array nums. In one move, you can choose one element of nums and change it by any value.
-Return the minimum difference between the largest and smallest value of nums after performing at most three moves.
-
-Example 1:
-
-Input: nums = [5,3,2,4]
-Output: 0
-Explanation: Change the array [5,3,2,4] to [2,2,2,2].
-The difference between the maximum and minimum is 2-2 = 0.
-Example 2:
-
-Input: nums = [1,5,0,10,14]
-Output: 1
-Explanation: Change the array [1,5,0,10,14] to [1,1,0,1,1]. 
-The difference between the maximum and minimum is 1-0 = 1.
- 
-
-Constraints:
-
-1 <= nums.length <= 105
--109 <= nums[i] <= 109
-*/
-
 public class Leet1509MinimumDifferenceBetweenLargestSmallestValueThreeMoves extends BasicStudy {
 
     @CaseData
@@ -70,6 +40,23 @@ public class Leet1509MinimumDifferenceBetweenLargestSmallestValueThreeMoves exte
             minVal = Math.min(nums[len - 1 - k + i] - nums[i], minVal);
         }
         return minVal;
+    }
+
+    // second try - 2022/06/19
+    @CaseRunner
+    public int minDifference2(int[] nums) {
+        int n = nums.length;
+        int k = 3; // change three numbers
+        if (n <= k + 1)
+            return 0;
+        Arrays.sort(nums);
+
+        int m = Integer.MAX_VALUE;
+        for (int i = 0; i <= k; i++){
+            m = Math.min(m, nums[n - 1 - i] - nums[ k - i ]);
+        }
+        return m; 
+
     }
 
     @CaseRunner

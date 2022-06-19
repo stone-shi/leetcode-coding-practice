@@ -7,64 +7,6 @@ import com.shifamily.dev.CaseData;
 import com.shifamily.dev.CaseParameters;
 import com.shifamily.dev.CaseRunner;
 
-/*
-1048. Longest String Chain
-https://leetcode.com/problems/longest-string-chain/
-Medium
-
-3401
-
-166
-
-Add to List
-
-Share
-You are given an array of words where each word consists of lowercase English letters.
-
-wordA is a predecessor of wordB if and only if we can insert exactly one letter anywhere in wordA without changing the order of the other characters to make it equal to wordB.
-
-For example, "abc" is a predecessor of "abac", while "cba" is not a predecessor of "bcad".
-A word chain is a sequence of words [word1, word2, ..., wordk] with k >= 1, where word1 is a predecessor of word2, word2 is a predecessor of word3, and so on. A single word is trivially a word chain with k == 1.
-
-Return the length of the longest possible word chain with words chosen from the given list of words.
-
- 
-
-Example 1:
-
-Input: words = ["a","b","ba","bca","bda","bdca"]
-Output: 4
-Explanation: One of the longest word chains is ["a","ba","bda","bdca"].
-Example 2:
-
-Input: words = ["xbc","pcxbcf","xb","cxbc","pcxbc"]
-Output: 5
-Explanation: All the words can be put in a word chain ["xb", "xbc", "cxbc", "pcxbc", "pcxbcf"].
-Example 3:
-
-Input: words = ["abcd","dbqca"]
-Output: 1
-Explanation: The trivial word chain ["abcd"] is one of the longest word chains.
-["abcd","dbqca"] is not a valid word chain because the ordering of the letters is changed.
- 
-
-Constraints:
-
-1 <= words.length <= 1000
-1 <= words[i].length <= 16
-words[i] only consists of lowercase English letters.
-Accepted
-202,233
-Submissions
-349,476
-Seen this question in a real interview before?
-
-Yes
-
-No
-
-*/
-
 public class Leet1048LongestStringChain extends BasicStudy {
     @CaseData
     public List<CaseParameters> data1() {
@@ -88,6 +30,68 @@ public class Leet1048LongestStringChain extends BasicStudy {
         cases.add(CaseParameters.builder().parameters(new Object[] { new String[] { "abcd", "dbqca" } }).answer(1)
                 .description("case c").build());
         return cases;
+    }
+
+    // second try - 2022/06/19 sort + dp
+    @CaseRunner
+    public int longestStrChain4(String[] words) { 
+        Arrays.sort(words, (a, b) -> a.length() - b.length());
+        int res = Integer.MIN_VALUE;
+        Map<String, Integer> dp = new HashMap<>();
+        for (String s: words){
+            int chain = Integer.MIN_VALUE;
+            for (int i = 0; i < s.length(); i++) {
+                String chk = s.substring(0, i) + s.substring(i + 1);
+                chain = Math.max(chain,  1 + dp.getOrDefault(chk, 0));
+            }
+            dp.put(s, chain);
+            res = Math.max(res, chain);
+        }
+        return res;
+    }
+
+    // second try - 2022/06/19 dfs + dp (not optimize)
+    @CaseRunner
+    public int longestStrChain3(String[] words) {
+        int res = Integer.MIN_VALUE;
+        int[] dp = new int[words.length];
+        for (int i = 0; i < words.length; i++) {
+            res = Math.max(res, dfs(words, i, dp));
+        }
+        return res;
+    }
+
+    private boolean chain(String w1, String w2) {
+        if (w1.length() != w2.length() - 1)
+            return false;
+        int diff = 0;
+        int i = 0, j = 0;
+        while (i < w1.length() && j < w2.length()) {
+            if (w1.charAt(i) != w2.charAt(i + diff)) {
+                if (diff > 0)
+                    return false;
+                diff++;
+                j++;
+                continue;
+            }
+            i++;
+            j++;
+        }
+        return true;
+    }
+
+    private int dfs(String[] words, int idx, int[] dp) {
+        if (dp[idx] > 0)
+            return dp[idx];
+        int chainLen = 1;
+        for (int i = 0; i < words.length; i++) {
+            if (idx == i)
+                continue;
+            if (chain(words[idx], words[i]))
+                chainLen = Math.max(chainLen, 1 + dfs(words, i, dp));
+        }
+        dp[idx] = chainLen;
+        return chainLen;
     }
 
     // solution 1 - dfs + dp

@@ -10,53 +10,6 @@ import com.shifamily.dev.CaseData;
 import com.shifamily.dev.CaseParameters;
 import com.shifamily.dev.CaseRunner;
 
-/*
-735. Asteroid Collision
-Medium
-
-3489
-
-279
-
-Add to List
-
-Share
-We are given an array asteroids of integers representing asteroids in a row.
-
-For each asteroid, the absolute value represents its size, and the sign represents its direction (positive meaning right, negative meaning left). Each asteroid moves at the same speed.
-
-Find out the state of the asteroids after all collisions. If two asteroids meet, the smaller one will explode. If both are the same size, both will explode. Two asteroids moving in the same direction will never meet.
-
- 
-
-Example 1:
-
-Input: asteroids = [5,10,-5]
-Output: [5,10]
-Explanation: The 10 and -5 collide resulting in 10. The 5 and 10 never collide.
-Example 2:
-
-Input: asteroids = [8,-8]
-Output: []
-Explanation: The 8 and -8 collide exploding each other.
-Example 3:
-
-Input: asteroids = [10,2,-5]
-Output: [10]
-Explanation: The 2 and -5 collide resulting in -5. The 10 and -5 collide resulting in 10.
- 
-
-Constraints:
-
-2 <= asteroids.length <= 104
--1000 <= asteroids[i] <= 1000
-asteroids[i] != 0
-Accepted
-197,506
-Submissions
-445,252
-*/
-
 public class Leet735AsteroidCollision extends BasicStudy {
 
     @CaseData
@@ -77,6 +30,38 @@ public class Leet735AsteroidCollision extends BasicStudy {
                 .answer(new int[] { -2, -1, 1, 2 })
                 .description("case negative value first").build());
         return cases;
+    }
+
+    // second try - 2022/06/19
+    @CaseRunner
+    public int[] asteroidCollision2(int[] asteroids) {
+        Deque<Integer> stack = new LinkedList<>();
+        for (int a : asteroids) {
+            while (!stack.isEmpty()) {
+                int a1 = stack.peek();
+                if (a1 > 0 && a < 0) {
+                    int mass = -1 * a;
+                    if (a1 > mass) {
+                        a = 0;
+                        break;
+                    } else if (a1 == mass) {
+                        a = 0;
+                        stack.pop();
+                    } else {
+                        stack.pop();
+                    }
+                } else
+                    break;
+            }
+            if (a != 0)
+                stack.push(a);
+        }
+        int[] res = new int[stack.size()];
+        int i = 0;
+        while (!stack.isEmpty())
+            res[i++]  = stack.pollLast();
+        return res;
+
     }
 
     @CaseRunner

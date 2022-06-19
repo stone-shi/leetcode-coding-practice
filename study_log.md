@@ -104,4 +104,15 @@
 
 - 1776 Car Fleet II
 - 871 Minimum Number of Refueling Stops
-- 
+
+### 2022/06/19
+
+**2nd time starting** of google high frequency
+
+- 1509 Minimum Difference Between Largest and Smallest Value in Three Moves
+- 843 Guess the Word
+- 735 Asteroid Collision
+- 1048 Longest String Chain
+- 1525 Number of Good Ways to Split a String
+
+
