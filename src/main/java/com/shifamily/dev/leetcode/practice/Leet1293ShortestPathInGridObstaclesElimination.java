@@ -8,53 +8,6 @@ import com.shifamily.dev.CaseData;
 import com.shifamily.dev.CaseParameters;
 import com.shifamily.dev.CaseRunner;
 
-/*
-1293. Shortest Path in a Grid with Obstacles Elimination
-Hard
-
-2223
-
-41
-
-Add to List
-
-Share
-You are given an m x n integer matrix grid where each cell is either 0 (empty) or 1 (obstacle). You can move up, down, left, or right from and to an empty cell in one step.
-
-Return the minimum number of steps to walk from the upper left corner (0, 0) to the lower right corner (m - 1, n - 1) given that you can eliminate at most k obstacles. If it is not possible to find such walk return -1.
-
- 
-
-Example 1:
-
-
-Input: grid = [[0,0,0],[1,1,0],[0,0,0],[0,1,1],[0,0,0]], k = 1
-Output: 6
-Explanation: 
-The shortest path without eliminating any obstacle is 10.
-The shortest path with one obstacle elimination at position (3,2) is 6. Such path is (0,0) -> (0,1) -> (0,2) -> (1,2) -> (2,2) -> (3,2) -> (4,2).
-Example 2:
-
-
-Input: grid = [[0,1,1],[1,1,1],[1,0,0]], k = 1
-Output: -1
-Explanation: We need to eliminate at least two obstacles to find such a walk.
- 
-
-Constraints:
-
-m == grid.length
-n == grid[i].length
-1 <= m, n <= 40
-1 <= k <= m * n
-grid[i][j] is either 0 or 1.
-grid[0][0] == grid[m - 1][n - 1] == 0
-Accepted
-99,292
-Submissions
-228,079
-*/
-
 public class Leet1293ShortestPathInGridObstaclesElimination extends BasicStudy {
     @CaseData
     public List<CaseParameters> data1() {
@@ -103,6 +56,53 @@ public class Leet1293ShortestPathInGridObstaclesElimination extends BasicStudy {
                 .answer(20)
                 .description("case 4").build());
         return cases;
+    }
+
+    // second try - 2022/06/19
+    @CaseRunner
+    public int shortestPath3(int[][] grid, int k) {
+        int[][] dir = new int[][] { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
+        int m = grid.length;
+        if (m == 0)
+            return 0;
+        int n = grid[0].length;
+        if (n == 0)
+            return 0;
+
+        boolean[][][] visited = new boolean[m][n][k + 1];
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[] { 0, 0, k });
+        visited[0][0][k - 1] = true;
+
+        int steps = 0;
+        while (!q.isEmpty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                int[] node = q.poll();
+                if (node[0] == m - 1 && node[1] == n - 1)
+                    return steps;
+                for (int[] d : dir) {
+                    int nextM = d[0] + node[0];
+                    int nextN = d[1] + node[1];
+                    int nextK = node[2];
+                    if (nextM < 0 || nextM >= m || nextN < 0 || nextN >= n)
+                        continue;
+                    if (grid[nextM][nextN] == 1) {
+                        if (nextK == 0)
+                            continue;
+                        else
+                            nextK--;
+                    }
+                    if (visited[nextM][nextN][nextK])
+                        continue;
+                    visited[nextM][nextN][nextK] = true;
+                    q.offer(new int[] { nextM, nextN, nextK });
+                }
+            }
+            steps++;
+        }
+        return -1;
+
     }
 
     static class GridNode {
@@ -188,7 +188,7 @@ public class Leet1293ShortestPathInGridObstaclesElimination extends BasicStudy {
                     if (next_m > m - 1 || next_n > n - 1 || next_n < 0 || next_m < 0 || visited[next_m][next_n][next_k])
                         continue;
                     visited[next_m][next_n][next_k] = true;
-                    if (grid[next_m][next_n] == 1 && next_k > 0){
+                    if (grid[next_m][next_n] == 1 && next_k > 0) {
                         next_k--;
                     }
                     if (grid[next_m][next_n] == 0 || next_k != curr[2]) {

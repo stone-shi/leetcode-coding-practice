@@ -22,6 +22,25 @@ public class Leet1423MaximumPointsYouCanObtainCards extends BasicStudy {
         return cases;
     }
 
+    // second try - 2022/06/19  - it can be further optimize on space 
+    @CaseRunner
+    public int maxScore3(int[] cardPoints, int k) {
+        int n = cardPoints.length;
+        int[] sum = new int[k + 1];
+        int s = 0;
+        for (int i = 0; i < k; i++){
+            s += cardPoints[i];
+            sum[i + 1] = s;
+        }
+        int res = s;
+        s = 0;        
+        for (int i = 0; i < k; i++){
+            s += cardPoints[n - 1 - i];
+            res = Math.max(res, s + sum[k - 1 -i]);
+        }
+        return res;        
+    }
+
     // solution 1, space O(k)
     @CaseRunner
     public int maxScore(int[] cardPoints, int k) {

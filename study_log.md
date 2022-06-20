@@ -114,5 +114,8 @@
 - 735 Asteroid Collision
 - 1048 Longest String Chain
 - 1525 Number of Good Ways to Split a String
-
+- **1277 Count Square Submatrices with All Ones**
+- 1293 Shortest Path in a Grid with Obstacles Elimination
+- 690 Employee Importance 
+- 1423 Maximum Points You Can Obtain from Cards
 
