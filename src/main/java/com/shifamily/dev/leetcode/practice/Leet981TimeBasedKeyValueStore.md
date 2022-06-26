@@ -3,15 +3,9 @@
 ## 原题
 
 [981 Time Based Key-Value Store](https://leetcode.com/problems/time-based-key-value-store/)
-Medium
 
-2106
+**<span style="color:blue">Medium</span>** 2106 217
 
-217
-
-Add to List
-
-Share
 Design a time-based key-value data structure that can store multiple values for the same key at different time stamps and retrieve the key's value at a certain timestamp.
 
 Implement the TimeMap class:

@@ -4,10 +4,7 @@
 
 [299 Bulls and Cows](https://leetcode.com/problems/bulls-and-cows/)
 
-Medium
-1395
-1315
-Share
+**<span style="color:blue">Medium</span>** 1395 1315
 
 You are playing the Bulls and Cows game with your friend.
 

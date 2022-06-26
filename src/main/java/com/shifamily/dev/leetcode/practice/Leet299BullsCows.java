@@ -18,7 +18,31 @@ public class Leet299BullsCows extends BasicStudy {
         return cases;
     }
 
-    // solution 2 - 1 pass - best 
+    // second try - 2022/06/25
+    @CaseRunner
+    public String getHint3(String secret, String guess) {
+
+        int[] ct = new int[10];
+        int a = 0, b = 0;
+
+        for (int i = 0; i < secret.length(); i++) {
+            int s = secret.charAt(i) - '0';
+            int g = guess.charAt(i) - '0';
+            if (s == g) {
+                a++;
+            } else {
+                if (ct[g] > 0)
+                    b++;
+                if (ct[s] < 0)
+                    b++;
+                ct[g]--;
+                ct[s]++;
+            }
+        }
+        return String.valueOf(a) + 'A' + String.valueOf(b) + 'B';
+    }
+
+    // solution 2 - 1 pass - best
     @CaseRunner
     public String getHint1(String secret, String guess) {
         int[] charCount = new int[10];
@@ -30,7 +54,7 @@ public class Leet299BullsCows extends BasicStudy {
             int g = guess.charAt(i) - '0';
             if (s == g)
                 a++;
-            else{
+            else {
                 if (charCount[g] > 0)
                     b++;
                 if (charCount[s] < 0)
@@ -48,7 +72,7 @@ public class Leet299BullsCows extends BasicStudy {
         int[] charCount = new int[10];
         int aCount = 0;
         int bCount = 0;
-        for (int i = 0; i < secret.length(); i++){
+        for (int i = 0; i < secret.length(); i++) {
             if (secret.charAt(i) != guess.charAt(i))
                 charCount[secret.charAt(i) - '0']++;
             else
@@ -56,8 +80,8 @@ public class Leet299BullsCows extends BasicStudy {
         }
 
         for (int i = 0; i < secret.length(); i++) {
-            if (secret.charAt(i) != guess.charAt(i)){
-                if (charCount[guess.charAt(i) - '0'] > 0){
+            if (secret.charAt(i) != guess.charAt(i)) {
+                if (charCount[guess.charAt(i) - '0'] > 0) {
                     bCount++;
                     charCount[guess.charAt(i) - '0']--;
                 }

@@ -4,9 +4,7 @@
 
 [56 Merge Intervals](https://leetcode.com/problems/merge-intervals/)
 
-Medium
-3650
-266
+**<span style="color:blue">Medium</span>** 3650 266
 
 Given a collection of intervals, merge all overlapping intervals.
 

@@ -30,6 +30,34 @@ public class Leet833FindAndReplaceString extends BasicStudy {
         return cases;
     }
 
+    // second try - 2022/06/25
+    @CaseRunner
+    public String findReplaceString3(String s, int[] indices, String[] sources, String[] targets) {
+        StringBuilder sb = new StringBuilder();
+        int n = indices.length;
+        int[][] indicesSorted = new int[n][2];
+        for (int i = 0; i < indices.length; i++) {
+            indicesSorted[i][0] = indices[i];
+            indicesSorted[i][1] = i;
+        }
+        Arrays.sort(indicesSorted, (a,b) -> a[0] - b[0]);
+
+        int lastIdx = 0;
+        for (int[] idx : indicesSorted){
+            int start = idx[0];
+            int i = idx[1];
+            int end = sources[i].length() + start;
+
+            if (end <= s.length() &&  s.substring(start, end).equals(sources[i])){
+                sb.append(s.substring(lastIdx, start));
+                sb.append(targets[i]);
+                lastIdx = end ;
+            }
+        }
+        sb.append(s.substring(lastIdx));
+        return sb.toString();
+    }
+
     // solution 1 - hashmap record change index, scan original s and get change
     // idicateor - a bit slow
     @CaseRunner

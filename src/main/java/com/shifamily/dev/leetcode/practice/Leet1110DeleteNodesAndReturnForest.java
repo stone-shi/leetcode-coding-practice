@@ -28,6 +28,30 @@ public class Leet1110DeleteNodesAndReturnForest extends BasicStudy {
         return cases;
     }
 
+    // second try - 2022/06/25
+    @CaseRunner
+    public List<TreeNode> delNodes3(TreeNode root, int[] to_delete) {
+        List<TreeNode> res = new ArrayList<>();
+        Set<Integer> delId = Arrays.stream(to_delete).boxed().collect(Collectors.toSet());
+        dfs(root, delId, res, true);
+        return res;
+    }
+
+    private TreeNode dfs(TreeNode node, Set<Integer> to_delete, List<TreeNode> res, boolean isRoot){
+        if (node == null)
+            return null;
+        
+        boolean isDelete = to_delete.contains(node.val);
+        if (isRoot && !isDelete)
+            res.add(node);
+
+        node.left = dfs(node.left, to_delete, res, isDelete);
+        node.right = dfs(node.right, to_delete, res, isDelete);
+
+        return isDelete ? null : node;
+    }
+
+
     // solution 2, dfs - should use this one, much simpler
     @CaseRunner
     public List<TreeNode> delNodes2(TreeNode root, int[] to_delete) {

@@ -16,6 +16,29 @@ public class Leet56MergeIntervals extends BasicStudy {
         return cases;
     }
 
+    // 3rd try 6/25/2022
+    @CaseRunner
+    public int[][] merge3(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        List<int[]> res = new ArrayList<>();
+
+        int currStart = intervals[0][0];
+        int currEnd = intervals[0][1];
+
+        for (int i = 1; i < intervals.length; i++) {
+            if (currEnd < intervals[i][0]) {
+                res.add(new int[] { currStart, currEnd });
+                currStart = intervals[i][0];
+                currEnd = intervals[i][1];
+            }else{
+                currEnd = Math.max(currEnd, intervals[i][1]);
+            }
+        }
+        res.add(new int[] { currStart, currEnd });
+        int[][] ret = new int[res.size()][];
+        return res.toArray(ret);
+    }
+
     // revisit at 5/22/2022
     @CaseRunner
     public int[][] merge2(int[][] intervals) {
@@ -32,7 +55,7 @@ public class Leet56MergeIntervals extends BasicStudy {
             }
         }
         res.add(curr);
-        int[][] ret = new int[res.size()][]; 
+        int[][] ret = new int[res.size()][];
         return res.toArray(ret);
     }
 

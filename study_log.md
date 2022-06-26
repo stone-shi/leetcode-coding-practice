@@ -2,8 +2,9 @@
 
 ## TODO
 
-- Check TreeMap, LinkedHashMap
+- Check TreeMap, LinkedHashMap (981)
 - Binary search all cases
+- Design video [Link](https://m.youtube.com/watch?v=bUHFg8CZFws)
 
 ## For Google interview
 
@@ -107,7 +108,7 @@
 
 ### 2022/06/19
 
-**2nd time starting** of google high frequency
+**2nd time starting** of google high frequency [1/x]
 
 - 1509 Minimum Difference Between Largest and Smallest Value in Three Moves
 - 843 Guess the Word
@@ -119,3 +120,13 @@
 - 690 Employee Importance 
 - 1423 Maximum Points You Can Obtain from Cards
 
+### 2022/06/25
+
+**2nd time starting** of google high frequency [2/x]
+
+- 792 Number of Matching Subsequences
+- **1110 Delete Nodes And Return Forest**
+- 833 Find And Replace in String
+- 56 Merge Intervals
+- 299 Bulls and Cows
+- 
