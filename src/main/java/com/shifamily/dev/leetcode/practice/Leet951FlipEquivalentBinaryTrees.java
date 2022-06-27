@@ -31,14 +31,29 @@ public class Leet951FlipEquivalentBinaryTrees extends BasicStudy {
         return cases;
     }
 
+    // second try - 2022/06/26
+    @CaseRunner
+    public boolean flipEquiv2(TreeNode root1, TreeNode root2) {
+        if (root1 == null)
+            return root2 == null;
+        if (root2 == null)
+            return false;
+
+        if (root1.val != root2.val)
+            return false;
+
+        return (flipEquiv2(root1.left, root2.left) || flipEquiv2(root1.left, root2.right))
+                && (flipEquiv2(root1.right, root2.right) || flipEquiv2(root1.right, root2.left));
+    }
+
     // solution 2, DFS
     @CaseRunner
     public boolean flipEquivDFS(TreeNode root1, TreeNode root2) {
         return dfs(root1, root2);
     }
 
-    private boolean dfs(TreeNode n1, TreeNode n2){
-        if (n1 == null || n2 == null){
+    private boolean dfs(TreeNode n1, TreeNode n2) {
+        if (n1 == null || n2 == null) {
             if (n1 == n2)
                 return true;
             else
@@ -50,12 +65,12 @@ public class Leet951FlipEquivalentBinaryTrees extends BasicStudy {
         boolean usedRightNode = false;
 
         boolean leftOK = dfs(n1.left, n2.left);
-        if (!leftOK){
-            if ( !dfs(n1.left, n2.right))
-            return false;
+        if (!leftOK) {
+            if (!dfs(n1.left, n2.right))
+                return false;
             usedRightNode = true;
         }
-        return dfs(n1.right, usedRightNode? n2.left : n2.right);
+        return dfs(n1.right, usedRightNode ? n2.left : n2.right);
     }
 
     // solution 1, BFS

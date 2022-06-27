@@ -4,11 +4,11 @@
 
 [853 Car Fleet](https://leetcode.com/problems/car-fleet/)
 
-Medium 1425 414
+**<span style="color:blue">Medium</span>** 1425 414
 
 There are n cars going to the same destination along a one-lane road. The destination is target miles away.
 
-You are given two integer array position and speed, both of length n, where position[i] is the position of the ith car and speed[i] is the speed of the ith car (in miles per hour).
+You are given two integer array position and speed, both of length n, where `position[i]` is the position of the i^th^ car and `speed[i]` is the speed of the i^th^ car (in miles per hour).
 
 A car can never pass another car ahead of it, but it can catch up to it and drive bumper to bumper at the same speed. The faster car will slow down to match the slower car's speed. The distance between these two cars is ignored (i.e., they are assumed to have the same position).
 

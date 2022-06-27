@@ -20,6 +20,31 @@ public class Leet853CarFleet extends BasicStudy {
         return cases;
     }
 
+
+    // second try - 2022/6/26
+    @CaseRunner
+    public int carFleet2(int target, int[] position, int[] speed) {
+        int n = position.length;
+        int[][] car = new int[n][2];
+        for (int i = 0; i < speed.length; i++){
+            car[i][0] = position[i];
+            car[i][1] = speed[i];
+        }
+        Arrays.sort(car, (a, b) -> b[0] - a[0]);
+        int res = 0;
+
+        double at = -1.0;
+        for (int i = 0; i < car.length; i++) {
+            double atCar = (target - car[i][0]) * 1.0 / car[i][1] ;
+            if (atCar > at){
+                res++;
+                at = atCar;
+            }
+        }
+
+        return res;    
+    }
+
     @CaseRunner
     public int carFleet(int target, int[] position, int[] speed) {
         PriorityQueue<int[]> pq = new PriorityQueue<>( (o1, o2) -> o2[0] - o1[0] );

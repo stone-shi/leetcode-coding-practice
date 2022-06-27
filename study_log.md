@@ -3,7 +3,7 @@
 ## TODO
 
 - Check TreeMap, LinkedHashMap (981)
-- Binary search all cases
+- Binary search all casesa (875)
 - Design video [Link](https://m.youtube.com/watch?v=bUHFg8CZFws)
 
 ## For Google interview
@@ -129,4 +129,16 @@
 - 833 Find And Replace in String
 - 56 Merge Intervals
 - 299 Bulls and Cows
-- 
+
+### 2022/06/26
+
+**2nd time starting** [3/x]
+
+- 394 Decode String
+- 3 Longest Substring Without Repeating Characters
+- **4 Median of Two Sorted Arrays**
+- 951 Flip Equivalent Binary Trees
+- 2 Add Two Numbers
+- 418 Sentence Screen Fitting
+- 853 Car Fleet
+- 900 RLE Iterator

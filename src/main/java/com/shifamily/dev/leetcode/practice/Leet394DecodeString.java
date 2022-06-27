@@ -9,9 +9,10 @@ public class Leet394DecodeString extends BasicStudy {
     @CaseData
     public List<CaseParameters> data1() {
         List<CaseParameters> cases = new ArrayList<>();
-        cases.add(CaseParameters.builder().parameters(new Object[] { "3[z]2[2[y]pq4[2[jk]e1[f]]]ef" })
-                .answer("zzzyypqjkjkefjkjkefjkjkefjkjkefyypqjkjkefjkjkefjkjkefjkjkefef")
-                .description("case 0").build());
+        // cases.add(CaseParameters.builder().parameters(new Object[] {
+        // "3[z]2[2[y]pq4[2[jk]e1[f]]]ef" })
+        // .answer("zzzyypqjkjkefjkjkefjkjkefjkjkefyypqjkjkefjkjkefjkjkefjkjkefef")
+        // .description("case 0").build());
 
         cases.add(CaseParameters.builder().parameters(new Object[] { "3[a]2[bc]" }).answer("aaabcbc")
                 .description("case a").build());
@@ -21,6 +22,42 @@ public class Leet394DecodeString extends BasicStudy {
                 .description("case c").build());
 
         return cases;
+    }
+
+    // second try - 2022/06/25
+    @CaseRunner
+    public String decodeString3(String s) {
+        StringBuilder sb = new StringBuilder();
+        Deque<Integer> stackCt = new LinkedList<>();
+        Deque<StringBuilder> stackSb = new LinkedList<>();
+
+        int i = 0;
+        int numStart = -1;
+        int count = 1;
+        while (i < s.length()) {
+            char c = s.charAt(i);
+            if (c >= '0' && c <= '9') {
+                if (numStart == -1)
+                    numStart = i;
+            } else if (c == '[') {
+                stackCt.push(count);
+                stackSb.push(sb);
+                sb = new StringBuilder();
+                count = Integer.valueOf(s.substring(numStart, i));
+                numStart = -1;
+            } else if (c == ']') {
+                StringBuilder expended = new StringBuilder();
+                for (int j = 0; j < count; j++) {
+                    expended.append(sb);
+                }
+                count = stackCt.pop();
+                sb = stackSb.pop().append(expended);
+            } else {
+                sb.append(c);
+            }
+            i++;
+        }
+        return sb.toString();
     }
 
     // solution 2 - iteration / stack

@@ -4,9 +4,7 @@
 
 [394 Decode String](https://leetcode.com/problems/decode-string/)
 
-Medium
-8183
-350
+**<span style="color:blue">Medium</span>** 8183 350
 
 Given an encoded string, return its decoded string.
 

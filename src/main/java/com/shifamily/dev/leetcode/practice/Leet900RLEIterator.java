@@ -20,6 +20,36 @@ public class Leet900RLEIterator extends BasicStudy {
     }
 
     @CaseRunner("RLEIterator")
+    static public class RLEIterator2 {
+        int[] encoding;
+        int currentEle = 0;
+        int ct = 0;
+        int len = 0;
+
+        public RLEIterator2(int[] encoding) {
+            this.encoding = encoding;
+            this.len = encoding.length;
+            ct = encoding[0];
+        }
+
+        public int next(int n) {
+            while (n > 0 && currentEle < len - 1) {
+                if (ct >= n) {
+                    ct = ct - n;
+                    return encoding[currentEle + 1];
+                } else {
+                    n = n - ct;
+                    currentEle += 2;
+                    if (currentEle > len - 1)
+                        return -1;
+                    ct = encoding[currentEle];
+                }
+            }
+            return -1;
+        }
+    }
+
+    @CaseRunner("RLEIterator")
     static public class RLEIterator {
         int[] encoding;
         int index = 0;

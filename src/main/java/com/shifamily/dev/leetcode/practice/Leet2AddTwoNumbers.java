@@ -30,6 +30,33 @@ public class Leet2AddTwoNumbers extends BasicStudy {
         return cases;
     }
 
+    // second try - 2022/06/26
+    @CaseRunner
+    public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
+        int up = 0;
+        ListNode res = null;
+        ListNode prev = null;
+        while (l1 != null || l2 != null) {
+            int sum = (l1 == null ? 0 : l1.val) + (l2 == null ? 0 : l2.val) + up;
+            up = sum / 10;
+            sum = sum % 10;
+            ListNode r = new ListNode(sum);
+            if (res == null) {
+                res = r;
+                prev = r;
+            } else {
+                prev.next = r;
+                prev = r;
+            }
+            l1 = l1 == null ? null : l1.next;
+            l2 = l2 == null ? null : l2.next;
+        }
+        if (up != 0){
+            prev.next = new ListNode(1);
+        }
+        return res;
+    }
+
     @CaseRunner
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 
@@ -54,7 +81,7 @@ public class Leet2AddTwoNumbers extends BasicStudy {
             l1 = l1 == null ? null : l1.next;
             l2 = l2 == null ? null : l2.next;
         }
-        if (addtion != 0){
+        if (addtion != 0) {
             prev.next = new ListNode(addtion);
         }
 

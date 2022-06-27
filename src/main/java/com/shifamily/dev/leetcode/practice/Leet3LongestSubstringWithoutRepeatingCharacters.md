@@ -2,8 +2,8 @@
 
 ## 原题
 
-3 Longest Substring Without Repeating Characters
-Medium 23815 1058
+[3 Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
+**<span style="color:blue">Medium</span>**
 
 Given a string s, find the length of the longest substring without repeating characters.
 

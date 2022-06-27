@@ -21,6 +21,48 @@ public class Leet418SentenceScreenFitting extends BasicStudy {
         return cases;
     }
 
+    // second try 2022/6/26
+    @CaseRunner
+    public int wordsTyping2(String[] sentence, int rows, int cols) {
+        int[] lens = new int[sentence.length];
+        for (int i = 0; i < sentence.length; i++) 
+            lens[i] = sentence[i].length();
+       
+        int res = -1;
+        int currentRow = 0;
+        int currentCol = 0;
+        Map<Integer, int[]> cache = new HashMap<>();
+        while (currentRow <= rows){
+            int[] r = fitInto(lens, currentCol, cols, cache);
+            currentCol = r[0];
+            currentRow += r[1];
+            res++;
+        }
+        return res;
+    }
+
+    private int[] fitInto(int[] lens, int startCol, int col, Map<Integer, int[]> cache) {
+        if (cache.containsKey(startCol))
+            return cache.get(startCol);
+
+        int row = 0;
+        int currCol = startCol;
+
+        int i = 0;
+        while (i < lens.length) {
+            if (currCol + lens[i] > col) {
+                row++;
+                currCol = 0;
+            } else {
+                currCol = currCol + lens[i] + 1;
+                i++;
+            }
+        }
+        int[] res = new int[]{currCol, row};
+        cache.put(startCol, res);
+        return res;
+    }
+
     @CaseRunner
     public int wordsTyping(String[] sentence, int rows, int cols) {
         int[] l = new int[sentence.length];

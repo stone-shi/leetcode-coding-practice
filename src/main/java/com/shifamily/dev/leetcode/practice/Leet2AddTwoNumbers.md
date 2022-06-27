@@ -4,7 +4,7 @@
 
 [2 Add Two Numbers](https://leetcode.com/problems/add-two-numbers)
 
-Medium 18508 3774
+**<span style="color:blue">Medium</span>**  18508 3774
 
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
 

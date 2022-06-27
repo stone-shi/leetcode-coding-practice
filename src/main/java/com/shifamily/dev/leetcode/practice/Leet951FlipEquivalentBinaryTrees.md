@@ -3,7 +3,7 @@
 ## 原题
 
 [951 Flip Equivalent Binary Trees](https://leetcode.com/problems/flip-equivalent-binary-trees/)
-Medium 1646 75
+**<span style="color:blue">Medium</span>**
 
 For a binary tree T, we can define a flip operation as follows: choose any node, and swap the left and right child subtrees.
 
