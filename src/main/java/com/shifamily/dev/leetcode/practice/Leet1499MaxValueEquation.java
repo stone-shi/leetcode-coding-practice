@@ -23,6 +23,36 @@ public class Leet1499MaxValueEquation extends BasicStudy {
         return cases;
     }
 
+
+    // second try - 2022/6/27
+    @CaseRunner
+    public int findMaxValueOfEquation2(int[][] points, int k) {
+        Deque<int[]> q = new LinkedList<>();
+
+        int res = Integer.MIN_VALUE;
+        for (int[] point : points) {
+            // yi + yj + |xi - xj| -> yi + yj + xj - xi -> yj + xj + (yi - xi)
+
+            // remove invalid - (yi - xi) > k, pull from first is because pointes sorted by x
+            while (!q.isEmpty() && point[0] - q.peekFirst()[1] > k)
+                q.pollFirst();
+
+            // check max, head is alway biggest (yi - xi)
+            if (!q.isEmpty())
+                res = Math.max(res, q.peekFirst()[0] + point[0] + point[1]);
+
+            // make sure biggest (yi - xi) in the first elemenet of queue
+            while (!q.isEmpty() && q.peekLast()[0] < (point[1] - point[0]))
+                q.removeLast(); 
+
+            // enqueue yi - xi, xi
+            q.offerLast(new int[] {point[1] - point[0], point[0]});
+        }
+        return res;
+        
+    }
+
+
     // monotonic stack solution
     // yi + yj + | xi - xj|, since x is sorted, | xi - xj | -> xj - xi.
     // yi + yj + | xi - xj| -> yi + yj + xj - xi -> xj + yj + yi - xi

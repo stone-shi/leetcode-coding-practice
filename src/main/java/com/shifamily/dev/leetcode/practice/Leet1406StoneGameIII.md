@@ -3,8 +3,7 @@
 ## 原题
 
 [1406 Stone Game III](https://leetcode.com/problems/stone-game-iii/)
-
-**Hard** 983 22
+**<span style="color:red">Hard</span>**
 
 Alice and Bob continue their games with piles of stones. There are several stones arranged in a row, and each stone has an associated value which is an integer given in the array stoneValue.
 
@@ -46,15 +45,15 @@ Remember that both play optimally so here Alice will choose the scenario that ma
 
 ## 解法
 
-dp[i] means, if we ignore before A[i],
-what's the highest score that Alex can win over the Bob？
+`dp[i]` means, if we ignore before `A[i]` (last i stones)
+what's the highest score that current operator (at i) win over their oppononent？
+Then dp[0] shows whether Alice win over Bob (Alice goes first, so index 0 is alice)
 
-There are three option for Alice to choose.
-Take A[i], win take - dp[i+1]
-Take A[i] + A[i+1], win take - dp[i+2]
-Take A[i] + A[i+1] + A[i+2], win take - dp[i+3]
-dp[i] equals the best outcome of these three solutions.
-
+There are three option for Current ops to choose.
+Take `A[i]`, win `take - dp[i+1]`
+Take `A[i] + A[i+1]`, win `take - dp[i+2]`
+Take `A[i] + A[i+1] + A[i+2]`, win `take - dp[i+3]`
+`dp[i]` equals the best outcome of these three solutions.
 
 ## 复杂度
 

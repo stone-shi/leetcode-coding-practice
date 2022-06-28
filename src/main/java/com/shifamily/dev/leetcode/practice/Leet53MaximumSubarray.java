@@ -17,6 +17,21 @@ public class Leet53MaximumSubarray extends BasicStudy {
         return cases;
     }
 
+    // 4th at 2022/06/27
+    @CaseRunner
+    public int maxSubArray4(int[] nums) {
+        int n = nums.length;
+
+        int[] dp = new int[n];
+        dp[0] = nums[0];
+        int max = dp[0];
+        for (int i = 1; i < n; i++) {
+            dp[i] = dp[i - 1] > 0 ? dp[i - 1] + nums[i] : nums[i];
+            max = Math.max(dp[i], max);
+        }
+        return max;
+    }
+
     // 3rd try at 5/31/2022
     @CaseRunner
     public int maxSubArray2(int[] nums) {
@@ -26,7 +41,7 @@ public class Leet53MaximumSubarray extends BasicStudy {
 
         for (int i = 1; i < nums.length; i++) {
             dp[i] = (dp[i - 1] > 0 ? dp[i - 1] : 0) + nums[i];
-            res = Math.max(res, dp[i]) ;
+            res = Math.max(res, dp[i]);
         }
         return res;
     }

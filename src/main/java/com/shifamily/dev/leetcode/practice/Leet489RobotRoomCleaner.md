@@ -4,7 +4,7 @@
 
 489 Robot Room Cleaner
 
-Hard
+**<span style="color:red">Hard</span>**
 
 Given a robot cleaner in a room modeled as a grid.
 

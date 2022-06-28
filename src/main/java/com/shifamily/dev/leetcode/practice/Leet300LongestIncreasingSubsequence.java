@@ -21,6 +21,24 @@ public class Leet300LongestIncreasingSubsequence extends BasicStudy {
         return cases;
     }
 
+    // second try - 2022/06/27
+    // dp solution O(N^2)
+    @CaseRunner
+    public int lengthOfLIS4(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j])
+                    dp[i] = Math.max(dp[j] +1, dp[i]);
+            }
+            max = Math.max(max, dp[i]);
+        }
+        return max;
+    }
+
     // solution 1, dp time: O(N^2)
     // dp[i] = max increasing subsequence ended at num[i]
     // give num[i], find if num[i] > num[j] true, dp[i] = max( dp[j] + 1, dp[i] ),

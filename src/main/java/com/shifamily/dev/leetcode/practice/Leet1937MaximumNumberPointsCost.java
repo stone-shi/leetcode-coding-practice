@@ -23,6 +23,42 @@ public class Leet1937MaximumNumberPointsCost extends BasicStudy {
         return cases;
     }
 
+    // second try - 2022/06/27
+    public long maxPoints3(int[][] points) {
+        int m = points.length;
+        int n = points[0].length;
+
+        long[] prev = new long[n];
+        for (int i = 0; i < n; i++) {
+           prev[i] = points[0][i]; 
+        }
+
+        for (int i = 1; i < m; i++) {
+            long[] left = new long[n];
+            left[0] = prev[0];
+            for (int j = 1; j < n; j++) {
+                left[j] = Math.max(left[j - 1] -1, prev[j]);
+            }
+
+            long[] right = new long[n];
+            right[n - 1] = prev[n - 1];
+            for (int j = n - 2; j >= 0; j--) {
+                right[j] = Math.max(right[j + 1] - 1, prev[j]);
+            }
+            
+            long[] curr = new long[n];
+            for (int j = 0; j < j; j++) {
+                curr[j] = Math.max(left[j], right[j]) + points[i][j]; 
+            }
+            prev = curr;
+        }
+        long res = 0;
+        for (int i = 0; i < prev.length; i++) {
+           res = Math.max(res, prev[i]); 
+        }
+        return res;
+    }
+
     // solution 1 O (m * n ), good one, but need solution 2 to understand why
     // basically , we need get rid of k loop
     // leftDP[i] meaning when chose i, what's the max points if max from left side
@@ -30,8 +66,9 @@ public class Leet1937MaximumNumberPointsCost extends BasicStudy {
     @CaseRunner
     public long maxPoints2(int[][] points) {
         int m = points.length, n = points[0].length;
-        long [] prev = new long[n];
-        for (int i = 0; i < n; i++) prev[i] = points[0][i];
+        long[] prev = new long[n];
+        for (int i = 0; i < n; i++)
+            prev[i] = points[0][i];
         long[] leftDP = new long[n];
         long[] rightDP = new long[n];
 

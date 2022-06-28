@@ -3,7 +3,7 @@
 ## TODO
 
 - Check TreeMap, LinkedHashMap (981)
-- Binary search all casesa (875)
+- Binary search all casesa (875, 300)
 - Design video [Link](https://m.youtube.com/watch?v=bUHFg8CZFws)
 
 ## For Google interview
@@ -142,3 +142,16 @@
 - 418 Sentence Screen Fitting
 - 853 Car Fleet
 - 900 RLE Iterator
+
+### 2022/06/27
+
+**2nd time starting** [4/x]
+
+- 329 Longest Increasing Path in a Matrix
+- **1406 Stone Game III**
+- **1937 Maximum Number of Points with Cost**
+- **1499 Max Value of Equation**
+- **300 Longest Increasing Subsequence** ONLY O(N^2^) DP one
+- **53 Maximum Subarray**
+- 489 Robot Room Cleaner
+- 

@@ -4,7 +4,7 @@
 
 [300 Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)
 
-**Medium** 12122 237
+**<span style="color:blue">Medium</span>** 12122 237
 
 Given an integer array nums, return the length of the longest strictly increasing subsequence.
 

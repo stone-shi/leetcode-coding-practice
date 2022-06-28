@@ -24,6 +24,12 @@ public class Leet15ThreeSum extends BasicStudy {
         return cases;
     }
 
+    // second try - 2022/6/27
+    public List<List<Integer>> threeSum3(int[] nums) {
+        
+        
+    }
+
     // solution 2:
     @CaseRunner
     public List<List<Integer>> threeSum2(int[] nums) {

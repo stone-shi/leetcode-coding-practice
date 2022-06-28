@@ -36,6 +36,43 @@ public class Leet329LongestIncreasingPathMatrix extends BasicStudy {
         return cases;
     }
 
+    // second try 2022/06/27
+    @CaseRunner
+    public int longestIncreasingPath2(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        int[][] dp = new int[m][n];
+
+        int maxStep = Integer.MIN_VALUE;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int step = helper(matrix, i, j, m, n, dp);
+                maxStep = Math.max(maxStep, step);
+            }
+        }
+        return maxStep;
+    }
+
+    private int[][] dir = new int[][] { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
+
+    private int helper(int[][] matrix, int i, int j, int rows, int cols, int[][] dp) {
+        if (dp[i][j] > 0)
+            return dp[i][j];
+
+        int maxStep = 1;
+        for (int[] d : dir) {
+            int nextI = i + d[0];
+            int nextJ = j + d[1];
+            if (nextI >= rows || nextJ >= cols || nextJ < 0 || nextI < 0 || matrix[nextI][nextJ] <= matrix[i][j])
+                continue;
+            int step = 1 + helper(matrix, nextI, nextJ, rows, cols, dp);
+            maxStep = Math.max(maxStep, step);
+        }
+        dp[i][j] = maxStep;
+        return maxStep;
+    }
+
     @CaseRunner
     public int longestIncreasingPath(int[][] matrix) {
         int m = matrix.length;
@@ -45,7 +82,7 @@ public class Leet329LongestIncreasingPathMatrix extends BasicStudy {
         int max = Integer.MIN_VALUE;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                int s = dfs(matrix, i, j, m, n, maxcell );
+                int s = dfs(matrix, i, j, m, n, maxcell);
                 max = Math.max(s, max);
             }
         }
@@ -61,7 +98,7 @@ public class Leet329LongestIncreasingPathMatrix extends BasicStudy {
         for (int[] d : dir) {
             int nextI = i + d[0];
             int nextJ = j + d[1];
-            if (nextI < 0 || nextJ < 0 || nextI >= m || nextJ >= n || matrix[nextI][nextJ] <= matrix[i][j] )
+            if (nextI < 0 || nextJ < 0 || nextI >= m || nextJ >= n || matrix[nextI][nextJ] <= matrix[i][j])
                 continue;
             int curr = 1 + dfs(matrix, nextI, nextJ, m, n, maxcell);
             step = Math.max(step, curr);

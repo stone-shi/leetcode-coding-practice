@@ -5,7 +5,7 @@ import com.shifamily.dev.*;
 
 public class Leet489RobotRoomCleaner extends BasicStudy {
 
-    // test driver code, not part of solution 
+    // test driver code, not part of solution
     static class Robot {
 
         int[][] room;
@@ -81,6 +81,43 @@ public class Leet489RobotRoomCleaner extends BasicStudy {
                                 { 2, 2, 2, 2, 2, 2, 2, 2 } })
                 .description("case a").build());
         return cases;
+    }
+
+    // second try - 2022/06/27
+    @CaseRunner
+    public int[][] runnerWrapper2(int[][] room, int row, int col) {
+        Robot robot = new Robot(room, row, col);
+        cleanRoom2(robot);
+        return room;
+    }
+
+    private void cleanRoom2(Robot r) {
+        helper(r, 0, 0, 0, new HashSet<>());
+    }
+
+    int[][] dir = new int[][] { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
+
+    private void helper(Robot r, int i, int j, int d, Set<String> visited) {
+        // d: 0 - up, 1 - right, 2 - down, 3 - left
+        r.clean();
+        visited.add(i + "," + j);
+
+        for (int k = 0; k < 4; k++) {
+            int nextI = i + dir[d][0];
+            int nextJ = j + dir[d][1];
+            if (!visited.contains(nextI + "," + nextJ) && r.move()) {
+                helper(r, nextI, nextJ, d, visited);
+                r.turnRight();
+                r.turnRight();
+                r.move();
+                r.turnRight();
+                r.turnRight();
+            }
+            d++;
+            d %= 4;
+            r.turnRight();
+        }
+
     }
 
     @CaseRunner

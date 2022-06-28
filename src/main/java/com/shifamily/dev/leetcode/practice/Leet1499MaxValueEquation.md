@@ -4,7 +4,7 @@
 
 [1499 Max Value of Equation](https://leetcode.com/problems/max-value-of-equation/)
 
-**Hard** 830 31
+**<span style="color:red">Hard</span>** 830 31
 
 You are given an array points containing the coordinates of points on a 2D plane, sorted by the x-values, where `points[i] = [xi, yi]` such that `xi < xj` for all `1 <= i < j <= points.length`. You are also given an integer k.
 
@@ -67,7 +67,9 @@ monotonic solution - O(N)
         int res = Integer.MIN_VALUE;
         Deque<int[]> q = new LinkedList<>();
         for (int[] point : points) { // go throuh all points (j)
-            // remove point not qualify xj - xi > k
+
+            // yi + yj + |xi - xj| -> yi + yj + xj - xi -> yj + xj + (yi - xi)
+            // remove point not qualify xj - xi > k, pull from first is because pointes sorted by x
             while (!q.isEmpty() && point[0] - q.peekFirst()[1] > k)
                 q.pollFirst();
 
@@ -75,7 +77,7 @@ monotonic solution - O(N)
             if (!q.isEmpty()) {
                 res = Math.max(res, point[0] + point[1] + q.peekFirst()[0]); //  point[0] + point[1] + q.peekFirst()[0] -> xj + yj + (yi - xi)
             }
-            // monotonic stack here
+            // monotonic stack here, make sure biggest (yi - xi) in the first elemenet of queue
             while (!q.isEmpty() && q.peekLast()[0] < (point[1] - point[0]))
                 q.removeLast();
 
