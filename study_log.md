@@ -6,6 +6,10 @@
 - Binary search all casesa (875, 300)
 - Design video [Link](https://m.youtube.com/watch?v=bUHFg8CZFws)
 
+## TODO questions
+
+
+
 ## For Google interview
 
 ### 2022/05/14
@@ -154,4 +158,26 @@
 - **300 Longest Increasing Subsequence** ONLY O(N^2^) DP one
 - **53 Maximum Subarray**
 - 489 Robot Room Cleaner
-- 
+
+### 2022/06/28
+
+**2nd time starting** [4/x]
+
+- 15 3Sum
+- 562 Longest Line of Consecutive One in Matrix
+- 954 Array of Doubled Pairs
+- 1776 Car Fleet II
+
+### 2022/06/29
+
+**2nd time starting** [5/x]
+
+- **542 01 Matrix**
+
+### 2022/06/30
+
+**2nd time starting** [6/x]
+
+-  871 Minimum Number of Refueling Stops
+-  417 Pacific Atlantic Water Flow
+
