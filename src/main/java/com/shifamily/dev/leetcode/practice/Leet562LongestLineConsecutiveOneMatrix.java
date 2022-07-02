@@ -3,7 +3,7 @@ package com.shifamily.dev.leetcode.practice;
 import java.util.*;
 import com.shifamily.dev.*;
 
-public class Leet562LongestLineConsecutiveOneMatrix extends BasicStudy{
+public class Leet562LongestLineConsecutiveOneMatrix extends BasicStudy {
     @CaseData
     public List<CaseParameters> data1() {
         List<CaseParameters> cases = new ArrayList<>();
@@ -11,6 +11,37 @@ public class Leet562LongestLineConsecutiveOneMatrix extends BasicStudy{
                 .parameters(new Object[] { new int[][] { { 0, 1, 1, 0 }, { 0, 1, 1, 0 }, { 0, 0, 0, 1 } } }).answer(3)
                 .description("case a").build());
         return cases;
+    }
+
+
+    // second try 2022/6/28
+    @CaseRunner
+    public int longestLine2(int[][] m) {
+        int rows = m.length;
+        int cols = m.length;
+
+        int[][] dpV = new int[rows + 1][cols + 1];
+        int[][] dpD = new int[rows + 1][cols + 2];
+        int[][] dpAD = new int[rows + 1][cols + 1];
+
+        int res = 0;
+        for (int i = 1; i <= rows; i++) {
+            int ctH = 0;
+            for (int j = 1; j <= cols; j++) {
+                int v = m[i - 1][j - 1];
+                ctH++;
+                dpV[i][j] = dpV[i - 1][j] + v;
+                dpD[i][j] = dpD[i - 1][j + 1] + v;
+                dpAD[i][j] = dpAD[i - 1][j - 1] + v;
+            }
+            res = Math.max(res, ctH);
+        }
+        for (int i = 0; i < cols; i++) {
+            res = Math.max(res, dpV[rows][i]);
+            res = Math.max(res, dpD[rows][i]);
+            res = Math.max(res, dpAD[rows][i]);
+        }
+        return res;
     }
 
     @CaseRunner

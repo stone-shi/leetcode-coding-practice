@@ -1,6 +1,8 @@
 package com.shifamily.dev.leetcode.practice;
 
 import java.util.*;
+
+
 import com.shifamily.dev.*;
 
 public class Leet542ZeroOneMatrix extends BasicStudy {
@@ -34,6 +36,39 @@ public class Leet542ZeroOneMatrix extends BasicStudy {
 
     int[][] dir = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
 
+    // second try - 2022/6/29
+    @CaseRunner
+    public int[][] updateMatrix2(int[][] mat) {
+        int m = mat.length;
+        int n = mat[0].length;
+        int[][] res = new int[m][n];
+        Queue<int[]> q = new LinkedList<>();
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (mat[i][j] == 0)
+                    q.offer(new int[] { i, j });
+                else
+                    res[i][j] = -1;
+
+            }
+        }
+        while (!q.isEmpty()) {
+            int[] pos = q.poll();
+            for (int[] d : dir) {
+                int nextI = pos[0] + d[0];
+                int nextJ = pos[1] + d[1];
+                if (nextI < 0 || nextI >= m || nextJ < 0 || nextJ >= n)
+                    continue;
+                if (res[nextI][nextJ] == -1){
+                    res[nextI][nextJ] = 1 + res[pos[0]][pos[1]];
+                    q.offer(new int[]{nextI, nextJ});
+                }
+            }
+        }
+        return res;
+    }
+
     @CaseRunner
     public int[][] updateMatrix(int[][] mat) {
         int m = mat.length;
@@ -43,40 +78,38 @@ public class Leet542ZeroOneMatrix extends BasicStudy {
 
         Queue<int[]> q = new LinkedList<>();
         // you can reuse mat too
-        // this loop will add zero (first layer in queue) and marked rest -1 (not processed)
+        // this loop will add zero (first layer in queue) and marked rest -1 (not
+        // processed)
         int[][] res = new int[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 if (mat[i][j] == 0)
-                    q.offer(new int[]{i, j});
+                    q.offer(new int[] { i, j });
                 else
                     res[i][j] = -1;
             }
         }
 
-        while (!q.isEmpty()){
-            // get 
+        while (!q.isEmpty()) {
+            // get
             int[] pos = q.poll();
 
-            // check up, down, left and right, if not processed, enqueue and update result + 1
+            // check up, down, left and right, if not processed, enqueue and update result +
+            // 1
             for (int[] d : dir) {
                 int nextM = d[0] + pos[0];
                 int nextN = d[1] + pos[1];
-                if (nextM < 0 || nextN < 0 || nextM >= m || nextN >= n )
+                if (nextM < 0 || nextN < 0 || nextM >= m || nextN >= n)
                     continue;
-                if (res[nextM][nextN] == -1){
+                if (res[nextM][nextN] == -1) {
                     res[nextM][nextN] = res[pos[0]][pos[1]] + 1;
-                    q.offer(new int[]{nextM, nextN});
+                    q.offer(new int[] { nextM, nextN });
                 }
             }
 
         }
 
-
         return res;
     }
-
-
-
 
 }

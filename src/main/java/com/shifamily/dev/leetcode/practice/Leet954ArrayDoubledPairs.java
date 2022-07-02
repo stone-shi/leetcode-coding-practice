@@ -9,8 +9,9 @@ public class Leet954ArrayDoubledPairs extends BasicStudy {
     @CaseData
     public List<CaseParameters> data1() {
         List<CaseParameters> cases = new ArrayList<>();
-        // cases.add(CaseParameters.builder().parameters(new Object[] { new int[] { 2, 1, 1, 4, 8, 8 } }).answer(false)
-        //         .description("Case 0").build());
+        // cases.add(CaseParameters.builder().parameters(new Object[] { new int[] { 2,
+        // 1, 1, 4, 8, 8 } }).answer(false)
+        // .description("Case 0").build());
         cases.add(CaseParameters.builder().parameters(new Object[] { new int[] { 2, 4, 0, 0, 8, 1 } }).answer(true)
                 .description("Case 0").build());
         cases.add(CaseParameters.builder().parameters(new Object[] { new int[] { 3, 1, 3, 6 } }).answer(false)
@@ -23,6 +24,45 @@ public class Leet954ArrayDoubledPairs extends BasicStudy {
     }
 
     @CaseRunner
+    public boolean canReorderDoubled2(int[] arr) {
+        Map<Integer, Integer> arrMap = new HashMap<>();
+        int z = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == 0)
+                z++;
+            else
+                arrMap.put(arr[i], arrMap.getOrDefault(arr[i], 0) + 1);
+        }
+        if (z % 2 != 0)
+            return false;
+        Arrays.sort(arr);
+        for (int a : arr) {
+            int target;
+            if (a > 0) {
+                target = 2 * a;
+            } else if (a < 0 && a % 2 == 0) {
+                target = a / 2;
+            } else
+                continue;
+            if (arrMap.containsKey(target) && arrMap.containsKey(a)) {
+                int tc = arrMap.get(target);
+                int ac = arrMap.get(a);
+                if (tc > ac) {
+                    arrMap.put(target, tc - ac);
+                    arrMap.remove(a);
+                } else if (tc < ac) {
+                    arrMap.put(a, ac - tc);
+                    arrMap.remove(target);
+                } else {
+                    arrMap.remove(a);
+                    arrMap.remove(target);
+                }
+            }
+        }
+        return arrMap.size() == 0;
+    }
+
+    @CaseRunner
     public boolean canReorderDoubled(int[] arr) {
         Arrays.sort(arr);
 
@@ -31,7 +71,7 @@ public class Leet954ArrayDoubledPairs extends BasicStudy {
         for (int a : arr) {
             if (a != 0) {
                 count.put(a, count.getOrDefault(a, 0) + 1);
-            }else{
+            } else {
                 z++;
             }
         }
@@ -59,7 +99,7 @@ public class Leet954ArrayDoubledPairs extends BasicStudy {
                     count.remove(a);
                 } else {
                     count.remove(target);
-                    count.put(a, -1 * t );
+                    count.put(a, -1 * t);
                 }
             }
         }

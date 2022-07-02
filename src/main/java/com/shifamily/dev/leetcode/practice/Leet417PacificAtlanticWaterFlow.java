@@ -26,6 +26,59 @@ public class Leet417PacificAtlanticWaterFlow extends BasicStudy {
     }
 
     @CaseRunner
+    public List<List<Integer>> pacificAtlantic2(int[][] heights) {
+        List<List<Integer>> res = new ArrayList<>();
+        int m = heights.length;
+        int n = heights[0].length;
+        int[][] dp = new int[m][n];
+
+        for (int i = 0; i < m; i++)
+            helper(heights, i, 0, m, n, dp, res, true);
+
+        for (int i = 0; i < n; i++)
+            helper(heights, 0, i, m, n, dp, res, true);
+
+        for (int i = 0; i < m; i++)
+            helper(heights, i, n - 1, m, n, dp, res, false);
+
+        for (int i = 0; i < n; i++)
+            helper(heights, m - 1, i, m, n, dp, res, false);
+
+        return res;
+    }
+
+    int[][] dr = new int[][] { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+
+    private void helper(int[][] heights, int i, int j, int m, int n, int[][] dp, List<List<Integer>> res,
+            boolean fromPacific) {
+        if (fromPacific) {
+            if (dp[i][j] == 1)
+                return;
+            dp[i][j] = 1;
+        } else {
+            if (dp[i][j] == 2)
+                return;
+            if (dp[i][j] == 1) {
+                List<Integer> r = new ArrayList<>();
+                r.add(i);
+                r.add(j);
+                res.add(r);
+            }
+            dp[i][j] = 2;
+        }
+
+        for (int[] d : dr) {
+            int nextI = i + d[0];
+            int nextJ = j + d[1];
+
+            if (nextI < 0 || nextI >= m || nextJ < 0 || nextJ >= n
+                    || (heights[nextI][nextJ] < heights[i][j]))
+                continue;
+            helper(heights, nextI, nextJ, m, n, dp, res, fromPacific);
+        }
+    }
+
+    @CaseRunner
     public List<List<Integer>> pacificAtlantic(int[][] heights) {
         List<List<Integer>> res = new ArrayList<>();
         int row = heights.length;
@@ -37,7 +90,7 @@ public class Leet417PacificAtlanticWaterFlow extends BasicStudy {
         // from pacific row
         for (int i = 0; i < row; i++)
             dfs(heights, row, col, i, 0, dp, res, false);
-        // from pacific col 
+        // from pacific col
         for (int i = 0; i < col; i++)
             dfs(heights, row, col, 0, i, dp, res, false);
         // from atlantic row

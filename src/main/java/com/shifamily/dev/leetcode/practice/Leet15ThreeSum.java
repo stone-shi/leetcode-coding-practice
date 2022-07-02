@@ -24,11 +24,34 @@ public class Leet15ThreeSum extends BasicStudy {
         return cases;
     }
 
-    // second try - 2022/6/27
+    // second try - 2022/6/28
+    @CaseRunner
     public List<List<Integer>> threeSum3(int[] nums) {
-        
-        
+        Set<List<Integer>> res = new HashSet<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length - 2; i++) {
+            twoSum2(nums, i + 1, nums[i], 0 - nums[i], res);
+        }
+        List<List<Integer>> ret = new ArrayList<>();
+        ret.addAll(res);
+        return ret;
     }
+
+    private void twoSum2(int[] nums, int start, int num,  int target, Set<List<Integer>> res){
+        Set<Integer> s = new HashSet<>();
+        for (int i = start; i < nums.length; i++) {
+            int find = target - nums[i];
+            if (s.contains(find)){
+                List<Integer> r = new LinkedList<>();
+                r.add(num);
+                r.add(find);
+                r.add(nums[i]);
+                res.add(r);
+            }else
+                s.add(nums[i]);
+        }
+    }
+
 
     // solution 2:
     @CaseRunner
