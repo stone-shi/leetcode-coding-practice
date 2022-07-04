@@ -7,7 +7,15 @@
 - Design video [Link](https://m.youtube.com/watch?v=bUHFg8CZFws)
 
 ## TODO questions
-803 2096 204 2277 1882 
+1717 269 1101 1034
+https://github.com/hxu296/leetcode-company-wise-problems-2022
+
+### Design
+设计一个能够auto complete的language model。怎么设计model，如果需要保护隐私，怎么设计data flow和training flow
+在内存1GB的机器处理6TB日志文件，设计一个API返回top K的日志
+設計翻譯器OOP
+设计metric收集器
+设计rate limit
 
 
 ## For Google interview
@@ -181,3 +189,17 @@
 -  871 Minimum Number of Refueling Stops
 -  417 Pacific Atlantic Water Flow
 
+### 2022/07/02
+
+- 803 Bricks Falling When Hit
+- 2096 Step-By-Step Directions From a Binary Tree Node to Another
+
+### 2022/07/03
+
+- 204 Count Primes
+  
+### 2022/07/04
+
+- 1882 Process Tasks Using Servers
+- 2277 Closest Node to Path in Tree
+- 

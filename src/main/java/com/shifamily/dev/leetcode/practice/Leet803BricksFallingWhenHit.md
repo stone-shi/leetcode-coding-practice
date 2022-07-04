@@ -67,10 +67,78 @@ Hence the result is [0,0].
 
 ## 解法
 
+[参考](https://leetcode.com/problems/bricks-falling-when-hit/discuss/119829/Python-Solution-by-reversely-adding-hits-bricks-back)
+![](https://s3-lc-upload.s3.amazonaws.com/users/luckypants/image_1521450349.png)
+![](https://s3-lc-upload.s3.amazonaws.com/users/luckypants/image_1521450376.png)
+![](https://s3-lc-upload.s3.amazonaws.com/users/luckypants/image_1521450387.png)
+![](https://s3-lc-upload.s3.amazonaws.com/users/luckypants/image_1521450393.png)
+
+- 把所有hits中的brick全部remove，因为有可能本来是0，所以 1->0, 0->-1，方便以后检查。
+- dfs把所有链接到 i = 0 row的所有 brick全部mark成2。这是remove所有的hit后的最终链接状态。
+- 从hits数组后向前，把 brick全部加回去，并且要计数有多少应为这个动作而加回去brick。从后往前是应为 isConnected检查，最后remove的在之前是连接的。
+  - 做某些检查，比如是 -1代表原来是0，没有连接的，说明之前其实已经drop了，直接countine。
+
 ## 复杂度
-`
+
+Time O(m x n | k) k -> hits， m x n -> dfs worst case
+
 ## 代码
 
 ```Java
+    @CaseRunner
+    public int[] hitBricks2(int[][] grid, int[][] hits) {
+        int m = grid.length;
+        if (m == 0)
+            return null;
+        int n = grid[0].length;
+        int k = hits.length;
 
+        // remove all hit blocks: original 1 -> 0, 0 -> -1
+        for (int[] hit : hits)
+            grid[hit[0]][hit[1]]--;
+
+        // dfs marks all connected cell to 2
+        for (int i = 0; i < n; i++)
+            dfs2(grid, 0, i);
+
+        int[] res = new int[k];
+        for (int i = k - 1; i >= 0; i--) {
+            int hi = hits[i][0];
+            int hj = hits[i][1];
+            if (grid[hi][hj] != 0)
+                continue;
+            grid[hi][hj] = 1;
+            if (!isConnected(grid, hi, hj))
+                continue;
+            res[i] = dfs2(grid, hi, hj) - 1;
+        }
+        return res;
+    }
+
+    private boolean isConnected(int[][] grid, int i, int j) {
+        if (i == 0)
+            return true;
+
+        for (int[] d : dir) {
+            int nextI = i + d[0];
+            int nextJ = j + d[1];
+            if (nextI < 0 || nextJ < 0 || nextI >= grid.length || nextJ >= grid[0].length)
+                continue;
+            if (grid[nextI][nextJ] == 2)
+                return true;
+        }
+
+        return false;
+    }
+
+    private int dfs2(int[][] grid, int i, int j) {
+        if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length || grid[i][j] != 1)
+            return 0;
+        int res = 1;
+        grid[i][j] = 2;
+        for (int[] d : dir) {
+            res += dfs2(grid, i + d[0], j + d[1]);
+        }
+        return res;
+    }
 ```
