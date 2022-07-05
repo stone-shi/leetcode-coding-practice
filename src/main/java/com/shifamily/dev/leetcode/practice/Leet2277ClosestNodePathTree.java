@@ -3,7 +3,7 @@ package com.shifamily.dev.leetcode.practice;
 import java.util.*;
 import com.shifamily.dev.*;
 
-public class Leet2277ClosestNodePathTree extends BasicStudy{
+public class Leet2277ClosestNodePathTree extends BasicStudy {
 
     @CaseData
     public List<CaseParameters> data1() {
@@ -38,7 +38,7 @@ public class Leet2277ClosestNodePathTree extends BasicStudy{
             nodeMap.put(edge[0], childrenNode);
         }
 
-        Map<int[], List<Integer>> mem = new HashMap<>();
+        Map<List<Integer>, List<Integer>> mem = new HashMap<>();
         int[] res = new int[query.length];
         for (int i = 0; i < query.length; i++) {
             int[] q = query[i];
@@ -58,9 +58,10 @@ public class Leet2277ClosestNodePathTree extends BasicStudy{
         return res;
     }
 
-    private List<Integer> bfs(Map<Integer, List<Integer>> nodeMap, int start, int end, Map<int[], List<Integer>> mem) {
-        if (mem.containsKey(new int[] { start, end }))
-            return mem.get(new int[] { start, end });
+    private List<Integer> bfs(Map<Integer, List<Integer>> nodeMap, int start, int end, Map<List<Integer>, List<Integer>> mem) {
+        List<Integer> keyPair = Arrays.asList(start, end);
+        if (mem.containsKey(keyPair))
+            return mem.get(keyPair);
 
         Queue<Integer> q = new LinkedList<>();
         HashMap<Integer, List<Integer>> nodePath = new HashMap<>();
@@ -74,8 +75,10 @@ public class Leet2277ClosestNodePathTree extends BasicStudy{
             for (int i = 0; i < size; i++) {
                 int node = q.poll();
                 List<Integer> path = nodePath.get(node);
-                if (node == end)
+                if (node == end) {
+                    mem.put(keyPair, path);
                     return path;
+                }
                 List<Integer> adjNodes = nodeMap.get(node);
                 for (int adjNode : adjNodes) {
 

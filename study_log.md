@@ -202,4 +202,7 @@ https://github.com/hxu296/leetcode-company-wise-problems-2022
 
 - 1882 Process Tasks Using Servers
 - 2277 Closest Node to Path in Tree
-- 
+
+### 2022/07/05
+
+- 1717 Maximum Score From Removing Substrings
