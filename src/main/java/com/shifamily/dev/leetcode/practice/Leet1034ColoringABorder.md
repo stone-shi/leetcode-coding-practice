@@ -42,7 +42,10 @@
 
 ## 解法
 
+从 row和col开始BFS，把同一 component的格子遍历一遍。检查边界并且color。
 ## 复杂度
+
+O(M x N)
 
 ## 代码
 

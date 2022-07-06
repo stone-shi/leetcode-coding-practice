@@ -24,7 +24,30 @@ public class Leet1034ColoringABorder extends BasicStudy {
 
     @CaseRunner
     public int[][] colorBorder(int[][] grid, int row, int col, int color) {
-        return null;
+        int m = grid.length;
+        int n = grid[0].length;
+        boolean[][] visited = new boolean[m][n];
+
+        int checkColor = grid[row][col];
+        int[][] dir = new int[][] { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[] { row, col });
+
+        while (!q.isEmpty()) {
+            int[] pos = q.poll();
+            visited[pos[0]][pos[1]] = true;
+            for (int[] d : dir) {
+                int[] next = new int[] { pos[0] + d[0], pos[1] + d[1] };
+                if (next[0] < 0 || next[1] < 0 || next[0] >= m || next[1] >= n
+                        || (!visited[next[0]][next[1]] && grid[next[0]][next[1]] != checkColor)) {
+                    grid[pos[0]][pos[1]] = color;
+                    continue;
+                }
+                if (!visited[next[0]][next[1]])
+                    q.offer(next);
+            }
+        }
+        return grid;
     }
 
 }

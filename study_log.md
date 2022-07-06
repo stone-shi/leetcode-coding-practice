@@ -5,9 +5,10 @@
 - Check TreeMap, LinkedHashMap (981)
 - Binary search all casesa (875, 300)
 - Design video [Link](https://m.youtube.com/watch?v=bUHFg8CZFws)
+- graph 269 2277 1101 - MST, prim 
 
 ## TODO questions
-1717 269 1101 1034
+ 1034
 https://github.com/hxu296/leetcode-company-wise-problems-2022
 
 ### Design
@@ -206,3 +207,10 @@ https://github.com/hxu296/leetcode-company-wise-problems-2022
 ### 2022/07/05
 
 - 1717 Maximum Score From Removing Substrings
+- 269 Alien Dictionary
+
+## 2022/07/06
+
+- 1101 The Earliest Moment When Everyone Become Friends
+- 1034 Coloring A Border
+

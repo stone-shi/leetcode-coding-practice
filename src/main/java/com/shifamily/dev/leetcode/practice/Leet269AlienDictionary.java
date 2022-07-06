@@ -1,79 +1,76 @@
 package com.shifamily.dev.leetcode.practice;
 
-import com.shifamily.dev.BasicStudy;
-import com.shifamily.dev.CaseRunner;
-
 import java.util.*;
+import com.shifamily.dev.*;
 
-/*
-269. Alien Dictionary
-Hard
-
-849
-
-174
-
-Favorite
-
-Share
-There is a new alien language which uses the latin alphabet. However, the order among letters are unknown to you. You receive a list of non-empty words from the dictionary, where words are sorted lexicographically by the rules of this new language. Derive the order of letters in this language.
-
-Example 1:
-
-Input:
-[
-  "wrt",
-  "wrf",
-  "er",
-  "ett",
-  "rftt"
-]
-
-Output: "wertf"
-Example 2:
-
-Input:
-[
-  "z",
-  "x"
-]
-
-Output: "zx"
-Example 3:
-
-Input:
-[
-  "z",
-  "x",
-  "z"
-]
-
-Output: ""
-
-Explanation: The order is invalid, so return "".
-Note:
-
-You may assume all letters are in lowercase.
-You may assume that if a is a prefix of b, then a must appear before b in the given dictionary.
-If the order is invalid, return an empty string.
-There may be multiple valid order of letters, return any one of them is fine.
- */
 public class Leet269AlienDictionary extends BasicStudy {
-
-    public Leet269AlienDictionary() {
-        String[][] casesP1 = {  {"z", "x"}, {"wrt", "wrf", "er", "ett", "rftt"},  { "z", "x", "z"}};
-        String[] answers = {  "zx", "wertf", ""};
-
-        for (int i = 0; i < casesP1.length; i++) {
-            Object[] p = new Object[1];
-            p[0] = casesP1[i];
-            addParameterAndAnswer(p, answers[i], false);
-        }
+    @CaseData
+    public List<CaseParameters> data1() {
+        List<CaseParameters> cases = new ArrayList<>();
+        cases.add(CaseParameters.builder()
+                .parameters(new Object[] { new String[] { "wrt", "wrf", "er", "ett", "rftt" } }).answer("wertf")
+                .description("Example 1").build());
+        cases.add(CaseParameters.builder()
+                .parameters(new Object[] { new String[] { "z", "x" } }).answer("zx")
+                .description("Example 2").build());
+        cases.add(CaseParameters.builder()
+                .parameters(new Object[] { new String[] { "z", "x", "z" } }).answer("")
+                .description("Example 3").build());
+        return cases;
     }
 
+    // 3rd try - 2022/7/5
+    @CaseRunner
+    public String alienOrder3(String[] words) {
+        int[] inDegree = new int[26];
+        Map<Character, Set<Character>> mapEdges = new HashMap<>();
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < words.length - 1; i++) {
+            String w1 = words[i];
+            String w2 = words[i + 1];
+            for (int j = 0; j < w1.length() && j < w2.length(); j++) {
+                char c1 = w1.charAt(j);
+                char c2 = w2.charAt(j);
+                if (c1 != c2) {
+                    inDegree[c2 - 'a']++;
+                    Set<Character> outEdge = mapEdges.getOrDefault(c1, new HashSet<>());
+                    outEdge.add(c2);
+                    mapEdges.put(c1, outEdge);
+                    if (!mapEdges.containsKey(c2))
+                        mapEdges.put(c2, new HashSet<>());
+                    break;
+                }
+            }
+        }
+
+        Queue<Character> q = new LinkedList<>();
+        for (char c : mapEdges.keySet()) {
+            if (inDegree[c - 'a'] == 0) {
+                q.offer(c);
+            }
+        }
+
+        while (!q.isEmpty()) {
+            char c = q.poll();
+            sb.append(c);
+            Set<Character> children = mapEdges.get(c);
+            for (char child : children) {
+                inDegree[child - 'a']--;
+                if (inDegree[child - 'a'] == 0)
+                    q.offer(child);
+            }
+        }
+
+        if (sb.length() != mapEdges.size())
+            return "";
+
+        return sb.toString();
+
+    }
 
     /*
-    Second try
+     * Second try
      */
     @CaseRunner
     public String alienOrder2nd(String[] words) {
@@ -84,7 +81,7 @@ public class Leet269AlienDictionary extends BasicStudy {
         Map<Character, Set<Character>> outbound = new HashMap<>();
         Map<Character, Integer> inbound = new HashMap<>();
 
-        for (String w : words){
+        for (String w : words) {
             for (Character c : w.toCharArray())
                 inbound.put(c, 0);
         }
@@ -94,10 +91,10 @@ public class Leet269AlienDictionary extends BasicStudy {
             int idx = 0;
             while (idx < words[i].length()
                     && idx < prev.length()
-                    && prev.charAt(idx) == words[i].charAt(idx) )
+                    && prev.charAt(idx) == words[i].charAt(idx))
                 idx++;
 
-            if (idx == words[i].length() || idx == prev.length()){
+            if (idx == words[i].length() || idx == prev.length()) {
                 if (words[i].length() > prev.length())
                     prev = words[i];
                 continue;
@@ -106,7 +103,7 @@ public class Leet269AlienDictionary extends BasicStudy {
             Character to = words[i].charAt(idx);
             if (outbound.containsKey(from))
                 outbound.get(from).add(to);
-            else{
+            else {
                 Set<Character> toSet = new HashSet<>();
                 toSet.add(to);
                 outbound.put(from, toSet);
@@ -116,14 +113,14 @@ public class Leet269AlienDictionary extends BasicStudy {
         }
 
         PriorityQueue<Character> q = new PriorityQueue<>();
-        for (Map.Entry<Character, Integer> e : inbound.entrySet()){
-            if (e.getValue() == 0){
+        for (Map.Entry<Character, Integer> e : inbound.entrySet()) {
+            if (e.getValue() == 0) {
                 q.offer(e.getKey());
             }
         }
 
         StringBuilder sb = new StringBuilder();
-        while (!q.isEmpty()){
+        while (!q.isEmpty()) {
             Character c = q.poll();
             sb.append(c);
             Set<Character> toSet = outbound.get(c);
@@ -142,11 +139,7 @@ public class Leet269AlienDictionary extends BasicStudy {
 
         return sb.toString();
 
-
     }
-
-
-
 
     @CaseRunner
     public String alienOrder(String[] words) {
@@ -154,50 +147,50 @@ public class Leet269AlienDictionary extends BasicStudy {
         Map<Character, Set<Character>> map = new HashMap<>();
         Map<Character, Integer> inDegree = new HashMap<>();
 
-        //为每个字符建立入度表 ，初始化0
+        // 为每个字符建立入度表 ，初始化0
         for (String w : words) {
-            for (char c: w.toCharArray())
+            for (char c : w.toCharArray())
                 inDegree.put(c, 0);
         }
 
-        //循环所有的单词
+        // 循环所有的单词
         for (int i = 0; i < words.length - 1; i++) {
-            
+
             char[] w1 = words[i].toCharArray();
             char[] w2 = words[i + 1].toCharArray();
             int len = Math.min(w1.length, w2.length);
 
-            //前一个单词和后一个比较，一个个字符比较直到有不同的（我们可以知道这个不同的字符的顺序）.
+            // 前一个单词和后一个比较，一个个字符比较直到有不同的（我们可以知道这个不同的字符的顺序）.
             for (int j = 0; j < len; j++) {
-                if (w1[j] != w2[j]){
+                if (w1[j] != w2[j]) {
 
-                    //建立第一个字符到其他字符的边， 如果这个组合不存在，后一个字符的入度+1 （应为第一个字符指向他）
+                    // 建立第一个字符到其他字符的边， 如果这个组合不存在，后一个字符的入度+1 （应为第一个字符指向他）
                     Set<Character> s = map.getOrDefault(w1[j], new HashSet<>());
                     if (!s.contains(w2[j])) {
                         s.add(w2[j]);
                         map.put(w1[j], s);
                         inDegree.put(w2[j], inDegree.get(w2[j]) + 1);
                     }
-                    //看到不同后就停止，因为后面字符不是必须按照顺序的
+                    // 看到不同后就停止，因为后面字符不是必须按照顺序的
                     break;
                 }
             }
         }
 
-        //对有向图进行BFS遍历，每个节点，加到结果
+        // 对有向图进行BFS遍历，每个节点，加到结果
         Queue<Character> queue = new LinkedList<>();
-        for (Map.Entry<Character, Integer> e: inDegree.entrySet()){
+        for (Map.Entry<Character, Integer> e : inDegree.entrySet()) {
             if (e.getValue() == 0)
                 queue.offer(e.getKey());
         }
         StringBuilder sb = new StringBuilder();
-        while (! queue.isEmpty()){
+        while (!queue.isEmpty()) {
 
             char c = queue.poll();
             sb.append(c);
 
             Set<Character> nexts = map.get(c);
-            if (nexts !=  null) {
+            if (nexts != null) {
                 for (char n : nexts) {
                     int inDe = inDegree.get(n) - 1;
                     inDegree.put(n, inDe);
@@ -206,7 +199,7 @@ public class Leet269AlienDictionary extends BasicStudy {
                 }
             }
         }
-        //如果长度不匹配意味着有向图不能遍历所有节点，这个排序是无效的
+        // 如果长度不匹配意味着有向图不能遍历所有节点，这个排序是无效的
         if (sb.length() != inDegree.size())
             return "";
         return sb.toString();

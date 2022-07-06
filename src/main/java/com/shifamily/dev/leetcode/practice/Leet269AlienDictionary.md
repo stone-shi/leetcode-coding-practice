@@ -1,59 +1,39 @@
-# 原题
+# Leetcode #269 Alien Dictionary
 
-Leetcode 269
+## 原题
 
 269 Alien Dictionary
-Hard
+**<span style="color:red">Hard</span>**
 
-849
-
-174
-
-Favorite
-
-Share
 There is a new alien language which uses the latin alphabet. However, the order among letters are unknown to you. You receive a list of non-empty words from the dictionary, where words are sorted lexicographically by the rules of this new language. Derive the order of letters in this language.
 
-Example 1:
+**Example 1:**
 
-Input:
-[
-  "wrt",
-  "wrf",
-  "er",
-  "ett",
-  "rftt"
-]
+> `Input: [ "wrt", "wrf", "er", "ett", "rftt" ]`
+> `Output: "wertf"`
 
-Output: "wertf"
-Example 2:
+**Example 2:**
 
-Input:
-[
-  "z",
-  "x"
-]
+> `Input: [ "z", "x" ]`
+> `Output: "zx"`
 
-Output: "zx"
-Example 3:
+**Example 3:**
 
-Input:
-[
-  "z",
-  "x",
-  "z"
-] 
+> `Input: [ "z", "x", "z" ]`
+> `Output: ""`
+> **Explanation:** The order is invalid, so return "".
 
-Output: "" 
+**Note:**
 
-Explanation: The order is invalid, so return "".
-Note:
+* You may assume all letters are in lowercase.
+* You may assume that if a is a prefix of b, then a must appear before b in the given dictionary.
+* If the order is invalid, return an empty string.
+* There may be multiple valid order of letters, return any one of them is fine.
 
-You may assume all letters are in lowercase.
-You may assume that if a is a prefix of b, then a must appear before b in the given dictionary.
-If the order is invalid, return an empty string.
-There may be multiple valid order of letters, return any one of them is fine.
-# 解法
+## 解法
+
+**Topological Sorting**
+**有向无环图(Directed Acyclic Graph，DAG)**
 
 构建有向图。任何能找出顺序的字符组，组成第一个字符到第二个的有向图边 比如 Example 1
 [
@@ -90,7 +70,7 @@ wrt wrf 我们可以看到w, r一样，t，f不同，所以 t->f边
 
 
 ## 复杂度
-时间复杂度 
+时间复杂度  O(V + E) 
 空间复杂度 
 
 
