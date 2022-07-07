@@ -1,70 +1,56 @@
 package com.shifamily.dev.leetcode.practice;
 
-
-import com.shifamily.dev.BasicStudy;
-import com.shifamily.dev.CaseRunner;
-
-import java.util.Deque;
-import java.util.LinkedList;
-
-/*
-150. Evaluate Reverse Polish Notation
-Medium
-
-768
-
-414
-
-Add to List
-
-Share
-Evaluate the value of an arithmetic expression in Reverse Polish Notation.
-
-Valid operators are +, -, *, /. Each operand may be an integer or another expression.
-
-Note:
-
-Division between two integers should truncate toward zero.
-The given RPN expression is always valid. That means the expression would always evaluate to a result and there won't be any divide by zero operation.
-Example 1:
-
-Input: ["2", "1", "+", "3", "*"]
-Output: 9
-Explanation: ((2 + 1) * 3) = 9
-Example 2:
-
-Input: ["4", "13", "5", "/", "+"]
-Output: 6
-Explanation: (4 + (13 / 5)) = 6
-Example 3:
-
-Input: ["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"]
-Output: 22
-Explanation:
-  ((10 * (6 / ((9 + 3) * -11))) + 17) + 5
-= ((10 * (6 / (12 * -11))) + 17) + 5
-= ((10 * (6 / -132)) + 17) + 5
-= ((10 * 0) + 17) + 5
-= (0 + 17) + 5
-= 17 + 5
-= 22
-Accepted
- */
+import java.util.*;
+import com.shifamily.dev.*;
 
 public class Leet150EvaluateReversePolishNotation extends BasicStudy {
-    public Leet150EvaluateReversePolishNotation() {
-        String[][] caseP1 = {
-                {"2", "1", "+", "3", "*"},
-                {"4", "13", "5", "/", "+"},
-                {"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"}
-        };
-        int[] answer = {9, 6, 22};
 
-        for (int i = 0; i < caseP1.length; i++) {
-            Object[] p = new Object[1];
-            p[0] = caseP1[i];
-            addParameterAndAnswer(p, answer[i], false);
+    @CaseData
+    public List<CaseParameters> data1() {
+        List<CaseParameters> cases = new ArrayList<>();
+        cases.add(
+                CaseParameters.builder().parameters(new Object[] { new String[] { "2", "1", "+", "3", "*" } }).answer(9)
+                        .description("Example 1").build());
+        cases.add(
+                CaseParameters.builder().parameters(new Object[] { new String[] { "4", "13", "5", "/", "+" } })
+                        .answer(6)
+                        .description("Example 2").build());
+        cases.add(
+                CaseParameters.builder()
+                        .parameters(new Object[] {
+                                new String[] { "10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+" } })
+                        .answer(22)
+                        .description("Example 3").build());
+        return cases;
+    }
+
+    @CaseRunner
+    public int evalRPN2(String[] tokens) {
+        Deque<Integer> s = new LinkedList<>();
+
+        for (String t : tokens) {
+            if (t.equals("+")) {
+                int n1 = s.pop();
+                int n2 = s.pop();
+                s.push(n1 + n2);
+
+            } else if (t.equals("-")) {
+                int n1 = s.pop();
+                int n2 = s.pop();
+                s.push(n2 + n1);
+            } else if (t.equals("*")) {
+                int n1 = s.pop();
+                int n2 = s.pop();
+                s.push(n2 * n1);
+            } else if (t.equals("/")) {
+                int n1 = s.pop();
+                int n2 = s.pop();
+                s.push(n2 / n1);
+            } else {
+                s.push(Integer.valueOf(t));
+            }
         }
+        return s.pop();
     }
 
     @CaseRunner
@@ -72,8 +58,7 @@ public class Leet150EvaluateReversePolishNotation extends BasicStudy {
 
         Deque<String> stack = new LinkedList<>();
 
-        for (String token: tokens
-             ) {
+        for (String token : tokens) {
             if (token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/")) {
                 int n2 = Integer.parseInt(stack.pop());
                 int n1 = Integer.parseInt(stack.pop());
