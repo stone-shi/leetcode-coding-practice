@@ -56,5 +56,32 @@ Note:  Any solutions that attempt to circumvent the judge will result in disqual
 
 ## 代码
 ```Java
+    private String[] findMatchNum(String[] wordList, int n, int selected) {
+        List<String> candidate = new ArrayList<>();
+        for (int i = 0; i < wordList.length; i++) {
+            if (selected == i)
+                continue;
+            int ct = 0;
+            for (int j = 0; j < wordList[i].length(); j++) {
+                if (wordList[selected].charAt(j) == wordList[i].charAt(j))
+                    ct++;
+            }
+            if (ct == n)
+                candidate.add(wordList[i]);
+        }
+        return candidate.stream().toArray(String[]::new);
+    }
+
+    public void findSecretWord(String[] wordlist, Master master) {
+        int guessMatch;
+        Random r = new Random();
+        for (int i = 0; i < 10 && wordlist.length > 0; i++) {
+            int selected = r.nextInt(wordlist.length);
+            guessMatch = master.guess(wordlist[selected]);
+            if (guessMatch == 6)
+                return;
+            wordlist = findMatchNum(wordlist, guessMatch, selected);
+        }
+    }
 
 ```

@@ -46,7 +46,7 @@ Return the length of the longest possible word chain with words chosen from the 
 把字符插入长度相关的 map，并且保存dp
 然后找下一层的字符
 
-2 排序 + DP
+**2 排序 + DP**
 
 
 ## 复杂度
@@ -56,5 +56,21 @@ Return the length of the longest possible word chain with words chosen from the 
 
 
 ```Java
+    public int longestStrChain2(String[] words) {
+        Map<String, Integer> map = new HashMap<>();
+        Arrays.sort(words, (w1, w2) -> w1.length() - w2.length());
+        int res = 0;
+        for (int i = 0; i < words.length; i++) {
+            String w = words[i];
+            int chain = 0;
+            for (int j = 0; j < w.length(); j++) {
+                String wordToCheck = w.substring(0, j) + w.substring(j + 1);
+                chain = Math.max(map.getOrDefault(wordToCheck, 0) + 1, chain);
+            }
+            res = Math.max(chain, res);
+            map.put(w, chain);
+        }
+        return res;
+    }
 
 ```

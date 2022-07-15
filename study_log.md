@@ -6,8 +6,10 @@
 - Binary search all casesa (875, 300)
 - Design video [Link](https://m.youtube.com/watch?v=bUHFg8CZFws)
 - graph 269 2277 1101 - MST, prim 
+- Floyd Cycle detection algorithm 202 142 141
 
 ## TODO questions
+1146 2034 539 56 528 68 253 ~~202~~ (142, 141)
 https://github.com/hxu296/leetcode-company-wise-problems-2022
 
 ### Design
@@ -214,4 +216,8 @@ https://github.com/hxu296/leetcode-company-wise-problems-2022
 - 1034 Coloring A Border
 - 150 Evaluate Reverse Polish Notation
 
+## 2022/07/07
 
+- 202 Happy Number
+- 1146 Snapshot Array
+- 
